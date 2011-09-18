@@ -1,8 +1,6 @@
-#summary One-sentence summary of this page.
+#summary Quelques spécifications importantes à la rédaction du dossier
 
 = SARAH =
-
-Quelques spécifications importantes à la rédaction du dossier
 
 
 Dans l'objectif de réaliser un dossier cohérent et complet, voici le protocole complet :
