@@ -1,31 +1,27 @@
 #summary One-sentence summary of this page.
 
-= Introduction =
+= SARAH =
 
 Quelques spécifications importantes à la rédaction du dossier
 
-
-= Details =
-
-SARAH
 
 Dans l'objectif de réaliser un dossier cohérent et complet, voici le protocole complet :
 
 Chaque nom propre doit figurer au lexique
 Chaque algorithme doit avoir une source et une démonstration
-Chaque classe doit avoir sa trace dans la conception (UML et langage de conception)
-Pas de rétroconception
+Chaque classe doit avoir sa trace dans la conception (U.M.L et langage de conception)
+Pas de rétro conception
 Les sources ont à être notées au fur et à mesure
 Tous les logiciels utilisés figurent dans le glossaire
 
-Ne pas faire de mise en page pour les textes, ils seront presentés plus tard sous forme d'articles.
+Ne pas faire de mise en page pour les textes, ils seront présentés plus tard sous forme d'articles.
 
 Plan
 
 I - Introduction
 	- La recherche d'idées						 auteur : Anton
 
-		Comment on a procedé, sur quoi on c'est appuyé (accessibilité, bla bla bla)
+		Comment on a procédé, sur quoi on c'est appuyé (accessibilité, bla bla bla)
 
 	- Sarah, un agent qui vous veut du bien                          auteur : Anton
 
