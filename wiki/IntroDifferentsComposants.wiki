@@ -1,0 +1,14 @@
+#summary Cette page figurera dans le dossier en tant que 1.4
+
+== L'IA	==
+
+Présentation des méthodes d'IA communément utilisés comme dans ALICE et GOD
+
+== L'audio ==
+
+Techniques d'analyse et de synthèse vocale utilise dans la librairie choisie
+			
+				
+== Le graphique ==
+
+Les moteurs graphiques, le systeme d'animation
