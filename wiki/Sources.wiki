@@ -19,7 +19,9 @@ Jonn a dit :
  * L'API peut-être utlisée : http://msdn.microsoft.com/en-us/library/ee125663%28VS.85%29.aspx
  * Avec quelques exemples en C/C++ (avec code source) : http://msdn.microsoft.com/en-us/library/ee125103%28v=VS.85%29.aspx
  * Ici en 2eme un logiciel (DSpeech) qui lit des textes avec SAPI *et des voix en DL* : http://dimio.altervista.org/eng/
- * eSpeak parle beaucoup de langues, et apparement bien le français : http://espeak.sourceforge.net/languages.html
+ * eSpeak parle beaucoup de langues, et apparement bien le français : http://espeak.sourceforge.net/languages.html *(Après tests, c'est vraiment de la merde en français)*
+
+_La meilleure voix pour le moment est Virginie : http://rapidshare.com/files/108331417/Virginie.exe.html _
 
 
 ==Partie Graphique==
