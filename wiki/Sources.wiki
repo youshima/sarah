@@ -1,1 +1,28 @@
 #summary Cette page figurera dans le dossier en tant que 4
+
+Pour l'instant je vais modifier un peu cette page juste pour balancer des liens, des idées, des commentaires sur ces liens.
+On changera ça plus tard.
+
+==Partie IA==
+
+Jonn a dit :
+ * http://chatterbots.fr/forum/viewtopic.php?id=2
+ * http://s140685957.onlinehome.fr/bot/logs/193.55.51.9.htm
+
+
+==Partie Audio==
+
+ * Un vieux tuto pas fini (à peine commencé) : http://blogs.developpeur.org/madmatt/archive/2009/05/03/reconnaissance-et-synth-se-vocale-sapi-5-1.aspx
+ * Un autre : http://www.blong.com/Conferences/DCon2002/Speech/SAPI51/SAPI51.htm (*En Delphi !*)
+ * L'API peut-être utlisée : http://msdn.microsoft.com/en-us/library/ee125663%28VS.85%29.aspx
+ * Avec quelques exemples en C/C++ (avec code source) : http://msdn.microsoft.com/en-us/library/ee125103%28v=VS.85%29.aspx
+ * Ici en 2eme un logiciel (DSpeech) qui lit des textes avec SAPI *et des voix en DL* : http://dimio.altervista.org/eng/
+ * eSpeak parle beaucoup de langues, et apparement bien le français : http://espeak.sourceforge.net/languages.html
+
+
+==Partie Graphique==
+
+ Librairies/Moteur utilisés : ^???^
+
+
+==Autre==
