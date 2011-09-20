@@ -22,6 +22,17 @@
 
  adresse web : http://usa.autodesk.com/3ds-max/
 
+=O=
+
+     ==OGRE 3D==
+ _Moteur graphique directX/openGL_
+
+ OS : Windows/Linux
+
+ Licence : "MIT"
+
+ adresse web : http://www.ogre3d.org/
+
 =P=
 
      ==Photoshop CS==
