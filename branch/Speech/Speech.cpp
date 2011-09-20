@@ -18,7 +18,11 @@ int _tmain(int argc, _TCHAR* argv[])
     if( SUCCEEDED( hr ) )
     {
 		 pVoice->SetRate(0.2);
-		 hr = pVoice->Speak(L"Hello, I am Sarah, the talking pc.", 0, NULL);
+		 hr = pVoice->Speak(L"Bonjour, je suis Sarah.\
+							 Je suis une intelligence artificielle destinée à vous aider.\
+							 Je peux vous assister dans l'utilisation de votre ordinateur.\
+							 Je peux répondre à vos questions.\
+							 Je peux effectuer des calculs pour vous.", 0, NULL);
 		
         pVoice->Release();
         pVoice = NULL;
