@@ -1,5 +1,16 @@
 #summary Cette page figurera dans le dossier en tant que 5
 
+=G=
+
+     ==Google Code==
+ _Logiciel d'infographie 3D_
+
+ OS : Tous
+
+ Licence : "GNU"
+
+ adresse web : http://code.google.com/
+
 =M=
 
      ==3ds MAX==
