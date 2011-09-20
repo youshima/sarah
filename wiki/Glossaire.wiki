@@ -1,9 +1,22 @@
 #summary Cette page figurera dans le dossier en tant que 5
 
+=P=
+
+     ==Photoshop CS==
+ _Logiciel de traitement d'images_
+
+ OS : Windows
+
+ Licence : "Student and Teacher License"
+
+ adresse web : http://www.photoshop.com/
+
 =U=
 
      ==UMLet==
  _Logiciel de création d'UML gratuit - Open source_
+
+ OS : Windows
 
  Licence : non spécifiée
 
