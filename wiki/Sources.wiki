@@ -21,7 +21,8 @@ Jonn a dit :
  * Ici en 2eme un logiciel (DSpeech) qui lit des textes avec SAPI *et des voix en DL* : http://dimio.altervista.org/eng/
  * eSpeak parle beaucoup de langues, et apparement bien le français : http://espeak.sourceforge.net/languages.html *(Après tests, c'est vraiment de la merde en français)*
 
-_La meilleure voix pour le moment est Virginie : http://rapidshare.com/files/108331417/Virginie.exe.html _
+_La meilleure voix pour le moment est Virginie : http://rapidshare.com/files/108331417/Virginie.exe.html
+Elle est aussi à la racine du SVN. Il faut l'installer et la choisir en lançant le fichier C:\Windows\SysWOW64\Speech\SpeechUX\sapi.cpl (Sous windows 7 64). Sous Windows 32 bits il suffit d'aller dans *Panneau de Configuration -> Reconnaissance vocale* et ça se trouve facilement. Pour tester Virginie, ouvrez le fichier /branch/Speech/Speeche.vcxproj avec VC++ et appuyez sur F5. _
 
 
 ==Partie Graphique==
