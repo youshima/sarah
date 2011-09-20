@@ -1,5 +1,0 @@
-#summary Cette page figurera dans le dossier en tant que 1.1
-
-= La recherche d'idées =
-
-Blablabla
