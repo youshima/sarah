@@ -3,6 +3,8 @@
 =U=
 
      ==UMLet==
-Logiciel de création d'UML gratuit - Open source
-Licence : non spécifiée
-adresse web : http://www.umlet.com/
+ _Logiciel de création d'UML gratuit - Open source_
+
+ Licence : non spécifiée
+
+ adresse web : http://www.umlet.com/
