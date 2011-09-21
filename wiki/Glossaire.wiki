@@ -85,7 +85,7 @@
 =V=
 
      ==Virginie==
- _Voix la plus performante trouvable sur le net, version de démonstration de la même voix payante et plus performante. Utilisation non limitée_
+ _Voix pour windows speech non inclue dans le pack de base_
 
  OS : Windows
 
