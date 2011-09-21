@@ -27,7 +27,7 @@ Elle est aussi à la racine du SVN. Il faut l'installer et la choisir en lançan
 
 ==Partie Graphique==
 
- Librairies/Moteur utilisés : ^???^
+ Librairies/Moteur utilisés : Ogre 3D http://www.ogre3d.org/
 
 
 ==Autre==
