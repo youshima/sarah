@@ -3,9 +3,14 @@
 
 #include "stdafx.h"
 #include "SAPI.h"
+#include <atlbase.h>
 
 int _tmain(int argc, _TCHAR* argv[])
 {
+	HRESULT                        hr = S_OK;
+	CComPtr<ISpObjectToken>        cpVoiceToken;
+	CComPtr<IEnumSpObjectTokens>   cpEnum;
+	CComPtr<ISpVoice>              cpVoice;
 	ISpVoice * pVoice = NULL;
 
 	 SOToken: ISpeechObjectToken;
