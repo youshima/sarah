@@ -4,36 +4,38 @@
 #include "stdafx.h"
 #include "SAPI.h"
 #include <atlbase.h>
+#include "sphelper.h"
 
 int _tmain(int argc, _TCHAR* argv[])
 {
 	HRESULT                        hr = S_OK;
 	CComPtr<ISpObjectToken>        cpVoiceToken;
-	CComPtr<IEnumSpObjectTokens>   cpEnum;
 	CComPtr<ISpVoice>              cpVoice;
-	ISpVoice * pVoice = NULL;
 
-	 SOToken: ISpeechObjectToken;
-	 SOTokens: ISpeechObjectTokens;
+SOToken: ISpeechObjectToken;
+SOTokens: ISpeechObjectTokens;
 
-    ::CoInitialize(NULL);
-	
+	::CoInitialize(NULL);
 
-    HRESULT hr = CoCreateInstance(CLSID_SpVoice, NULL, CLSCTX_ALL, IID_ISpVoice, (void **)&pVoice);
-    if( SUCCEEDED( hr ) )
-    {
-		 pVoice->SetRate(0.2);
-		 hr = pVoice->Speak(L"Bonjour, je suis Sarah.\
+
+	hr = CoCreateInstance(CLSID_SpVoice, NULL, CLSCTX_ALL, IID_ISpVoice, (void **)&cpVoice);
+	if( SUCCEEDED( hr ) )
+	{
+		hr = SpFindBestToken(SPCAT_VOICES, L"Name=ScanSoft Virginie_Dri40_16kHz", L"", &cpVoiceToken);
+		if( !SUCCEEDED(hr)) return 1; // Voix pas installée
+		cpVoice->SetVoice(cpVoiceToken);
+		cpVoice->SetRate(0.2);
+		hr = cpVoice->Speak(L"Bonjour, je suis Sarah.\
 							 Je suis une intelligence artificielle destinée à vous aider.\
 							 Je peux vous assister dans l'utilisation de votre ordinateur.\
 							 Je peux répondre à vos questions.\
 							 Je peux effectuer des calculs pour vous.", 0, NULL);
-		
-        pVoice->Release();
-        pVoice = NULL;
-    }
 
-    ::CoUninitialize();
+		//cpVoice->Release(); <= Marche pas ? Wtf ?
+		cpVoice = NULL;
+	}
+
+	::CoUninitialize();
 	return 0;
 }
 
