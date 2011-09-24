@@ -31,7 +31,6 @@ SOTokens: ISpeechObjectTokens;
 							 Je peux répondre à vos questions.\
 							 Je peux effectuer des calculs pour vous.", 0, NULL);
 
-		//cpVoice->Release(); <= Marche pas ? Wtf ?
 		cpVoice = NULL;
 	}
 
