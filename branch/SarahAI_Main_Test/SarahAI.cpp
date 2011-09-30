@@ -13,7 +13,7 @@ SarahAI::SarahAI(void)
 	this->tree->word = "grand-messes";
 	this->tree->left = NULL;
 	this->tree->right = NULL;
-	ifstream file("../liste.de.mots.francais.frgut.txt", ios::in); //mot au milieu de la liste, pour l'efficacité de la dichotomie.
+	ifstream file("../liste.de.mots.francais.frgut.txt", ios::in); //mot au milieu de la liste, pour l'efficacitÃ© de la dichotomie.
 	string word;
 	if (file)
 	{
@@ -62,8 +62,8 @@ SarahAI::~SarahAI(void)
 /*========
 	Think
 	Fonction principale
-	Prend une phrase complète en entrée, sur une ligne
-	Rend une réponse.
+	Prend une phrase complÃ¨te en entrÃ©e, sur une ligne
+	Rend une rÃ©ponse.
 ==========*/
 
 string SarahAI::think(string sentence)
@@ -118,24 +118,4 @@ bool SarahAI::iKnow(WordTree* tree,string word)
 	}
 	else
 		return false;
-}
-
-/*=================
-	DumpTree
-	Fonction de test de l'arbre
-=================*/
-void SarahAI::dumpTree()
-{
-	dumpTree(this->tree);
-}
-
-void SarahAI::dumpTree(WordTree* tree)
-{
-	if (tree)
-	{
-		dumpTree(tree->left);
-		cout << tree->word << endl;
-		dumpTree(tree->right);
-	}
-
 }
