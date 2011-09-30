@@ -6,13 +6,13 @@
 /_______  (____  /__|  (____  /___|  /
         \/     \/           \/     \/ 
 
-Ceci est la classe qui définit toutes les fonctionnalités de 
+Ceci est la classe qui dÃ©finit toutes les fonctionnalitÃ©s de 
 l'Intelligence Artificielle de Sarah.
 
-Par : André-Poyaud Tom
+Par : AndrÃ©-Poyaud Tom
 	  Espie-Caullet Jonathan
 
-Créé le : 9/29/2011
+CrÃ©Ã© le : 9/29/2011
 */
 
 #pragma once
@@ -48,12 +48,10 @@ public:
 	SarahAI(void);
 	~SarahAI(void);
 	string think(string sentence);
-	void dumpTree();
-	void dumpTree(WordTree* tree);
 
 protected:
 private:
-	WordTree* tree;
+	WordTree* tree; //TODO : Find how to fill the tree in a better way (ATM, it only consists of 2 branches).
 	void addWord(WordTree*& root,string word);
 	void addLeaf(WordTree*& leaf,string word);
 	bool iKnow(WordTree* tree,string word);
