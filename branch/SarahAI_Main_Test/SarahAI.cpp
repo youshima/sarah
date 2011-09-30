@@ -18,17 +18,24 @@ SarahAI::SarahAI(void)
 	if (file)
 	{
 		int i=0;
-		string load = "Loading word database. [                    ] ";
+    int loaded=1;
+		string load = "Loading word database. [                    ] 0%";
 		while (getline(file,word))
 		{
 			this->addWord(this->tree,word);
 			i++;
 			if (!(i%16826))
 			{
+        if (!(i%33652))
+        {
+          load.erase(43,3);
+          load += string(loaded++) +"%";
+        }
 				load[23+(i/16826)] = '=';
 				printf("%s",load);
 				printf("\r");					//Barre de chargement \o/
 				fflush(stdout);
+          
 			}
 			if (i==1)
 			{
@@ -36,10 +43,9 @@ SarahAI::SarahAI(void)
 				printf("\r");
 				fflush(stdout);
 			}
-			cout << endl;
 		}
 		file.close();
-		cout << "Done loading " << i << " words." << endl;
+		cout << endl <<  "Done loading " << i << " words." << endl;
 	}
 	else
 	{
