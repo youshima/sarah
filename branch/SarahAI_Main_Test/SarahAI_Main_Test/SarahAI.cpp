@@ -10,32 +10,25 @@
 SarahAI::SarahAI(void)
 {
 	this->tree = new WordTree;
-	this->tree->word = "grand-messes";
+	this->tree->word = "grand-messes"; //mot au milieu de la liste, pour l'efficacité de la dichotomie.
 	this->tree->left = NULL;
 	this->tree->right = NULL;
-	ifstream file("../liste.de.mots.francais.frgut.txt", ios::in); //mot au milieu de la liste, pour l'efficacité de la dichotomie.
+	ifstream file("../liste.de.mots.francais.frgut.txt", ios::in);
 	string word;
 	if (file)
 	{
 		int i=0;
-    int loaded=1;
-		string load = "Loading word database. [                    ] 0%";
+		string load = "Loading word database. [                    ]";
 		while (getline(file,word))
 		{
 			this->addWord(this->tree,word);
 			i++;
 			if (!(i%16826))
 			{
-        if (!(i%33652))
-        {
-          load.erase(43,3);
-          load += string(loaded++) +"%";
-        }
 				load[23+(i/16826)] = '=';
 				printf("%s",load);
 				printf("\r");					//Barre de chargement \o/
 				fflush(stdout);
-          
 			}
 			if (i==1)
 			{
@@ -51,7 +44,7 @@ SarahAI::SarahAI(void)
 	{
 		cout << "Je ne trouve pas mon dictionnaire, je ne peux pas vous aider." << endl;
 		Sleep(5000);
-		exit;
+		exit(0);
 
 	}
 }
