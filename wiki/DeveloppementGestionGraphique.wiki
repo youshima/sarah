@@ -1,1 +1,12 @@
 #summary Cette page figurera dans le dossier en tant que 2.4
+
+=2.4.1 - Créer un visage pour Sarah=
+
+Sarah est sensée posséder un visage en 3d s'affichant à l'écran lorsqu'elle parle, ce visage est en fait un modèle 3D réalisé sous 3DS Max, possédant des animations et affiché par le moteur OGRE 3D dans la fenêtre de l'application finale.
+
+Pour réaliser celà je vais passer par 3 étapes :
+
+ #Modelisation
+ #"Skin" du modèle
+ #Animation
+
