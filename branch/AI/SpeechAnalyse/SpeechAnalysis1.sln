@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpeechAnalysis1", "SpeechAnalysis1\SpeechAnalysis1.vcproj", "{FD294EA3-FD0B-4F58-BADE-9BFF1EE3D077}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{FD294EA3-FD0B-4F58-BADE-9BFF1EE3D077}.Debug|Win32.ActiveCfg = Debug|Win32
+		{FD294EA3-FD0B-4F58-BADE-9BFF1EE3D077}.Debug|Win32.Build.0 = Debug|Win32
+		{FD294EA3-FD0B-4F58-BADE-9BFF1EE3D077}.Release|Win32.ActiveCfg = Release|Win32
+		{FD294EA3-FD0B-4F58-BADE-9BFF1EE3D077}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
