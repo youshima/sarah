@@ -26,6 +26,3 @@ Pour améliorer la précision nous recommandons un bon microphone bien configur�
 Affin de limiter les problèmes et incompatibilités, Sarah parlera exclusivement Anglais.
 
 Plus loin dans ce rapport, nous présenterons l'ensemble du travail effectué sur le projet, l'organisation, les problèmes rencontrés. Un Glossaire est à votre disposition, il vous renseignera sur les logiciels et termes techniques utilisés.
-
-
-Pour finir
