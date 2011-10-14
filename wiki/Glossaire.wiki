@@ -81,14 +81,3 @@
  Licence : non spécifiée
 
  adresse web : http://www.umlet.com/
-
-=V=
-
-     ==Virginie==
- _Voix pour windows speech non inclue dans le pack de base_
-
- OS : Windows
-
- License : ^?^Démonstration^?^
-
- Adresse Web : ^???^
