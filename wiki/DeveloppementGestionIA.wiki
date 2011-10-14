@@ -4,7 +4,7 @@
 
 
 
-Dans l'idée de pouvoir tester correctement et étape par étape les différents composants de l'IA, le choix fut fait de réaliser un logiciel graphique qui permettrait d’accéder à l'ensemble des informations dont on dispose au cours de l'analyse des phrases.
+Dans l'idée de pouvoir tester correctement et étape par étape les différents composants de l'IA, le choix fut fait de réaliser un logiciel graphique qui permettrait d’accéder à l'ensemble des informations dont on dispose au cours de l'analyse des phrases ainsi que d'un arbre visuel représentant le déroulement du dialogue et ses étapes.
 
 Dans sa phase première on a décomposé les phrases en séries de boutons comme ceci :
 
