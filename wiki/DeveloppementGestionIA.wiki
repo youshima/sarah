@@ -27,3 +27,18 @@ Une fois les mots identifiés, il est possible d'analyser la phrase.
 La première problématique qui se pose alors est de vérifier si la phrase est une question ou une affirmation (la ponctuation n'est pas disponible en sortie de l'analyse vocale).
 
 C'est la structure de la phrase qui permet d'identifier une question. En anglais, les structures de question les plus communes sont :
+
+###### A REMPLIR #####
+
+
+
+Bien entendu la mise en place d'un tel système d'analyse nécessite une base de données solide.
+
+=2.2.2 - La base de données=
+
+Dès le début du développement de l'IA il était devenu clair que nous avions besoin d'un support de données qui n'était pas accessible en tant que tel, il était alors nécessaire de le créer.
+Nous avons donc réalisé une série de programmes console dont le but était de piocher dans les bases de données ###### A REMPLIR ##### afin d'obtenir une base cohérente et contenant toutes les données dont nous avions besoin.
+
+Pour recueillir toutes ces données les éléments suivants ont été mis en œuvre :
+ * système de requête HTML pour les bases de données en ligne
+ * parseur HTML, XML
