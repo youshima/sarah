@@ -11,17 +11,17 @@ Dans sa phase première on a décomposé les phrases en séries de boutons comme
 //IMAGE : SpeechAnalysis.jpg
 
 Ainsi nous avons su définir précisément ce que nous avions en entrée. Une fois chaque mot identifié, il est recherché dans la base de données pour des informations utiles :
-* type
-* genre
-* brève description
-* synonymes
-* si c'est un verbe, sa conjugaison à tous les temps
+ * type
+ * genre
+ * brève description
+ * synonymes
+ * si c'est un verbe, sa conjugaison à tous les temps
 
 Un code couleur pour les mots permet de distinguer les mots inconnus :
 
-* rouge = inconnu
-* vert = connu
-* jaune = en recherche
+ * rouge = inconnu
+ * vert = connu
+ * jaune = en recherche
 
 Une fois les mots identifiés, il est possible d'analyser la phrase.
 La première problématique qui se pose alors est de vérifier si la phrase est une question ou une affirmation (la ponctuation n'est pas disponible en sortie de l'analyse vocale).
