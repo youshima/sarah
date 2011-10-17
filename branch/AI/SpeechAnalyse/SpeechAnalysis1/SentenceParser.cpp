@@ -64,10 +64,10 @@ SentenceParser::~SentenceParser(void)
 }
 vector<Element*>* SentenceParser::Analyse(System::String ^ str) {
 
-	//passer le string managé en non managé
+	//passer le string managÃ© en non managÃ©
 	cursor = 0;
 	this->str.clear(); //effacer le contenu actuel de la chaine
-	for(UINT i = 0; i < elements.size(); i++) //effacer les mots de l'analyse précédente
+	for(UINT i = 0; i < elements.size(); i++) //effacer les mots de l'analyse prÃ©cÃ©dente
 		elements.at(i)->~Element(); 
 	elements.clear();
 
@@ -98,9 +98,9 @@ UINT SentenceParser::readElement() {
 	}
 	if(cursor < str.length()) //si on a fini de lire, inutile de continuer
 	{
-		//ajouter le separateur à la liste d'elements
+		//ajouter le separateur Ã  la liste d'elements
 		Separator* separator = new Separator(str[cursor]);
-		if(strcmp(separator->getData()," ") != 0)
+		if(strcmp(separator->getData()," ") != 0 || strcmp(separator->getData(),"\r") != 0 || strcmp(separator->getData(),"\n") != 0)
 			elements.push_back((Element*)separator);
 		//sauter le separateur
 		cursor++;
