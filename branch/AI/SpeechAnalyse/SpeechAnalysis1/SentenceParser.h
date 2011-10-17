@@ -1,9 +1,6 @@
 #pragma once
 
-#include <string>
-#include <vector>
-#define DWORD unsigned short
-#define UINT unsigned int
+#include "Helpers.h"
 
 using namespace std;
 /*
