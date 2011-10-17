@@ -200,6 +200,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Database.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\SentenceParser.cpp"
 				>
 			</File>
@@ -234,6 +238,10 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
+				RelativePath=".\Database.h"
+				>
+			</File>
+			<File
 				RelativePath=".\Form1.h"
 				FileType="3"
 				>
@@ -242,6 +250,10 @@
 					SubType="Designer"
 					>
 				</File>
+			</File>
+			<File
+				RelativePath=".\Helpers.h"
+				>
 			</File>
 			<File
 				RelativePath=".\resource.h"
