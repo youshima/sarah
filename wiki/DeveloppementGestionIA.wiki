@@ -24,11 +24,10 @@ Un code couleur pour les mots permet de distinguer les mots inconnus :
  * jaune = en recherche
 
 Une fois les mots identifiés, il est possible d'analyser la phrase.
-La première problématique qui se pose alors est de vérifier si la phrase est une question ou une affirmation (la ponctuation n'est pas disponible en sortie de l'analyse vocale).
 
-C'est la structure de la phrase qui permet d'identifier une question. En anglais, les structures de question les plus communes sont :
-
-###### A REMPLIR #####
+Pour la phase d'analyse nous avons choisi de nous réferrer à un système de Règles écrites dans un script que nous avons mis en place.
+Le script est un pseudo-langage interprété à la volée et executé à chaque analyse de phrase. Un script permet de spécifier un comportement ou un élement de réponse de l'IA.
+Par exemple il est possible d'executer des scripts externes de contrôle d'applications (comme firefox ou thunderbird). Ou bien spécifier l'évolution des branches de l'arbre de dialogue.
 
 
 
