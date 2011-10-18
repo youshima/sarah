@@ -5,7 +5,7 @@ Element::Element(string str)
 {
 	length = str.length();
 	c = new char[length + 1];
-	strcpy(c,str.c_str());
+	strcpy_s(c,sizeof(char) * length,str.c_str());
 	c[length] = '\0';
 }
 
@@ -64,16 +64,16 @@ SentenceParser::~SentenceParser(void)
 }
 vector<Element*>* SentenceParser::Analyse(System::String ^ str) {
 
-	//passer le string managÃ© en non managÃ©
+	//passer le string managé en non managé
 	cursor = 0;
 	this->str.clear(); //effacer le contenu actuel de la chaine
-	for(UINT i = 0; i < elements.size(); i++) //effacer les mots de l'analyse prÃ©cÃ©dente
+	for(UINT i = 0; i < elements.size(); i++) //effacer les mots de l'analyse précédente
 		elements.at(i)->~Element(); 
 	elements.clear();
 
 	for(UINT i = 0; i < (UINT)str->Length; i++) //boucle simple de copie
 		this->str += str[i];
-	while(readElement()){} //lecture de la phrase mot par mot et assemblage du vecteur de mots
+	while(readElement() != 0); //lecture de la phrase mot par mot et assemblage du vecteur de mots
 	
 
 	return &elements;
@@ -98,7 +98,7 @@ UINT SentenceParser::readElement() {
 	}
 	if(cursor < str.length()) //si on a fini de lire, inutile de continuer
 	{
-		//ajouter le separateur Ã  la liste d'elements
+		//ajouter le separateur à la liste d'elements
 		Separator* separator = new Separator(str[cursor]);
 		if(strcmp(separator->getData()," ") != 0 || strcmp(separator->getData(),"\r") != 0 || strcmp(separator->getData(),"\n") != 0)
 			elements.push_back((Element*)separator);

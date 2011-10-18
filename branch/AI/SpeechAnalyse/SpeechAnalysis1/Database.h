@@ -8,11 +8,11 @@
 
 #define FILENAME "database.data"
 
-enum TYPE {VERB, NOUN, ADJECTIVE, ADVERB, PRONOUN, PREPOSITION, FORMUNCTION, INTERJECTION, NONE};
-enum TENSE {PAST, NON_PAST, NONE};
-enum MOOD {INDICATIVE, SUBJUNCTIVE, IMPERATIVE, NONE};
-enum ASPECT {SIMPLE, CONTINUOUS, PERFECT, PERFECT_CONTINUOUS, NONE};
-enum VOICE {ACTIVE, PASSIVE, NONE};
+enum TYPE {VERB, NOUN, ADJECTIVE, ADVERB, PRONOUN, PREPOSITION, FORMUNCTION, INTERJECTION, NONE_TYPE};
+enum TENSE {PAST, NON_PAST, NONE_TENSE};
+enum MOOD {INDICATIVE, SUBJUNCTIVE, IMPERATIVE, NONE_MOOD};
+enum ASPECT {SIMPLE, CONTINUOUS, PERFECT, PERFECT_CONTINUOUS, NONE_ASPECT};
+enum VOICE {ACTIVE, PASSIVE, NONE_VOICE};
 
 /*
 	structure STR :
@@ -74,9 +74,9 @@ public:
 	char* GetString() const;
 	/*
 		fonction GetLength
-		=> {la valeur de l}
+		=> {le pointeur de length}
 	*/
-	UINT GetLength() const;
+	UINT* GetLength();
 	/*
 		procedure SetString
 		{affecte la chaine de caracteres à celle de l'élement}
@@ -87,6 +87,11 @@ public:
 		{affecte la longueur à celle de l'élement}
 	*/
 	void SetLength(UINT length);
+	/*
+		procedure PopHead
+		{enlève le premier caractere}
+	*/
+	void PopBack();
 
 private:
 	char* c;
@@ -105,7 +110,7 @@ public:
 		constructeur de MapWord
 		{initialise les variables par défaut ou selon l'utilisateur}
 	*/
-	MapWord(str = "", offset = 0);
+	MapWord(UINT offset = 0);
 	/*
 		destructeur de MapWord
 		{nettoie la mémoire}
@@ -114,85 +119,66 @@ public:
 	/*
 		operateur de comparaison
 		{compare le MapWord avec un autre}
-		=> {vrai si les deux MapWord ont le meme nom et offset}
+		=> {vrai si les deux MapWord ont le meme offset}
 	*/
 	bool operator==(MapWord* word);
 	/*
 		operateur de comparaison
 		{compare le MapWord avec un autre}
-		=> {faux si les deux MapWord ont le meme nom et offset}
+		=> {faux si les deux MapWord ont le meme offset}
 	*/
 	bool operator!=(MapWord* word);
-	/*
-		fonction GetString
-		=> {ponteur de str}
-	*/
-	STR* GetString();
 	/*
 		fonction GetOffset
 		=> {retourne la valeur de l'offset}
 	*/
 	UINT GetOffset();
 	/*
-		fonction GetChildrenCount
-		=> {retourne le nombre d'enfants}
+		fonction GetSynonym
+		=> {retourne le prochain synonime du mot}
 	*/
-	UINT GetChildrenCount();
-	/*
-		fonction GetChildren
-		=> {retourne le pointeur sur l'enfant à la position i, 0 si i >= nombre d'enfants}
-	*/
-	MapWord* GetChildren(UINT i);
-	/*
-		procedure SetString
-		{affecte la valeur de str à this->str}
-	*/
-	void SetString(STR str);
+	MapWord* GetSynonym();
 	/*
 		procedure SetOffset
 		{affecte la valeur offset à this->offset}
 	*/
 	void SetOffset(UINT offset);
 	/*
-		fonction AddChildren [recursive]
-		{ajoute un enfant à la liste des enfants ou bien à leurs enfants suivant l'ordre alphabetique}
+		procedure SetSynonym
+		{affecte la valeur de synonym au prochain synonime du mot}
+	*/
+	void SetSynonym(MapWord* synonym);
+	/*
+		fonction Add [recursive]
+		{ajoute un enfant à la liste des enfants ou bien à leurs enfants suivant l'ordre alphabetique, name en minuscules}
 		=> {
 			S_OK si l'élément a bien été ajouté
 			E_FAIL si l'élément existe dejà
 			}
 	*/
-	HRESULT AddChildren(MapWord* mw);
+	HRESULT Add(MapWord* mw, STR name);
 	/*
-		fonction RemoveChildren [recursive]
-		{retrouve et supprime l'élément dans la liste des enfants}
-		=> {
-			S_OK si l'élément a bien été supprimé
-			E_FAIL si l'élément n'a pas été trouvé
-			}
+		fonction Find [recursive]
+		=> { offset du mot recherché, 0 sinon, name en minuscules }
 	*/
-	HRESULT RemoveChildren(MapWord* mw);
-
+	UINT Find(STR name);
 private:
-	STR str;
+	/*
+		fonction GetChild
+		{c minuscule} => {retourne le pointeur sur l'enfant à la position i, 0 si i >= nombre d'enfants}
+	*/
+	MapWord* GetChild(char c);
+private:
 	UINT offset;
-	LIST(MapWord) child;
-};
-
-/*
-	classe MapWord_s
-	représente le mappage de la base de données pour la partie reponse
-*/
-class MapWord_s : MapWord
-{
-	TYPE type;
-	_MapWord_s* synonym; //pointeur au prochain synonime
+	MapWord* child[26];
+	MapWord* synonym; //pointeur au prochain synonime
 };
 
 /*
 	structure FORM :
 	definit une formes pour un verbe
 */
-typedef struct _FORM
+typedef struct FORM
 {
 	STR name;
 	TENSE tense;
@@ -203,12 +189,12 @@ typedef struct _FORM
 		operateur de comparaison entre deux FORM
 		=> { vrai si tous les parametres des élements sont égaux }
 	*/
-	bool operator==(_FORM* form) {return ( this->name == form->name && this->mood == form->mood && this->aspect == form->aspect && this->tense == form->tense && this->voice == form->voice ); };
+	bool operator==(FORM form) {return ( this->name == form.name && this->mood == form.mood && this->aspect == form.aspect && this->tense == form.tense && this->voice == form.voice ); };
 	/*
 		operateur de comparaison entre deux FORM
 		=> { faux si tous les parametres des élements sont égaux }
 	*/
-	bool operator!=(_FORM* form) {return !(this == form) };
+	bool operator!=(FORM form) {return !(*this == form) ; };
 
 } FORM;
 /*
@@ -233,17 +219,17 @@ public:
 		fonction GetName
 		=> {le pointeur sur name}
 	*/
-	STR* GetName() const;
+	STR* GetName();
 	/*
 		fonction GetDef
 		=> {le pointeur sur def}
 	*/
-	STR* GetDef() const;
+	STR* GetDef();
 	/*
 		fonction GetType
 		=> {le pointeur sur type}
 	*/
-	TYPE GetType() const;
+	TYPE* GetType();
 	/*
 		procedure SetName
 		{affecte la valeur de name à self.name}
@@ -287,12 +273,17 @@ public:
 		fonction isIrregular
 		=> {vrai si le verbe est irrégulier}
 	*/
-	bool isIrregular();
+	bool isIrregular() const;
 	/*
-		fonction GetFormList
-		=> {le pointeur sur la liste des formess du verbe}
+		fonction GetFormCount
+		=> {nombre de formes}
 	*/
-	LIST(FORM)* GetFormList() const;
+	UINT GetFormCount() const;
+	/*
+		fonction GetForm
+		=> {le pointeur sur la forme à la position i}
+	*/
+	FORM* GetForm(UINT i);
 	/*
 		procedure SetIrregular
 		{affecte la valeur de irregular à self.irregular}
@@ -341,36 +332,39 @@ public:
 	~Database();
 
 	/*
-		fonction Load
+		fonction LoadMap
 		=> {
 			S_OK si le chargement de la BDD c'est bien passé, 
 			E_OUTOFMEMORY si problème de mémoire,
-			E_FILENOTFOUND si fichier non trouvé,
+			E_fileNOTFOUND si fichier non trouvé,
 			E_FAIL sinon 
 			}
 	*/
-	HRESULT Load();
+	HRESULT LoadMap();
 	/*
-		fonction Save
+		fonction AddWord
 		=> {
 			S_OK si la sauvegarde de la BDD c'est bien passé, 
 			E_OUTOFMEMORY si problème de mémoire,
 			E_FAIL sinon 
 			}
 	*/
-	HRESULT Save();
+	HRESULT AddWord(DBWORD* word);
+
+private:
 	/*
-		fonction Remap
+		fonction MapNextWord
 		=> {
-			S_OK si les deux maps ont été generées corréctement, 
+			S_OK si le mot a été mappé, 
+			E_OUTOFMEMORY si problème de mémoire,
 			E_FAIL sinon 
 			}
 	*/
-	HRESULT Remap();
+	HRESULT MapNextWord();
+
 private:
-	MapWord* map; //map triée par ordre alphabetique
-	MapWord_s* map_s; //map triée par type et synonime
-	fstream FILE;
+	MapWord* map[8]; //maps des offsets pour la BDD classées par type dans l'ordre de l'enuméré TYPE
+	std::fstream file;
 	
 
 };

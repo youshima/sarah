@@ -131,7 +131,7 @@ namespace SpeechAnalysis1 {
 			
 			 //enlever les boutons d'abord
 
-			 for(UINT i = 0; i < ButtonElements->Count; i++)
+			 for(UINT i = 0; i < (UINT)ButtonElements->Count; i++)
 				 this->Controls->Remove(ButtonElements[i]);
 			 ButtonElements->Clear();
 			 UINT offset = 0; //decalage depuis la gauche
