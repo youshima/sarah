@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Helpers.h"
+#include "STR.h"
 
 using namespace std;
 /*
@@ -22,6 +23,11 @@ public:
 	*/
 	Element(char str);
 	/*
+		Constructeur de Element
+		{initialise les variables par défaut ou selon l'utilisateur}
+	*/
+	Element(STR str);
+	/*
 		Destructeur de Element
 		{nettoie la mémoire}
 	*/
@@ -30,20 +36,24 @@ public:
 		fonction getLength
 		=> { la taille de l'élément }
 	*/
-	DWORD getLength();
+	const UINT* getLength();
 	/*
 		fonction getData
-		=> { pointeur sur le premier caractere de l'élément }
+		=> { pointeur sur le string de l'élément }
 	*/
-	char* getData();
+	STR* getString();
+	/*
+		procedure setSata
+		{ affecte this->str à str }
+	*/
+	void setString(STR str);
 	/*
 		fonction isSeparator (virtuelle)
 		=> { vrai si l'élément est un séparateur }
 	*/
 	virtual bool isSeparator() = 0;
 private:
-	DWORD length;
-	char* c;
+	STR str;
 };
 /*
 	classe Word
@@ -136,7 +146,7 @@ private:
 	bool isSeparator(char c);
 
 	DWORD cursor;
-	string str;
+	STR str;
 	vector<Element*> elements;
 };
 
