@@ -82,7 +82,8 @@ namespace SpeechAnalysis1 {
 			this->textEntry->Name = L"textEntry";
 			this->textEntry->Size = System::Drawing::Size(258, 87);
 			this->textEntry->TabIndex = 0;
-			this->textEntry->Text = L"Hello, I am superman!";
+			this->textEntry->Text = L"Hello, I am superman !";
+			this->textEntry->TextChanged += gcnew System::EventHandler(this, &Form1::textEntry_TextChanged);
 			// 
 			// ButtonAnalyse
 			// 
@@ -172,6 +173,8 @@ namespace SpeechAnalysis1 {
 
    private: System::Void buttonElements_Click(System::Object^  sender, System::EventArgs^  e) {
 			}
+private: System::Void textEntry_TextChanged(System::Object^  sender, System::EventArgs^  e) {
+		 }
 };
 }
 
