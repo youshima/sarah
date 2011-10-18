@@ -1,77 +1,15 @@
 #include "StdAfx.h"
 #include "Database.h"
-/*
-
-		CLASS STR
-
-
-
-
-*/
-STR::STR(const char *c) {
-	SetLength(strlen(c)); //recuperation de la taille de la chaine
-	SetString(new char[*getLength()]);
-	strcpy_s(getString(), *getLength(), c); //copie de la chaine
-}
-STR::~STR() {
-	delete[] c;	//suppression du tableau de pointeurs
-	SetLength(0);
-}
-
-
-void STR::operator =(const char *c) {
-	SetLength(strlen(c)); //recuperation de la taille de la chaine
-	delete[] c;
-	SetString(new char[*getLength()]);
-	strcpy_s(getString(), *getLength(), c); //copie de la chaine
-}
-bool STR::operator ==(const char *c) {
-	return strcmp(getString(),c) == 0;	//comparaison des deux chaines
-}
-bool STR::operator !=(const char *c) {
-	return !(*this == c);	//comparaison des deux chaines
-}
-void STR::operator =(STR str) {
-	SetLength(str.length); //recuperation de la taille de la chaine
-	delete[] c;
-	SetString(new char[*getLength()]);
-	strcpy_s(getString(), *getLength(), str.c); //copie de la chaine
-}
-bool STR::operator ==(STR str) {
-	return strcmp(getString(),str.getString()) == 0;	//comparaison des deux chaines
-}
-bool STR::operator !=(STR str) {
-	return !(*this == str);	//comparaison des deux chaines
-}
-char* STR::getString() const {
-	return this->c;
-}
-UINT* STR::getLength() {
-	return &this->length;
-}
-void STR::SetString(char *c) {
-	SetLength(strlen(c)); //recuperation de la taille de la chaine
-	delete[] c;
-	this->c = new char[*getLength()];
-	strcpy_s(c, *getLength(), c); //copie de la chaine
-}
-void STR::SetLength(UINT length) {
-	this->length = length;//recuperation de la taille de la chaine
-}
-void STR::PopBack() {
-	this->c++;
-	this->length--;
-}
 
 /*
 		CLASS MAPWORD
 
 */
 MapWord::MapWord(UINT offset) {
-	SetOffset(offset);
+	setOffset(offset);
 	for(UINT i = 0; i < 26; i++)
 		this->child[i] = 0; //tous les child à nul
-	SetSynonym(0);
+	setSynonym(0);
 }
 	
 MapWord::~MapWord() {
@@ -100,11 +38,11 @@ MapWord* MapWord::getSynonym()
 	return this->synonym;
 }
 	
-void MapWord::SetOffset(UINT offset) {
+void MapWord::setOffset(UINT offset) {
 	this->offset = offset;
 }
 	
-void MapWord::SetSynonym(MapWord* synonym)
+void MapWord::setSynonym(MapWord* synonym)
 {
 	this->synonym = synonym;
 }
@@ -118,12 +56,12 @@ HRESULT MapWord::Add(MapWord* mw, STR name) {
 		
 		if(this->getChild(name.getString()[0]) == 0) //si le fils n'existe pas encore
 			this->child[ name.getString()[0] ] = new MapWord(); //en creer un
-		name.PopBack();//enlever le premier caractere 
+		name.popBack();//enlever le premier caractere 
 		return this->getChild(name.getString()[0])->Add(mw, name); //calculer à quelle branche continuer récursivement
 	}
 	else //on a trouvé l'emplacement
 	{
-		SetOffset(mw->getOffset());
+		setOffset(mw->getOffset());
 		return S_OK; //ajouté avec succès
 	}
 }
@@ -136,7 +74,7 @@ UINT MapWord::Find(STR name)
 		
 		if(this->getChild(name.getString()[0]) == 0) //si le fils existe
 		{
-			name.PopBack();//enlever le premier caractere
+			name.popBack();//enlever le premier caractere
 			return this->getChild(name.getString()[0])->Find(name); //calculer à quelle branche continuer récursivement
 		}
 		else
@@ -160,11 +98,11 @@ MapWord* MapWord::getChild(char c) {
 
 */
 Form::Form(STR name, TENSE tense, MOOD mood, ASPECT aspect, VOICE voice) {
-	SetName(name);
-	SetTense(tense);
-	SetMood(mood);
-	SetAspect(aspect);
-	SetVoice(voice);
+	setName(name);
+	setTense(tense);
+	setMood(mood);
+	setAspect(aspect);
+	setVoice(voice);
 }
 
 Form::~Form() {
@@ -194,19 +132,19 @@ ASPECT* Form::getAspect() {
 VOICE* Form::getVoice() {
 	return &this->voice;
 }
-void Form::SetName(STR name) {
+void Form::setName(STR name) {
 	this->name = name;
 }
-void Form::SetTense(TENSE tense) {
+void Form::setTense(TENSE tense) {
 	this->tense = tense;
 }
-void Form::SetMood(MOOD mood) {
+void Form::setMood(MOOD mood) {
 	this->mood = mood;
 }
-void Form::SetAspect(ASPECT aspect) {
+void Form::setAspect(ASPECT aspect) {
 	this->aspect = aspect;
 }
-void Form::SetVoice(VOICE voice) {
+void Form::setVoice(VOICE voice) {
 	this->voice = voice;
 }
 /*
@@ -217,9 +155,9 @@ void Form::SetVoice(VOICE voice) {
 
 */
 DBWORD::DBWORD(STR name) {
-	SetName(name);
-	SetDef("");
-	SetType(TYPE_NONE);
+	setName(name);
+	setDef("");
+	setType(TYPE_NONE);
 }
 
 DBWORD::~DBWORD() {
@@ -240,15 +178,15 @@ TYPE* DBWORD::getType() {
 	return &this->type;
 }
 
-void DBWORD::SetName(STR name) {
+void DBWORD::setName(STR name) {
 	this->name = name;
 }
 	
-void DBWORD::SetDef(STR def) {
+void DBWORD::setDef(STR def) {
 	this->def = def;
 }
 	
-void DBWORD::SetType(TYPE type) {
+void DBWORD::setType(TYPE type) {
 	this->type = type;
 }
 
@@ -260,7 +198,7 @@ void DBWORD::SetType(TYPE type) {
 */
 DBVERB::DBVERB(STR name, bool irregular) : DBWORD(name) {
 	
-	SetIrregular(irregular);
+	setIrregular(irregular);
 }
 
 DBVERB::~DBVERB() {
@@ -280,7 +218,7 @@ Form* DBVERB::getForm(UINT i) {
 	return this->form[i];
 }
 
-void DBVERB::SetIrregular(bool irregular) {
+void DBVERB::setIrregular(bool irregular) {
 	this->irregular = irregular;
 }
 
@@ -315,7 +253,7 @@ Database::Database() {
 	for(UINT i = 0; i < 8; i++)
 	{
 		map[i] = new MapWord();
-		map[i]->SetOffset(0);
+		map[i]->setOffset(0);
 	}
 	//tester si le fichier est vide
 	file.open( FILENAME , std::fstream::binary | std::fstream::in );
@@ -359,11 +297,9 @@ HRESULT Database::AddWord(DBWORD* word) {
 
 		file.write((char*)word->getType(), sizeof(TYPE)); //ecrire le type
 
-		file.write((char*)word->getName()->getLength(), sizeof(UINT)); //ecrire la longueur du nom
-		file.write((char*)word->getName()->getString(), sizeof(char) * *word->getName()->getLength() ); //ecrire la chaine de caracteres
-		
-		file.write((char*)word->getDef()->getLength(), sizeof(UINT)); //ecrire la longueur de la definition
-		file.write((char*)word->getDef()->getString(), sizeof(char) * *word->getDef()->getLength() ); //ecrire la chaine de caracteres
+		write(word->getName());
+
+		write(word->getDef());
 
 		if(*word->getType() == VERB)	//tester si le mot est un verbe
 		{
@@ -376,13 +312,7 @@ HRESULT Database::AddWord(DBWORD* word) {
 			for(UINT i = 0; i < verb->getFormCount(); i++)
 			{
 				//ecrire la forme
-				file.write((char*)verb->getForm(i)->getName()->getLength(), sizeof(UINT)); 
-				file.write(verb->getForm(i)->getName()->getString(), sizeof(char) * *verb->getForm(i)->getName()->getLength()); 
-
-				file.write((char*)verb->getForm(i)->getTense(), sizeof(TENSE));
-				file.write((char*)verb->getForm(i)->getMood(), sizeof(MOOD)); 
-				file.write((char*)verb->getForm(i)->getAspect(), sizeof(ASPECT));
-				file.write((char*)verb->getForm(i)->getVoice(), sizeof(VOICE)); 
+				write(verb->getForm(i));
 
 			}
 			verb = 0; //abandonner le pointeur
@@ -393,41 +323,20 @@ HRESULT Database::AddWord(DBWORD* word) {
 		return E_FILENOTFOUND;
 }
 
-HRESULT Database::MapNextWord()
-{
+HRESULT Database::MapNextWord() {
+
 		TYPE type;
 		UINT offset = (UINT)file.tellg();
-
 		file.read((char*)&type, sizeof(TYPE)); //lire le type
 
-		UINT strLength;
 		STR str;
-
 		DBVERB* verb = new DBVERB();
 
-		file.read((char*)&strLength, sizeof(UINT)); //lire la longueur du nom
+		read(&str);
+		verb->setName(str);
 
-		char* buf = new char[strLength];
-		file.read(buf, sizeof(char) * strLength ); //lire la chaine de caracteres
-
-		str.SetLength(strLength);
-		str.SetString(buf);
-
-		verb->SetName(str);
-
-		delete[] buf;
-
-		file.read((char*)&strLength, sizeof(UINT)); //lire la longueur de la definition
-
-		buf = new char[strLength];
-		file.read(buf, sizeof(char) * strLength ); //lire la chaine de caracteres
-
-		str.SetLength(strLength);
-		str.SetString(buf);
-
-		verb->SetDef(str);
-
-		delete[] buf;
+		read(&str);
+		verb->setDef(str);
 
 		if(type == VERB)	//tester si le mot est un verbe
 		{
@@ -435,7 +344,7 @@ HRESULT Database::MapNextWord()
 			bool irregular;
 			file.read((char*)&irregular, sizeof(bool)); //lire le booleen spécifiant l'irrégularité du verbe
 
-			verb->SetIrregular(irregular);
+			verb->setIrregular(irregular);
 			
 			UINT formCount;
 			file.read((char*)&formCount, sizeof(UINT));  //lire le nombre de formes
@@ -444,30 +353,15 @@ HRESULT Database::MapNextWord()
 			{
 				Form form;
 				//lire la forme
-				file.read((char*)&strLength, sizeof(UINT)); //lire la longueur de la definition
-				buf = new char[strLength];
-				file.read(buf, sizeof(char) * strLength ); //lire la chaine de caracteres
-
-				form.getName()->SetLength(strLength);
-				form.getName()->SetString(buf);
-
-				
-
-				delete[] buf;
-				file.read((char*)form.getTense(), sizeof(TENSE));
-				file.read((char*)form.getMood(), sizeof(MOOD)); 
-				file.read((char*)form.getAspect(), sizeof(ASPECT));
-				file.read((char*)form.getVoice(), sizeof(VOICE)); 
-
-				
+				read(&form);
 
 				HRESULT hr = verb->AddForm(form);
 				if(hr != S_OK)
 					return E_FAIL;
 				
 				MapWord mw;
-				mw.SetOffset(offset);
-				mw.SetSynonym(0);
+				mw.setOffset(offset);
+				mw.setSynonym(0);
 				hr = map[*verb->getType()]->Add(&mw,*verb->getName());
 				if(hr != S_OK)
 					return E_FAIL;
@@ -480,12 +374,48 @@ HRESULT Database::MapNextWord()
 			DBWORD* word = (DBWORD*)verb;
 
 			MapWord mw;
-			mw.SetOffset(offset);
-			mw.SetSynonym(0);
+			mw.setOffset(offset);
+			mw.setSynonym(0);
 			HRESULT hr = map[*word->getType()]->Add(&mw,*word->getName());
 			if(hr != S_OK)
 					return E_FAIL;
 
 		}
 		return S_OK;
+}
+
+void Database::write(STR* str) {
+
+	file.write((char*)str->getLength(), sizeof(UINT)); //ecrire la longueur
+	file.write((char*)str->getString(), sizeof(char) * *str->getLength() ); //ecrire la chaine de caracteres
+}
+void Database::write(Form *form) {
+
+	//ecrire la forme
+	write(form->getName());
+
+	file.write((char*)form->getTense(), sizeof(TENSE));
+	file.write((char*)form->getMood(), sizeof(MOOD)); 
+	file.write((char*)form->getAspect(), sizeof(ASPECT));
+	file.write((char*)form->getVoice(), sizeof(VOICE)); 
+}
+void Database::read(STR* str) {
+
+		UINT strLength;
+		file.read((char*)&strLength, sizeof(UINT)); //lire la longueur du nom
+		char* buf = new char[strLength+1];
+		file.read(buf, sizeof(char) * strLength ); //lire la chaine de caracteres
+		buf[strLength] = '\0';
+		str->setString(buf);
+
+		delete[] buf;
+}
+void Database::read(Form* form) {
+
+		read(form->getName());
+
+		file.read((char*)form->getTense(), sizeof(TENSE));
+		file.read((char*)form->getMood(), sizeof(MOOD)); 
+		file.read((char*)form->getAspect(), sizeof(ASPECT));
+		file.read((char*)form->getVoice(), sizeof(VOICE)); 
 }

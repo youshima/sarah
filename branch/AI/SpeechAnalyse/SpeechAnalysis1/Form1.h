@@ -142,7 +142,7 @@ namespace SpeechAnalysis1 {
 			{
 				
 				Button^ button = (gcnew System::Windows::Forms::Button());
-				UINT size = 5 * elements->at(i)->getLength();
+				UINT size = 5 * *elements->at(i)->getLength();
 				if(offset + size + 25 >= 280)
 				{
 					offset = 0;
@@ -152,7 +152,7 @@ namespace SpeechAnalysis1 {
 				button->Name = L"ButtonAnalyse";
 				button->Size = System::Drawing::Size(size+25,30);
 				button->TabIndex = 1+i;
-				button->Text = gcnew String(elements->at(i)->getData());
+				button->Text = gcnew String(elements->at(i)->getString()->getString());
 				button->UseVisualStyleBackColor = true;
 				if(elements->at(i)->isSeparator())
 					button->BackColor = Color::Red;

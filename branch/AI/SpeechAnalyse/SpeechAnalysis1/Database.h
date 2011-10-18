@@ -1,5 +1,6 @@
 #pragma once
 #include "Helpers.h"
+#include "STR.h"
 
 #include <iostream> //traitement de fichiers
 #include <fstream>
@@ -13,91 +14,6 @@ enum TENSE {PAST, NON_PAST, TENSE_NONE};
 enum MOOD {INDICATIVE, SUBJUNCTIVE, IMPERATIVE, MOOD_NONE};
 enum ASPECT {SIMPLE, CONTINUOUS, PERFECT, PERFECT_CONTINUOUS, ASPECT_NONE};
 enum VOICE {ACTIVE, PASSIVE, VOICE_NONE};
-
-/*
-	structure STR :
-	contient une chaine de caracteres et sa longueur
-*/
-
-class STR
-{
-public:
-	/*
-		constructeur de STR
-		{initialise les variables}
-	*/
-	STR(const char* c = "");
-	/*
-		destructeur de STR
-		{nettoie la mémoire}
-	*/
-	~STR();
-	
-	/*
-		operateur d'affectation
-		{affecte la chaine de caracteres à l'élement}
-	*/
-	void operator=(const char* c);
-	/*
-		operateur de comparaison
-		{compare le STR avec une chaine de caracteres}
-		=> {vrai si les deux chaines ont la même taille et les mêmes caracteres}
-	*/
-	bool operator==(const char* c);
-	/*
-		operateur de comparaison
-		{compare le STR avec une chaine de caracteres}
-		=> {faux si les deux chaines ont la même taille et les mêmes caracteres}
-	*/
-	bool operator!=(const char* c);
-	/*
-		operateur d'affectation
-		{affecte la valeur d'un STR à l'élement}
-	*/
-	void operator=(STR str);
-	/*
-		operateur de comparaison
-		{compare le STR avec un autre STR}
-		=> {vrai si les deux STR ont la même taille et les mêmes caracteres}
-	*/
-	bool operator==(STR str);
-	/*
-		operateur de comparaison
-		{compare le STR avec un autre STR}
-		=> {faux si les deux STR ont la même taille et les mêmes caracteres}
-	*/
-	bool operator!=(STR str);
-	/*
-		fonction getString
-		=> {le pointeur c}
-	*/
-	char* getString() const;
-	/*
-		fonction getLength
-		=> {le pointeur de length}
-	*/
-	UINT* getLength();
-	/*
-		procedure SetString
-		{affecte la chaine de caracteres à celle de l'élement}
-	*/
-	void SetString(char* c);
-	/*
-		procedure SetLength
-		{affecte la longueur à celle de l'élement}
-	*/
-	void SetLength(UINT length);
-	/*
-		procedure PopHead
-		{enlève le premier caractere}
-	*/
-	void PopBack();
-
-private:
-	char* c;
-	UINT length;
-	
-};
 
 /*
 	classe MapWord
@@ -139,15 +55,15 @@ public:
 	*/
 	MapWord* getSynonym();
 	/*
-		procedure SetOffset
+		procedure setOffset
 		{affecte la valeur offset à this->offset}
 	*/
-	void SetOffset(UINT offset);
+	void setOffset(UINT offset);
 	/*
-		procedure SetSynonym
+		procedure setSynonym
 		{affecte la valeur de synonym au prochain synonime du mot}
 	*/
-	void SetSynonym(MapWord* synonym);
+	void setSynonym(MapWord* synonym);
 	/*
 		fonction Add [recursive]
 		{ajoute un enfant à la liste des enfants ou bien à leurs enfants suivant l'ordre alphabetique, name en minuscules}
@@ -168,6 +84,7 @@ private:
 		{c minuscule} => {retourne le pointeur sur l'enfant à la position i, 0 si i >= nombre d'enfants}
 	*/
 	MapWord* getChild(char c);
+
 private:
 	UINT offset;
 	MapWord* child[26];
@@ -228,30 +145,30 @@ public:
 	VOICE* getVoice();
 
 	/*
-		procedure SetName
+		procedure setName
 		{ attribue le nom de la forme }
 	*/
-	void SetName(STR name);
+	void setName(STR name);
 	/*
-		procedure SetTense
+		procedure setTense
 		{ attribue le tense de la forme }
 	*/
-	void SetTense(TENSE tense);
+	void setTense(TENSE tense);
 	/*
-		procedure SetMood
+		procedure setMood
 		{ attribue le mood de la forme }
 	*/
-	void SetMood(MOOD mood);
+	void setMood(MOOD mood);
 	/*
-		procedure SetAspect
+		procedure setAspect
 		{ attribue l'aspect de la forme }
 	*/
-	void SetAspect(ASPECT aspect);
+	void setAspect(ASPECT aspect);
 	/*
 		fonction getVoice
 		{ attribue le voice de la forme }
 	*/
-	void SetVoice(VOICE voice);
+	void setVoice(VOICE voice);
 private:
 	STR name;
 	TENSE tense;
@@ -293,20 +210,20 @@ public:
 	*/
 	TYPE* getType();
 	/*
-		procedure SetName
+		procedure setName
 		{affecte la valeur de name à self.name}
 	*/
-	void SetName(STR name);
+	void setName(STR name);
 	/*
-		procedure SetDef
+		procedure setDef
 		{affecte la valeur de def à self.def}
 	*/
-	void SetDef(STR def);
+	void setDef(STR def);
 	/*
-		procedure SetType
+		procedure setType
 		{affecte la valeur de type à self.type}
 	*/
-	void SetType(TYPE type);
+	void setType(TYPE type);
 
 private:
 	STR name;
@@ -347,10 +264,10 @@ public:
 	*/
 	Form* getForm(UINT i);
 	/*
-		procedure SetIrregular
+		procedure setIrregular
 		{affecte la valeur de irregular à self.irregular}
 	*/
-	void SetIrregular(bool irregular);
+	void setIrregular(bool irregular);
 	/*
 		fonction AddForm
 		{ajoute une forme à la liste des formes du verbe}
@@ -424,6 +341,27 @@ private:
 			}
 	*/
 	HRESULT MapNextWord();
+	/*
+		procedure write
+		{ecrit dans le fichier un élement de type STR}
+	*/
+	void write(STR* str);
+	/*
+		procedure write
+		{ecrit dans le fichier un élement de type Form}
+	*/
+	void write(Form* form);
+
+	/*
+		procedure write
+		{ecrit dans le fichier un élement de type STR}
+	*/
+	void read(STR* str);
+	/*
+		procedure write
+		{ecrit dans le fichier un élement de type Form}
+	*/
+	void read(Form* form);
 
 private:
 	MapWord* map[8]; //maps des offsets pour la BDD classées par type dans l'ordre de l'enuméré TYPE

@@ -3,35 +3,31 @@
 
 Element::Element(string str)
 {
-	length = str.length();
-	c = new char[length + 1];
-	strcpy_s(c,sizeof(char) * length,str.c_str());
-	c[length] = '\0';
+	this->str = str.c_str();
 }
 
 Element::Element(char str)
 {
-	length = 1;
-	c = new char[length + 1];
-	c[0] = str;
-	c[length] = '\0';
+	this->str = &str;
 }
 
 Element::~Element()
 {
-	delete[] c;
+	this->str.~STR();
 }
-DWORD Element::getLength() {
-	return length;
-}
-
-char* Element::getData() {
-	return c;
+const UINT* Element::getLength() {
+	return this->str.getLength();
 }
 
+STR* Element::getString() {
+	return &str;
+}
+void Element::setString(STR str) {
+	this->str = str;
+}
 Word::Word(std::string str) : Element(str)
 {
-
+	
 }
 Word::~Word()
 {
@@ -53,26 +49,32 @@ bool Separator::isSeparator()
 {
 	return true;
 }
-SentenceParser::SentenceParser() : str("")
+SentenceParser::SentenceParser()
 {
+	str = "";
 	elements.clear();
 }
 
 SentenceParser::~SentenceParser(void)
 {
-	str.empty();
+	str.~STR();
 }
 vector<Element*>* SentenceParser::Analyse(System::String ^ str) {
 
 	//passer le string managé en non managé
 	cursor = 0;
-	this->str.clear(); //effacer le contenu actuel de la chaine
+	this->str.empty(); //effacer le contenu actuel de la chaine
 	for(UINT i = 0; i < elements.size(); i++) //effacer les mots de l'analyse précédente
 		elements.at(i)->~Element(); 
 	elements.clear();
-
+	
+	std::string fastStr = "";
 	for(UINT i = 0; i < (UINT)str->Length; i++) //boucle simple de copie
-		this->str += str[i];
+		fastStr += str[i];
+	this->str = fastStr.c_str();
+
+	fastStr.empty();
+
 	while(readElement() != 0); //lecture de la phrase mot par mot et assemblage du vecteur de mots
 	
 
@@ -82,12 +84,12 @@ vector<Element*>* SentenceParser::Analyse(System::String ^ str) {
 UINT SentenceParser::readElement() {
 	UINT i = 0;
 	string element = "";
-	if(str.length() == 0 || cursor >= str.length()) //si la chaine est vide ou bien on a atteint la fin, retourner ""
+	if(*this->str.getLength() == 0 || cursor >= *this->str.getLength()) //si la chaine est vide ou bien on a atteint la fin, retourner ""
 		return 0;
 
-	while(!isSeparator(str[cursor]))
+	while(!isSeparator(*str[cursor]))
 	{
-		element += str[cursor];
+		element += *str[cursor];
 		cursor++;
 		i++;
 	}
@@ -96,11 +98,11 @@ UINT SentenceParser::readElement() {
 		Word* word = new Word(element);
 		elements.push_back((Element*)word);
 	}
-	if(cursor < str.length()) //si on a fini de lire, inutile de continuer
+	if(cursor < *this->str.getLength()) //si on a fini de lire, inutile de continuer
 	{
 		//ajouter le separateur à la liste d'elements
-		Separator* separator = new Separator(str[cursor]);
-		if(strcmp(separator->getData()," ") != 0 || strcmp(separator->getData(),"\r") != 0 || strcmp(separator->getData(),"\n") != 0)
+		Separator* separator = new Separator(*str[cursor]);
+		if(*separator->getString() != " " && *separator->getString() != "\r" && *separator->getString() != "\n" )
 			elements.push_back((Element*)separator);
 		//sauter le separateur
 		cursor++;
