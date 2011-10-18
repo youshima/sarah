@@ -10,8 +10,8 @@
 */
 STR::STR(const char *c) {
 	SetLength(strlen(c)); //recuperation de la taille de la chaine
-	SetString(new char[*GetLength()]);
-	strcpy_s(GetString(), *GetLength(), c); //copie de la chaine
+	SetString(new char[*getLength()]);
+	strcpy_s(getString(), *getLength(), c); //copie de la chaine
 }
 STR::~STR() {
 	delete[] c;	//suppression du tableau de pointeurs
@@ -22,11 +22,11 @@ STR::~STR() {
 void STR::operator =(const char *c) {
 	SetLength(strlen(c)); //recuperation de la taille de la chaine
 	delete[] c;
-	SetString(new char[*GetLength()]);
-	strcpy_s(GetString(), *GetLength(), c); //copie de la chaine
+	SetString(new char[*getLength()]);
+	strcpy_s(getString(), *getLength(), c); //copie de la chaine
 }
 bool STR::operator ==(const char *c) {
-	return strcmp(GetString(),c) == 0;	//comparaison des deux chaines
+	return strcmp(getString(),c) == 0;	//comparaison des deux chaines
 }
 bool STR::operator !=(const char *c) {
 	return !(*this == c);	//comparaison des deux chaines
@@ -34,26 +34,26 @@ bool STR::operator !=(const char *c) {
 void STR::operator =(STR str) {
 	SetLength(str.length); //recuperation de la taille de la chaine
 	delete[] c;
-	SetString(new char[*GetLength()]);
-	strcpy_s(GetString(), *GetLength(), str.c); //copie de la chaine
+	SetString(new char[*getLength()]);
+	strcpy_s(getString(), *getLength(), str.c); //copie de la chaine
 }
 bool STR::operator ==(STR str) {
-	return strcmp(GetString(),str.GetString()) == 0;	//comparaison des deux chaines
+	return strcmp(getString(),str.getString()) == 0;	//comparaison des deux chaines
 }
 bool STR::operator !=(STR str) {
 	return !(*this == str);	//comparaison des deux chaines
 }
-char* STR::GetString() const {
+char* STR::getString() const {
 	return this->c;
 }
-UINT* STR::GetLength() {
+UINT* STR::getLength() {
 	return &this->length;
 }
 void STR::SetString(char *c) {
 	SetLength(strlen(c)); //recuperation de la taille de la chaine
 	delete[] c;
-	this->c = new char[*GetLength()];
-	strcpy_s(c, *GetLength(), c); //copie de la chaine
+	this->c = new char[*getLength()];
+	strcpy_s(c, *getLength(), c); //copie de la chaine
 }
 void STR::SetLength(UINT length) {
 	this->length = length;//recuperation de la taille de la chaine
@@ -85,17 +85,17 @@ MapWord::~MapWord() {
 	}
 }
 bool MapWord::operator ==(MapWord* word) {
-	return ( GetOffset() == word->GetOffset());
+	return ( getOffset() == word->getOffset());
 }
 bool MapWord::operator !=(MapWord* word) {
 	return !( *this == word );
 }
 	
-UINT MapWord::GetOffset() {
+UINT MapWord::getOffset() {
 	return this->offset;
 }
 
-MapWord* MapWord::GetSynonym()
+MapWord* MapWord::getSynonym()
 {
 	return this->synonym;
 }
@@ -116,14 +116,14 @@ HRESULT MapWord::Add(MapWord* mw, STR name) {
 	if(name != "")
 	{
 		
-		if(this->GetChild(name.GetString()[0]) == 0) //si le fils n'existe pas encore
-			this->child[ name.GetString()[0] ] = new MapWord(); //en creer un
+		if(this->getChild(name.getString()[0]) == 0) //si le fils n'existe pas encore
+			this->child[ name.getString()[0] ] = new MapWord(); //en creer un
 		name.PopBack();//enlever le premier caractere 
-		return this->GetChild(name.GetString()[0])->Add(mw, name); //calculer à quelle branche continuer récursivement
+		return this->getChild(name.getString()[0])->Add(mw, name); //calculer à quelle branche continuer récursivement
 	}
 	else //on a trouvé l'emplacement
 	{
-		SetOffset(mw->GetOffset());
+		SetOffset(mw->getOffset());
 		return S_OK; //ajouté avec succès
 	}
 }
@@ -134,21 +134,21 @@ UINT MapWord::Find(STR name)
 	if(name != "")
 	{
 		
-		if(this->GetChild(name.GetString()[0]) == 0) //si le fils existe
+		if(this->getChild(name.getString()[0]) == 0) //si le fils existe
 		{
 			name.PopBack();//enlever le premier caractere
-			return this->GetChild(name.GetString()[0])->Find(name); //calculer à quelle branche continuer récursivement
+			return this->getChild(name.getString()[0])->Find(name); //calculer à quelle branche continuer récursivement
 		}
 		else
 			return 0; //n'existe pas
 	}
 	else
 	{
-		return GetOffset(); //on a trouvé l'élément
+		return getOffset(); //on a trouvé l'élément
 	}
 }
 
-MapWord* MapWord::GetChild(char c) {
+MapWord* MapWord::getChild(char c) {
 	if( c >= 'a' && c <= 'z')
 		return this->child[c - 'a'];
 	else
@@ -179,19 +179,19 @@ bool Form::operator!=(Form form) {
 	return !(*this == form) ; 
 }
 
-STR* Form::GetName() {
+STR* Form::getName() {
 	return &this->name;
 }
-TENSE* Form::GetTense() {
+TENSE* Form::getTense() {
 	return &this->tense;
 }
-MOOD* Form::GetMood() {
+MOOD* Form::getMood() {
 	return &this->mood;
 }
-ASPECT* Form::GetAspect() {
+ASPECT* Form::getAspect() {
 	return &this->aspect;
 }
-VOICE* Form::GetVoice() {
+VOICE* Form::getVoice() {
 	return &this->voice;
 }
 void Form::SetName(STR name) {
@@ -228,15 +228,15 @@ DBWORD::~DBWORD() {
 }
 	
 
-STR* DBWORD::GetName() {
+STR* DBWORD::getName() {
 	return &this->name;
 }
 	
-STR* DBWORD::GetDef() {
+STR* DBWORD::getDef() {
 	return &this->def;
 }
 	
-TYPE* DBWORD::GetType() {
+TYPE* DBWORD::getType() {
 	return &this->type;
 }
 
@@ -272,11 +272,11 @@ bool DBVERB::isIrregular() const {
 	return this->irregular;
 }
 
-UINT DBVERB::GetFormCount() const {
+UINT DBVERB::getFormCount() const {
 	return this->form.size();
 }
 
-Form* DBVERB::GetForm(UINT i) {
+Form* DBVERB::getForm(UINT i) {
 	return this->form[i];
 }
 
@@ -357,32 +357,32 @@ HRESULT Database::AddWord(DBWORD* word) {
 		file.seekg(std::ios_base::end); //se mettre à la fin du fichier
 		
 
-		file.write((char*)word->GetType(), sizeof(TYPE)); //ecrire le type
+		file.write((char*)word->getType(), sizeof(TYPE)); //ecrire le type
 
-		file.write((char*)word->GetName()->GetLength(), sizeof(UINT)); //ecrire la longueur du nom
-		file.write((char*)word->GetName()->GetString(), sizeof(char) * *word->GetName()->GetLength() ); //ecrire la chaine de caracteres
+		file.write((char*)word->getName()->getLength(), sizeof(UINT)); //ecrire la longueur du nom
+		file.write((char*)word->getName()->getString(), sizeof(char) * *word->getName()->getLength() ); //ecrire la chaine de caracteres
 		
-		file.write((char*)word->GetDef()->GetLength(), sizeof(UINT)); //ecrire la longueur de la definition
-		file.write((char*)word->GetDef()->GetString(), sizeof(char) * *word->GetDef()->GetLength() ); //ecrire la chaine de caracteres
+		file.write((char*)word->getDef()->getLength(), sizeof(UINT)); //ecrire la longueur de la definition
+		file.write((char*)word->getDef()->getString(), sizeof(char) * *word->getDef()->getLength() ); //ecrire la chaine de caracteres
 
-		if(*word->GetType() == VERB)	//tester si le mot est un verbe
+		if(*word->getType() == VERB)	//tester si le mot est un verbe
 		{
 			DBVERB* verb = (DBVERB*)word; //caster le mot en verbe
 			
 			file.write((char*)verb->isIrregular(), sizeof(bool)); //ecrire le booleen spécifiant l'irrégularité du verbe
 
-			file.write((char*)verb->GetFormCount(), sizeof(UINT));  //ecrire le nombre de formes
+			file.write((char*)verb->getFormCount(), sizeof(UINT));  //ecrire le nombre de formes
 
-			for(UINT i = 0; i < verb->GetFormCount(); i++)
+			for(UINT i = 0; i < verb->getFormCount(); i++)
 			{
 				//ecrire la forme
-				file.write((char*)verb->GetForm(i)->GetName()->GetLength(), sizeof(UINT)); 
-				file.write(verb->GetForm(i)->GetName()->GetString(), sizeof(char) * *verb->GetForm(i)->GetName()->GetLength()); 
+				file.write((char*)verb->getForm(i)->getName()->getLength(), sizeof(UINT)); 
+				file.write(verb->getForm(i)->getName()->getString(), sizeof(char) * *verb->getForm(i)->getName()->getLength()); 
 
-				file.write((char*)verb->GetForm(i)->GetTense(), sizeof(TENSE));
-				file.write((char*)verb->GetForm(i)->GetMood(), sizeof(MOOD)); 
-				file.write((char*)verb->GetForm(i)->GetAspect(), sizeof(ASPECT));
-				file.write((char*)verb->GetForm(i)->GetVoice(), sizeof(VOICE)); 
+				file.write((char*)verb->getForm(i)->getTense(), sizeof(TENSE));
+				file.write((char*)verb->getForm(i)->getMood(), sizeof(MOOD)); 
+				file.write((char*)verb->getForm(i)->getAspect(), sizeof(ASPECT));
+				file.write((char*)verb->getForm(i)->getVoice(), sizeof(VOICE)); 
 
 			}
 			verb = 0; //abandonner le pointeur
@@ -448,16 +448,16 @@ HRESULT Database::MapNextWord()
 				buf = new char[strLength];
 				file.read(buf, sizeof(char) * strLength ); //lire la chaine de caracteres
 
-				form.GetName()->SetLength(strLength);
-				form.GetName()->SetString(buf);
+				form.getName()->SetLength(strLength);
+				form.getName()->SetString(buf);
 
 				
 
 				delete[] buf;
-				file.read((char*)form.GetTense(), sizeof(TENSE));
-				file.read((char*)form.GetMood(), sizeof(MOOD)); 
-				file.read((char*)form.GetAspect(), sizeof(ASPECT));
-				file.read((char*)form.GetVoice(), sizeof(VOICE)); 
+				file.read((char*)form.getTense(), sizeof(TENSE));
+				file.read((char*)form.getMood(), sizeof(MOOD)); 
+				file.read((char*)form.getAspect(), sizeof(ASPECT));
+				file.read((char*)form.getVoice(), sizeof(VOICE)); 
 
 				
 
@@ -468,7 +468,7 @@ HRESULT Database::MapNextWord()
 				MapWord mw;
 				mw.SetOffset(offset);
 				mw.SetSynonym(0);
-				hr = map[*verb->GetType()]->Add(&mw,*verb->GetName());
+				hr = map[*verb->getType()]->Add(&mw,*verb->getName());
 				if(hr != S_OK)
 					return E_FAIL;
 			}
@@ -482,7 +482,7 @@ HRESULT Database::MapNextWord()
 			MapWord mw;
 			mw.SetOffset(offset);
 			mw.SetSynonym(0);
-			HRESULT hr = map[*word->GetType()]->Add(&mw,*word->GetName());
+			HRESULT hr = map[*word->getType()]->Add(&mw,*word->getName());
 			if(hr != S_OK)
 					return E_FAIL;
 

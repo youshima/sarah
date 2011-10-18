@@ -68,15 +68,15 @@ public:
 	*/
 	bool operator!=(STR str);
 	/*
-		fonction GetString
+		fonction getString
 		=> {le pointeur c}
 	*/
-	char* GetString() const;
+	char* getString() const;
 	/*
-		fonction GetLength
+		fonction getLength
 		=> {le pointeur de length}
 	*/
-	UINT* GetLength();
+	UINT* getLength();
 	/*
 		procedure SetString
 		{affecte la chaine de caracteres à celle de l'élement}
@@ -129,15 +129,15 @@ public:
 	*/
 	bool operator!=(MapWord* word);
 	/*
-		fonction GetOffset
+		fonction getOffset
 		=> {retourne la valeur de l'offset}
 	*/
-	UINT GetOffset();
+	UINT getOffset();
 	/*
-		fonction GetSynonym
+		fonction getSynonym
 		=> {retourne le prochain synonime du mot}
 	*/
-	MapWord* GetSynonym();
+	MapWord* getSynonym();
 	/*
 		procedure SetOffset
 		{affecte la valeur offset à this->offset}
@@ -164,10 +164,10 @@ public:
 	UINT Find(STR name);
 private:
 	/*
-		fonction GetChild
+		fonction getChild
 		{c minuscule} => {retourne le pointeur sur l'enfant à la position i, 0 si i >= nombre d'enfants}
 	*/
-	MapWord* GetChild(char c);
+	MapWord* getChild(char c);
 private:
 	UINT offset;
 	MapWord* child[26];
@@ -202,30 +202,30 @@ public:
 	*/
 	bool operator!=(Form form);
 	/*
-		fonction GetName
+		fonction getName
 		=> { pointeur sur le nom de la forme }
 	*/
-	STR* GetName();
+	STR* getName();
 	/*
-		fonction GetTense
+		fonction getTense
 		=> { pointeur sur le tense de la forme }
 	*/
-	TENSE* GetTense();
+	TENSE* getTense();
 	/*
-		fonction GetMood
+		fonction getMood
 		=> { pointeur sur le mood de la forme }
 	*/
-	MOOD* GetMood();
+	MOOD* getMood();
 	/*
-		fonction GetAspect
+		fonction getAspect
 		=> { pointeur sur l'aspect de la forme }
 	*/
-	ASPECT* GetAspect();
+	ASPECT* getAspect();
 	/*
-		fonction GetVoice
+		fonction getVoice
 		=> { pointeur sur voice de la forme }
 	*/
-	VOICE* GetVoice();
+	VOICE* getVoice();
 
 	/*
 		procedure SetName
@@ -248,7 +248,7 @@ public:
 	*/
 	void SetAspect(ASPECT aspect);
 	/*
-		fonction GetVoice
+		fonction getVoice
 		{ attribue le voice de la forme }
 	*/
 	void SetVoice(VOICE voice);
@@ -278,20 +278,20 @@ public:
 	~DBWORD();
 	
 	/*
-		fonction GetName
+		fonction getName
 		=> {le pointeur sur name}
 	*/
-	STR* GetName();
+	STR* getName();
 	/*
-		fonction GetDef
+		fonction getDef
 		=> {le pointeur sur def}
 	*/
-	STR* GetDef();
+	STR* getDef();
 	/*
-		fonction GetType
+		fonction getType
 		=> {le pointeur sur type}
 	*/
-	TYPE* GetType();
+	TYPE* getType();
 	/*
 		procedure SetName
 		{affecte la valeur de name à self.name}
@@ -337,15 +337,15 @@ public:
 	*/
 	bool isIrregular() const;
 	/*
-		fonction GetFormCount
+		fonction getFormCount
 		=> {nombre de formes}
 	*/
-	UINT GetFormCount() const;
+	UINT getFormCount() const;
 	/*
-		fonction GetForm
+		fonction getForm
 		=> {le pointeur sur la forme à la position i}
 	*/
-	Form* GetForm(UINT i);
+	Form* getForm(UINT i);
 	/*
 		procedure SetIrregular
 		{affecte la valeur de irregular à self.irregular}

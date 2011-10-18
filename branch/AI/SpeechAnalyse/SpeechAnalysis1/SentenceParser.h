@@ -4,32 +4,69 @@
 
 using namespace std;
 /*
-	Element
-	classe representant un mot
+	classe Element
+	represente un mot ou un separateur
 
 */
 class Element
 {
 public:
+	/*
+		Constructeur de Element
+		{initialise les variables par défaut ou selon l'utilisateur}
+	*/
 	Element(string str = "");
+	/*
+		Constructeur de Element
+		{initialise les variables par défaut ou selon l'utilisateur}
+	*/
 	Element(char str);
+	/*
+		Destructeur de Element
+		{nettoie la mémoire}
+	*/
 	~Element();
-
+	/*
+		fonction getLength
+		=> { la taille de l'élément }
+	*/
 	DWORD getLength();
+	/*
+		fonction getData
+		=> { pointeur sur le premier caractere de l'élément }
+	*/
 	char* getData();
-
+	/*
+		fonction isSeparator (virtuelle)
+		=> { vrai si l'élément est un séparateur }
+	*/
 	virtual bool isSeparator() = 0;
 private:
 	DWORD length;
 	char* c;
 };
+/*
+	classe Word
+	represente un mot
 
+*/
 class Word : public Element
 {
 public:
+	/*
+		Constructeur de Word
+		{initialise les variables par défaut ou selon l'utilisateur}
+	*/
 	Word(string str = "");
+	/*
+		Destructeur de Word
+		{nettoie la mémoire}
+	*/
 	~Word();
-
+	/*
+		fonction isSeparator
+		=> { faux }
+	*/
 	bool isSeparator();
 
 };
@@ -37,28 +74,67 @@ public:
 class Separator : public Element
 {
 public:
+	/*
+		Constructeur de Separator
+		{initialise les variables par défaut ou selon l'utilisateur}
+	*/
 	Separator(char str = '.');
+		/*
+		Destructeur de Separator
+		{nettoie la mémoire}
+	*/
 	~Separator();
+	/*
+		fonction isSeparator
+		=> { vrai }
+	*/
 	bool isSeparator();
 };
 /*
-	SentenceParser
-	classe se chargeant décortiquer un texte pour le transformer en une liste d'objets de type Element
+	classe SentenceParser
+	Se charge décortiquer un texte pour le transformer en une liste d'objets de type Element
 
 */
 class SentenceParser
 {
 public:
-	SentenceParser(); //initialise un SentenceParser
+	/*
+		constructeur de SentenceParser
+	*/
+	SentenceParser();
+	/*
+		destructeur de SentenceParser
+	*/
 	virtual ~SentenceParser();
+	/*
+		fonction Analyse
+		{ une chaine de caracteres } => { liste d'Elements }
+	*/
 	vector<Element*>* Analyse(System::String^ str); //permet d'analyser une phrase et la transformer en suite de Element
 
 
 private:
-	UINT readElement(); //retourne le mot suivant dans 'str', "" si plus de mots à lire
+	/*
+		fonction readElement
+		=> { le mot suivant dans 'str', "" si plus de mots à lire }
+	*/
+	UINT readElement();
+	/*
+		fonction isAlpha
+		=> { vrai si le caractere est alphabetique }
+	*/
 	bool isAlpha(char c); //retourne vrai si le caractere est un alphabetique
-	bool isNumerical(char c); //retourne vrai si le caractere est un nombre
-	bool isSeparator(char c); //retourne vrai si le caractere est un separateur (non alpha et non numerique)
+	/*
+		fonction isNumeric
+		=> { vrai si le caractere est numerique }
+	*/
+	bool isNumeric(char c); //retourne vrai si le caractere est un nombre
+	/*
+		fonction isSeparator
+		=> { vrai si le caractere est un séparatuer (non alpha et non numerique) }
+	*/
+	bool isSeparator(char c);
+
 	DWORD cursor;
 	string str;
 	vector<Element*> elements;
