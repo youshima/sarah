@@ -154,7 +154,61 @@ MapWord* MapWord::GetChild(char c) {
 	else
 		return 0;
 }
+/*
+	
+		CLASS Form
 
+*/
+Form::Form(STR name, TENSE tense, MOOD mood, ASPECT aspect, VOICE voice) {
+	SetName(name);
+	SetTense(tense);
+	SetMood(mood);
+	SetAspect(aspect);
+	SetVoice(voice);
+}
+
+Form::~Form() {
+	this->name.~STR();
+}
+
+bool Form::operator==(Form form) {
+	return ( this->name == form.name && this->mood == form.mood && this->aspect == form.aspect && this->tense == form.tense && this->voice == form.voice ); 
+}
+
+bool Form::operator!=(Form form) {
+	return !(*this == form) ; 
+}
+
+STR* Form::GetName() {
+	return &this->name;
+}
+TENSE* Form::GetTense() {
+	return &this->tense;
+}
+MOOD* Form::GetMood() {
+	return &this->mood;
+}
+ASPECT* Form::GetAspect() {
+	return &this->aspect;
+}
+VOICE* Form::GetVoice() {
+	return &this->voice;
+}
+void Form::SetName(STR name) {
+	this->name = name;
+}
+void Form::SetTense(TENSE tense) {
+	this->tense = tense;
+}
+void Form::SetMood(MOOD mood) {
+	this->mood = mood;
+}
+void Form::SetAspect(ASPECT aspect) {
+	this->aspect = aspect;
+}
+void Form::SetVoice(VOICE voice) {
+	this->voice = voice;
+}
 /*
 
 		CLASS DBWORD
@@ -165,7 +219,7 @@ MapWord* MapWord::GetChild(char c) {
 DBWORD::DBWORD(STR name) {
 	SetName(name);
 	SetDef("");
-	SetType(NONE_TYPE);
+	SetType(TYPE_NONE);
 }
 
 DBWORD::~DBWORD() {
@@ -222,28 +276,28 @@ UINT DBVERB::GetFormCount() const {
 	return this->form.size();
 }
 
-FORM* DBVERB::GetForm(UINT i) {
-	return &this->form[i];
+Form* DBVERB::GetForm(UINT i) {
+	return this->form[i];
 }
 
 void DBVERB::SetIrregular(bool irregular) {
 	this->irregular = irregular;
 }
 
-HRESULT DBVERB::AddForm(FORM form) {
+HRESULT DBVERB::AddForm(Form form) {
 	for(UINT i = 0; i < this->form.size(); i++)
 	{
-		if(this->form[i] == form)
+		if(*this->form[i] == form)
 			return E_FAIL; //la forme existe dejà dans la liste
 	}
-	this->form.push_back(form);
+	this->form.push_back(&form);
 
 	return S_OK; //forme ajoutée avec succès
 }
 
-HRESULT DBVERB::RemoveForm(FORM form) {
+HRESULT DBVERB::RemoveForm(Form form) {
 	UINT i = 0;
-	while(i < this->form.size() && this->form[i] != form); //boucler tant qu'on ne trouve pas la forme
+	while(i < this->form.size() && *this->form[i] != form); //boucler tant qu'on ne trouve pas la forme
 
 	if( i == this->form.size() ) //as t-on trouvé la forme?
 		return E_FAIL; //non
@@ -322,13 +376,13 @@ HRESULT Database::AddWord(DBWORD* word) {
 			for(UINT i = 0; i < verb->GetFormCount(); i++)
 			{
 				//ecrire la forme
-				file.write((char*)verb->GetForm(i)->name.GetLength(), sizeof(UINT)); 
-				file.write(verb->GetForm(i)->name.GetString(), sizeof(char) * *verb->GetForm(i)->name.GetLength()); 
+				file.write((char*)verb->GetForm(i)->GetName()->GetLength(), sizeof(UINT)); 
+				file.write(verb->GetForm(i)->GetName()->GetString(), sizeof(char) * *verb->GetForm(i)->GetName()->GetLength()); 
 
-				file.write((char*)&verb->GetForm(i)->tense, sizeof(TENSE));
-				file.write((char*)&verb->GetForm(i)->mood, sizeof(MOOD)); 
-				file.write((char*)&verb->GetForm(i)->aspect, sizeof(ASPECT));
-				file.write((char*)&verb->GetForm(i)->voice, sizeof(VOICE)); 
+				file.write((char*)verb->GetForm(i)->GetTense(), sizeof(TENSE));
+				file.write((char*)verb->GetForm(i)->GetMood(), sizeof(MOOD)); 
+				file.write((char*)verb->GetForm(i)->GetAspect(), sizeof(ASPECT));
+				file.write((char*)verb->GetForm(i)->GetVoice(), sizeof(VOICE)); 
 
 			}
 			verb = 0; //abandonner le pointeur
@@ -388,22 +442,22 @@ HRESULT Database::MapNextWord()
 
 			for(UINT i = 0; i < formCount; i++)
 			{
-				FORM form;
+				Form form;
 				//lire la forme
 				file.read((char*)&strLength, sizeof(UINT)); //lire la longueur de la definition
 				buf = new char[strLength];
 				file.read(buf, sizeof(char) * strLength ); //lire la chaine de caracteres
 
-				form.name.SetLength(strLength);
-				form.name.SetString(buf);
+				form.GetName()->SetLength(strLength);
+				form.GetName()->SetString(buf);
 
 				
 
 				delete[] buf;
-				file.read((char*)&form.tense, sizeof(TENSE));
-				file.read((char*)&form.mood, sizeof(MOOD)); 
-				file.read((char*)&form.aspect, sizeof(ASPECT));
-				file.read((char*)&form.voice, sizeof(VOICE)); 
+				file.read((char*)form.GetTense(), sizeof(TENSE));
+				file.read((char*)form.GetMood(), sizeof(MOOD)); 
+				file.read((char*)form.GetAspect(), sizeof(ASPECT));
+				file.read((char*)form.GetVoice(), sizeof(VOICE)); 
 
 				
 

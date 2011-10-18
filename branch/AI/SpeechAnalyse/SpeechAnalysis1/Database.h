@@ -8,11 +8,11 @@
 
 #define FILENAME "database.data"
 
-enum TYPE {VERB, NOUN, ADJECTIVE, ADVERB, PRONOUN, PREPOSITION, FORMUNCTION, INTERJECTION, NONE_TYPE};
-enum TENSE {PAST, NON_PAST, NONE_TENSE};
-enum MOOD {INDICATIVE, SUBJUNCTIVE, IMPERATIVE, NONE_MOOD};
-enum ASPECT {SIMPLE, CONTINUOUS, PERFECT, PERFECT_CONTINUOUS, NONE_ASPECT};
-enum VOICE {ACTIVE, PASSIVE, NONE_VOICE};
+enum TYPE {VERB, NOUN, ADJECTIVE, ADVERB, PRONOUN, PREPOSITION, FormUNCTION, INTERJECTION, TYPE_NONE};
+enum TENSE {PAST, NON_PAST, TENSE_NONE};
+enum MOOD {INDICATIVE, SUBJUNCTIVE, IMPERATIVE, MOOD_NONE};
+enum ASPECT {SIMPLE, CONTINUOUS, PERFECT, PERFECT_CONTINUOUS, ASPECT_NONE};
+enum VOICE {ACTIVE, PASSIVE, VOICE_NONE};
 
 /*
 	structure STR :
@@ -175,28 +175,90 @@ private:
 };
 
 /*
-	structure FORM :
+	class Form :
 	definit une formes pour un verbe
 */
-typedef struct FORM
+class Form
 {
+public:
+	/*
+		constructeur de Form
+		{initialise les variables par défaut ou selon l'utilisateur}
+	*/
+	Form(STR name = "", TENSE tense = TENSE_NONE, MOOD mood = MOOD_NONE, ASPECT aspect = ASPECT_NONE, VOICE voice = VOICE_NONE);
+	/*
+		destructeur de Form
+		{nettoie la mémoire}
+	*/
+	~Form();
+	/*
+		operateur de comparaison entre deux Form
+		=> { vrai si tous les parametres des élements sont égaux }
+	*/
+	bool operator==(Form form);
+	/*
+		operateur de comparaison entre deux Form
+		=> { faux si tous les parametres des élements sont égaux }
+	*/
+	bool operator!=(Form form);
+	/*
+		fonction GetName
+		=> { pointeur sur le nom de la forme }
+	*/
+	STR* GetName();
+	/*
+		fonction GetTense
+		=> { pointeur sur le tense de la forme }
+	*/
+	TENSE* GetTense();
+	/*
+		fonction GetMood
+		=> { pointeur sur le mood de la forme }
+	*/
+	MOOD* GetMood();
+	/*
+		fonction GetAspect
+		=> { pointeur sur l'aspect de la forme }
+	*/
+	ASPECT* GetAspect();
+	/*
+		fonction GetVoice
+		=> { pointeur sur voice de la forme }
+	*/
+	VOICE* GetVoice();
+
+	/*
+		procedure SetName
+		{ attribue le nom de la forme }
+	*/
+	void SetName(STR name);
+	/*
+		procedure SetTense
+		{ attribue le tense de la forme }
+	*/
+	void SetTense(TENSE tense);
+	/*
+		procedure SetMood
+		{ attribue le mood de la forme }
+	*/
+	void SetMood(MOOD mood);
+	/*
+		procedure SetAspect
+		{ attribue l'aspect de la forme }
+	*/
+	void SetAspect(ASPECT aspect);
+	/*
+		fonction GetVoice
+		{ attribue le voice de la forme }
+	*/
+	void SetVoice(VOICE voice);
+private:
 	STR name;
 	TENSE tense;
 	MOOD mood;
 	ASPECT aspect;
 	VOICE voice;
-	/*
-		operateur de comparaison entre deux FORM
-		=> { vrai si tous les parametres des élements sont égaux }
-	*/
-	bool operator==(FORM form) {return ( this->name == form.name && this->mood == form.mood && this->aspect == form.aspect && this->tense == form.tense && this->voice == form.voice ); };
-	/*
-		operateur de comparaison entre deux FORM
-		=> { faux si tous les parametres des élements sont égaux }
-	*/
-	bool operator!=(FORM form) {return !(*this == form) ; };
-
-} FORM;
+};
 /*
 	classe DBWORD :
 	spécifie le contenu d'un mot stoqué dans la BDD
@@ -283,7 +345,7 @@ public:
 		fonction GetForm
 		=> {le pointeur sur la forme à la position i}
 	*/
-	FORM* GetForm(UINT i);
+	Form* GetForm(UINT i);
 	/*
 		procedure SetIrregular
 		{affecte la valeur de irregular à self.irregular}
@@ -297,7 +359,7 @@ public:
 			E_FAIL si la forme existe dejà dans la liste
 		}
 	*/
-	HRESULT AddForm(FORM form);
+	HRESULT AddForm(Form form);
 	/*
 		fonction RemoveForm
 		{trouve et enleve une forme de la liste des formes du verbe}
@@ -306,10 +368,11 @@ public:
 			E_FAIL si la forme n'a pas été trouvée
 		}
 	*/
-	HRESULT RemoveForm(FORM form);
+	HRESULT RemoveForm(Form form);
 
 private:
-	LIST(FORM) form;
+	//LIST(Form*) form;
+	std::vector<Form*> form;
 	bool irregular;
 };
 
