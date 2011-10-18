@@ -1,5 +1,5 @@
 #pragma once
-
+#include <winsock2.h> //reseau
 #include <string>
 #include <vector>
 
