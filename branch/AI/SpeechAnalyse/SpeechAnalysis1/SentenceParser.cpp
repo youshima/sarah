@@ -112,10 +112,10 @@ UINT SentenceParser::readElement() {
 bool SentenceParser::isAlpha(char c) {
 	return ( ('A' <= c && c <= 'Z') || ('a' <= c && c <= 'z') );
 }
-bool SentenceParser::isNumerical(char c) {
+bool SentenceParser::isNumeric(char c) {
 	return ( ('1' <= c && c <= '9') );
 }
 bool SentenceParser::isSeparator(char c) {
-	return (!isAlpha(c) && !isNumerical(c));
+	return (!isAlpha(c) && !isNumeric(c));
 }
 
