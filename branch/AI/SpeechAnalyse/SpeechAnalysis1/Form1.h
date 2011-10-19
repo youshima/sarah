@@ -127,7 +127,7 @@ namespace SpeechAnalysis1 {
 			// 
 			// textEntry
 			// 
-			this->textEntry->ForeColor = System::Drawing::SystemColors::Info;
+			this->textEntry->ForeColor = System::Drawing::Color::Black;
 			this->textEntry->Location = System::Drawing::Point(12, 404);
 			this->textEntry->MaxLength = 200;
 			this->textEntry->Name = L"textEntry";
