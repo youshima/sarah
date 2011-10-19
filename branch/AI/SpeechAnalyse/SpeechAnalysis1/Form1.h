@@ -2,6 +2,8 @@
 
 #include "SentenceParser.h"
 
+#include "WindowRule.h"
+
 using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections;
@@ -170,19 +172,20 @@ namespace SpeechAnalysis1 {
 			this->ruleToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->addToolStripMenuItem1, 
 				this->removeToolStripMenuItem});
 			this->ruleToolStripMenuItem->Name = L"ruleToolStripMenuItem";
-			this->ruleToolStripMenuItem->Size = System::Drawing::Size(101, 22);
+			this->ruleToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->ruleToolStripMenuItem->Text = L"New";
 			// 
 			// addToolStripMenuItem1
 			// 
 			this->addToolStripMenuItem1->Name = L"addToolStripMenuItem1";
-			this->addToolStripMenuItem1->Size = System::Drawing::Size(110, 22);
+			this->addToolStripMenuItem1->Size = System::Drawing::Size(152, 22);
 			this->addToolStripMenuItem1->Text = L"Rule";
+			this->addToolStripMenuItem1->Click += gcnew System::EventHandler(this, &Form1::addToolStripMenuItem1_Click);
 			// 
 			// removeToolStripMenuItem
 			// 
 			this->removeToolStripMenuItem->Name = L"removeToolStripMenuItem";
-			this->removeToolStripMenuItem->Size = System::Drawing::Size(110, 22);
+			this->removeToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->removeToolStripMenuItem->Text = L"Script";
 			// 
 			// viewToolStripMenuItem
@@ -396,13 +399,13 @@ private: System::Void textEntry_PreviewKeyDown(System::Object^  sender, System::
 
 private: System::Void dialogTreeToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 
-			 this->dialogTree->Visible = !this->dialogTree->Visible;
+			 this->dialogTree->Visible = !this->dialogTree->Visible; //toogle la visibilité
 			 ToolStripMenuItem^ item = (ToolStripMenuItem^)sender;
 			 item->Checked = this->dialogTree->Visible;
 			 RefreshElements();
 		 }
 private: System::Void rulesToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-			 this->rules->Visible = !this->rules->Visible;
+			 this->rules->Visible = !this->rules->Visible; //toogle la visibilité
 			 ToolStripMenuItem^ item = (ToolStripMenuItem^)sender;
 			 item->Checked = this->rules->Visible;
 			 RefreshElements();
@@ -413,6 +416,11 @@ private: System::Void wordsToolStripMenuItem_Click(System::Object^  sender, Syst
 			 ToolStripMenuItem^ item = (ToolStripMenuItem^)sender;
 			 item->Checked = this->ElementContainer->Visible;
 			 this->RefreshElements();
+		 }
+private: System::Void addToolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
+			 Form^ ruleForm = gcnew WindowRule();
+			 ruleForm->Show();
+			 ruleForm->~Form();
 		 }
 };
 }
