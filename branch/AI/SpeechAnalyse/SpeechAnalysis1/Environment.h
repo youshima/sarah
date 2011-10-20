@@ -3,6 +3,7 @@
 #include "Helpers.h"
 #include "STR.h"
 #include "VAR.h"
+#include "File.h"
 
 #define FILENAME "environment.data"
 
