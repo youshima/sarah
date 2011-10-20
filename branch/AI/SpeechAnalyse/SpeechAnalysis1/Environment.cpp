@@ -1,115 +1,57 @@
-#include "StdAfx.h"
-#include "Environment.h"
 
 /*
-	CLASS VALUE
+
+	CLASS ENVIRONMENT
 */
-Value::Value(VAR_TYPE type) {
-	switch(this->type)
+Environment::Environment() {
+	file.open(FILENAME,std::ios_base::binary | std::ios_base::in | std::ios_base::out); //juste ouvrir le fichier normalement
+	if(file.is_open())
 	{
-		case INTEGER :
-			buffer = (char*)malloc(sizeof(int));
-			break;
-		case REAL :
-			buffer = (char*)malloc(sizeof(float));
-			break;
-		case STRING :
-			buffer = 0;
-			break;
-		case VARCHAR :
-			buffer = (char*)malloc(sizeof(char));
-			break;
+		if(!file.eof()) //tester si le fichier est vide
+		{
+			
+		}
+		file.close();
 	}
 }
-
-Value::~Value() {
-	free((void*)buffer);
+~Environment::Environment() {
+	Save();
+	for(UINT i = 0; i < this->Vars.size() ; i++)
+		Vars[i].~VAR();
 }
 
-VAR_TYPE Value::getType() {
-	return this->type;
+HRESULT Environment::Save() {
+
 }
 
-char* Value::getValue() {
-	return this->buffer;
+HRESULT Environment::AddVar(VAR var) {
+
 }
 
-void Value::setValue(char* value) {
-	switch(this->type)
-	{
-		case INTEGER :
-			memcpy((void*)buffer,value,sizeof(int));
-			break;
-		case REAL :
-			memcpy((void*)buffer,value,sizeof(float));
-			break;
-		case STRING :
-			free((char*)buffer);
-			buffer = (char*)malloc(sizeof(char) * strlen(value));
-			memcpy((void*)buffer,value,strlen(value));
-			break;
-		case VARCHAR :
-			memcpy((void*)buffer,value,sizeof(char));
-			break;
-	}
-}
-bool Value::operator ==(Value value) {
-	switch(this->type)
-	{
-		case INTEGER :
-			return ( this->getType() == value.getType() && memcmp(this->getValue(),value.getValue(), sizeof(int)) == 0 );
-			break;
-		case REAL :
-			return ( this->getType() == value.getType() && memcmp(this->getValue(),value.getValue(), sizeof(float)) == 0 );
-			break;
-		case STRING :
-			return ( this->getType() == value.getType() && memcmp(this->getValue(),value.getValue(), sizeof(strlen(this->buffer))) == 0 );
-			break;
-		case VARCHAR :
-			return ( this->getType() == value.getType() && memcmp(this->getValue(),value.getValue(), sizeof(char)) == 0 );
-			break;
-	}
-	
-}
-bool Value::operator !=(Value value) {
-	return !(*this == value);
-}
-/*
-	CLASS VAR
-*/
-VAR::VAR(STR name) : name(name) {
-	this->value = 0;
+HRESULT Environment::RemoveVar(STR name) {
+
 }
 
-VAR::~VAR() {
-	if(value)
-		value->~Value();
+HRESULT Environment::RemoveVar(UINT index) {
+
 }
 
-STR* VAR::getName() {
-	return &this->name;
+UINT Environment::FindVarIndex(STR name) {
+
 }
 
-Value* VAR::getValue() {
-	return value;
+VAR* Environment::getVar(UINT index) {
+
 }
 
-void VAR::setName( STR name ) {
-	this->name = name;
+VAR* Environment::getVar(STR name) {
+
 }
 
-void VAR::setValue( Value val ) {
-	this->value = new Value(val.getType());
-	this->value->setValue(val.getValue());
+HRESULT Environment::setVar(STR name, Value value) {
+
 }
 
-void VAR::operator=( Value val ) {
-	this->setValue(val);
-}
+HRESULT Environment::setVar(UINT index, Value value) {
 
-bool VAR::operator==( VAR val ) {
-	return ( *this->getValue() == *val.getValue());
-}
-bool VAR::operator!=( VAR val ) {
-	return !( *this == val );
 }

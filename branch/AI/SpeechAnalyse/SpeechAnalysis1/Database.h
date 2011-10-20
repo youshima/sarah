@@ -92,91 +92,6 @@ private:
 };
 
 /*
-	class Form :
-	definit une formes pour un verbe
-*/
-class Form
-{
-public:
-	/*
-		constructeur de Form
-		{initialise les variables par défaut ou selon l'utilisateur}
-	*/
-	Form(STR name = "", TENSE tense = TENSE_NONE, MOOD mood = MOOD_NONE, ASPECT aspect = ASPECT_NONE, VOICE voice = VOICE_NONE);
-	/*
-		destructeur de Form
-		{nettoie la mémoire}
-	*/
-	~Form();
-	/*
-		operateur de comparaison entre deux Form
-		=> { vrai si tous les parametres des élements sont égaux }
-	*/
-	bool operator==(Form form);
-	/*
-		operateur de comparaison entre deux Form
-		=> { faux si tous les parametres des élements sont égaux }
-	*/
-	bool operator!=(Form form);
-	/*
-		fonction getName
-		=> { pointeur sur le nom de la forme }
-	*/
-	STR* getName();
-	/*
-		fonction getTense
-		=> { pointeur sur le tense de la forme }
-	*/
-	TENSE* getTense();
-	/*
-		fonction getMood
-		=> { pointeur sur le mood de la forme }
-	*/
-	MOOD* getMood();
-	/*
-		fonction getAspect
-		=> { pointeur sur l'aspect de la forme }
-	*/
-	ASPECT* getAspect();
-	/*
-		fonction getVoice
-		=> { pointeur sur voice de la forme }
-	*/
-	VOICE* getVoice();
-
-	/*
-		procedure setName
-		{ attribue le nom de la forme }
-	*/
-	void setName(STR name);
-	/*
-		procedure setTense
-		{ attribue le tense de la forme }
-	*/
-	void setTense(TENSE tense);
-	/*
-		procedure setMood
-		{ attribue le mood de la forme }
-	*/
-	void setMood(MOOD mood);
-	/*
-		procedure setAspect
-		{ attribue l'aspect de la forme }
-	*/
-	void setAspect(ASPECT aspect);
-	/*
-		fonction getVoice
-		{ attribue le voice de la forme }
-	*/
-	void setVoice(VOICE voice);
-private:
-	STR name;
-	TENSE tense;
-	MOOD mood;
-	ASPECT aspect;
-	VOICE voice;
-};
-/*
 	classe DBWORD :
 	spécifie le contenu d'un mot stocké dans la BDD
 */
@@ -353,13 +268,13 @@ private:
 	void write(Form* form);
 
 	/*
-		procedure write
-		{ecrit dans le fichier un élement de type STR}
+		procedure read
+		{lit dans le fichier un élement de type STR}
 	*/
 	void read(STR* str);
 	/*
-		procedure write
-		{ecrit dans le fichier un élement de type Form}
+		procedure read
+		{litdans le fichier un élement de type Form}
 	*/
 	void read(Form* form);
 

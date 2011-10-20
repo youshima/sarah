@@ -2,116 +2,10 @@
 
 #include "Helpers.h"
 #include "STR.h"
+#include "VAR.h"
 
-enum VAR_TYPE { INTEGER, STRING, VARCHAR, REAL };
-/*
-	classe Value
-	represente une valeur de type quelconque
-*/
-class Value
-{
-public:
-	/*
-		constructeur de Value
-		{initialise les variables par défaut ou selon l'utilisateur}
-	*/
-	Value(VAR_TYPE type);
-	/*
-		destructeur de Value
-		{nettoie la mémoire}
-	*/
-	~Value();
-	/*
-		fonction getType
-		=> { type de la variable }
-	*/
-	VAR_TYPE getType();
+#define FILENAME "environment.data"
 
-	/*
-		fonction getValue
-		=> { pointeur sur le buffer de la valeur }
-	*/
-	char* getValue();
-	/*
-		procedure setValue
-		{attribue la valeur au buffer de variable}
-	*/
-	void setValue(char* value);
-	/*
-		operateur ==
-		{ vrai si les Value ont le même type et meme valeur }
-	*/
-	bool operator==(Value value);
-	/*
-		operateur !=
-		{ faux si les Value ont le même type et meme valeur }
-	*/
-	bool operator!=(Value value);
-private:
-	char* buffer;
-	VAR_TYPE type;
-};
-
-/*
-	classe VAR
-	represente une variable d'environnement
-*/
-class VAR
-{
-public:
-	/*
-		constructeur de VAR
-		{initialise les variables par défaut ou selon l'utilisateur}
-	*/
-	VAR(STR name = "");
-	/*
-		destructeur de VAR
-		{nettoie la mémoire}
-	*/
-	~VAR();
-	
-	/*
-		fonction getName
-		=> { pointeur sur le nom de la variable }
-	*/
-	STR* getName();
-	/*
-		fonction getValue
-		=> { pointeur sur la valeur de la variable }
-	*/
-	Value* getValue();
-	/*
-		procedure setName
-		{ attribue la valeur de nom à this->nom }
-	*/
-	void setName( STR name );
-	/*
-		procedure setValue
-		{ attribue la valeur de value à this->val }
-	*/
-	void setValue( Value val );
-	/*
-		operateur =
-		{ affectation de value }
-	*/
-	void operator=( Value val );
-	/*
-		operateur ==
-		=> { vrai si les deux variables sont égales (meme Value) }
-	*/
-	bool operator==( VAR val );
-	/*
-		operateur !=
-		=> { faux si les deux variables sont égales (meme Value) }
-	*/
-	bool operator!=( VAR val );
-
-
-private:
-	STR name; //nom effectif de la variable
-	Value* value; //valeur de la variable
-
-};
 /*
 	classe Environment
 	represente l'ensemble de l'environnement IA
@@ -129,6 +23,15 @@ public:
 		{nettoie la mémoire}
 	*/
 	~Environment();
+private:
+	/*
+		fonction Save
+		{enregistre l'environnement dans un fichier}
+		=> { 
+			 S_OK si l'opération a réussi
+			 E_FAIL si le fichier n'a pas pu être créé }
+	*/
+	HRESULT Save();
 	/*
 		fonction AddVar
 		{ ajoute une variable d'environnement } 
@@ -185,6 +88,8 @@ public:
 	*/
 	HRESULT setVar(UINT index, Value value);
 
+
 private:
 	std::vector<VAR> Vars; //liste des variables d'environnement
+	File* file; //fichier de sauvegarde
 };
