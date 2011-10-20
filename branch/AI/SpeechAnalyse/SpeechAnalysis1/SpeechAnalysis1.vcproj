@@ -209,6 +209,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\File.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Rule.cpp"
 				>
 			</File>
@@ -256,6 +260,10 @@
 			</File>
 			<File
 				RelativePath=".\Environment.h"
+				>
+			</File>
+			<File
+				RelativePath=".\File.h"
 				>
 			</File>
 			<File
