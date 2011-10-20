@@ -60,7 +60,7 @@ public:
 		fonction write
 		{ecrit dans le fichier un élement de type STR}
 	*/
-	HRESULT write(const STR& str);
+	HRESULT write(STR& str);
 	/*
 		fonction read
 		{lit dans le fichier un élement de type STR}
@@ -76,7 +76,7 @@ public:
 			S_OK si l'opération c'est effectuée correctement,
 			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	HRESULT write(const VAR& var);
+	HRESULT write(VAR& var);
 	/*
 		fonction read
 		{lit dans le fichier un élement de type VAR}

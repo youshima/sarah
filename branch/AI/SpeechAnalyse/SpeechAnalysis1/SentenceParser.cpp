@@ -70,7 +70,7 @@ vector<Element*>* SentenceParser::Analyse(System::String ^ str) {
 	
 	std::string fastStr = "";
 	for(UINT i = 0; i < (UINT)str->Length; i++) //boucle simple de copie
-		fastStr += str[i];
+		fastStr += (char)str[i];
 	this->str = fastStr.c_str();
 
 	fastStr.empty();
