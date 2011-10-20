@@ -65,7 +65,7 @@ char* STR::operator []( UINT index)
 char* STR::getString() const {
 	return this->c;
 }
-const UINT* STR::getLength() {
+UINT* STR::getLength() const {
 	return &this->length;
 }
 void STR::setString(char *c) {

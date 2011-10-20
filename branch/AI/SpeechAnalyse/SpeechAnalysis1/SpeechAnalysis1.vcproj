@@ -201,6 +201,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\Browser.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Database.cpp"
 				>
 			</File>
@@ -210,6 +214,10 @@
 			</File>
 			<File
 				RelativePath=".\File.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Form.cpp"
 				>
 			</File>
 			<File
@@ -248,12 +256,20 @@
 				RelativePath=".\STR.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\VAR.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Fichiers d&apos;en-tête"
 			Filter="h;hpp;hxx;hm;inl;inc;xsd"
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
+			<File
+				RelativePath=".\Browser.h"
+				>
+			</File>
 			<File
 				RelativePath=".\Database.h"
 				>
@@ -264,6 +280,10 @@
 			</File>
 			<File
 				RelativePath=".\File.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Form.h"
 				>
 			</File>
 			<File
@@ -294,6 +314,10 @@
 			</File>
 			<File
 				RelativePath=".\STR.h"
+				>
+			</File>
+			<File
+				RelativePath=".\VAR.h"
 				>
 			</File>
 			<File

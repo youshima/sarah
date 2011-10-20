@@ -1,5 +1,7 @@
 #pragma once
 
+#include <fstream>
+
 #include "Helpers.h"
 #include "VAR.h"
 #include "STR.h"
@@ -12,7 +14,7 @@ public:
 		constructeur de File
 		{ ouvre le fichier }
 	*/
-	File(STR filename, bool* exists);
+	File(STR filename, bool& exists);
 	/*
 		destructeur de File
 		{ ferme le fichier }
@@ -22,42 +24,42 @@ public:
 		procedure write
 		{ecrit dans le fichier un élement de type STR}
 	*/
-	void write(STR* str);
+	void write(const STR& str);
 	/*
 		procedure read
 		{lit dans le fichier un élement de type STR}
 	*/
-	void read(STR* str);
+	void read(STR& str);
 	/*
 		procedure write
 		{ecrit dans le fichier un élement de type VAR}
 	*/
-	void write(VAR* var);
+	void write(const VAR& var);
 	/*
 		procedure read
 		{lit dans le fichier un élement de type VAR}
 	*/
-	void read(VAR* var);
+	void read(VAR& var);
 	/*
 		procedure write
 		{ecrit dans le fichier un élement de type Form}
 	*/
-	void write(Form* form);
+	void write(const Form& form);
 	/*
 		procedure read
 		{lit dans le fichier un élement de type Form}
 	*/
-	void read(Form* form);
+	void read(Form& form);
 	/*
 		procedure write
 		{ecrit dans le fichier un élement de type int}
 	*/
-	void write(int* integer);
+	void write(const int& integer);
 	/*
 		procedure read
 		{lit dans le fichier un élement de type int}
 	*/
-	void read(int* integer);
+	void read(int& integer);
 private:
 	std::fstream file;
 	STR filename;

@@ -1,10 +1,6 @@
 #pragma once
-#pragma once
-
 #include "Helpers.h"
 #include "STR.h"
-
-#define FILENAME "environment.data"
 
 enum VAR_TYPE { INTEGER, STRING, VARCHAR, REAL };
 /*
