@@ -12,54 +12,153 @@ class File
 public:
 	/*
 		constructeur de File
-		{ ouvre le fichier }
+		{ initialise les variables par défaut }
 	*/
-	File(STR filename, bool& exists);
+	File();
 	/*
 		destructeur de File
-		{ ferme le fichier }
+		{ ferme le fichier s'il était ouvert }
 	*/
 	~File();
 	/*
-		procedure write
+		fonction open
+		{}
+		=> {
+			S_OK si fichier bien ouvert,
+			E_FILENOTFOUND si fichier non trouvé }
+	*/
+	HRESULT open(STR filename, bool& existed);
+	/*
+		fonction close
+		{}
+		=> {
+			S_OK si le fichier a bien été fermé,
+			E_FAIL si le fichier n'était pas ouvert }
+	*/
+	HRESULT close();
+	/*
+		fonction getCursor
+		=> { position du curseur dans le fichier, -1 si le fichier n'est pas ouvert}
+	*/
+	int getCursor();
+	/*
+		procedure toBegin
+		{ place le curseur au début du fichier }
+	*/
+	void toBegin();
+	/*
+		procedure toEnd
+		{ place le curseur à la fin du fichier }
+	*/
+	void toEnd();
+	/*
+		fonction isEmpty
+		=> { vrai si le fichier est vide }
+	*/
+	bool isEmpty();
+	/*
+		fonction write
 		{ecrit dans le fichier un élement de type STR}
 	*/
-	void write(const STR& str);
+	HRESULT write(const STR& str);
 	/*
-		procedure read
+		fonction read
 		{lit dans le fichier un élement de type STR}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	void read(STR& str);
+	HRESULT read(STR& str);
 	/*
-		procedure write
+		fonction write
 		{ecrit dans le fichier un élement de type VAR}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	void write(const VAR& var);
+	HRESULT write(const VAR& var);
 	/*
-		procedure read
+		fonction read
 		{lit dans le fichier un élement de type VAR}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	void read(VAR& var);
+	HRESULT read(VAR& var);
 	/*
-		procedure write
+		fonction write
 		{ecrit dans le fichier un élement de type Form}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	void write(const Form& form);
+	HRESULT write(Form& form);
 	/*
-		procedure read
+		fonction read
 		{lit dans le fichier un élement de type Form}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	void read(Form& form);
+	HRESULT read(Form& form);
 	/*
-		procedure write
+		fonction write
 		{ecrit dans le fichier un élement de type int}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	void write(const int& integer);
+	HRESULT write(const int& integer);
 	/*
-		procedure read
+		fonction read
 		{lit dans le fichier un élement de type int}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	void read(int& integer);
+	HRESULT read(int& integer);
+	/*
+		fonction write
+		{ecrit dans le fichier un élement de type bool}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
+	*/
+	HRESULT write(const bool& boolean);
+	/*
+		fonction read
+		{lit dans le fichier un élement de type bool}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
+	*/
+	HRESULT read(bool& boolean);
+		/*
+		fonction write
+		{ecrit dans le fichier un élement de type TYPE}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
+	*/
+	HRESULT write(const TYPE& type);
+	/*
+		fonction read
+		{lit dans le fichier un élement de type TYPE}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
+	*/
+	HRESULT read(TYPE& type);
+	/*
+		fonction eof
+		=> { vrai si nous sommes à la fin du fichier }
+	*/
+	bool eof();
+	/*
+		fonction isOpen
+		=> { vrai si le fichier est ouvert }
+	*/
+	bool isOpen();
 private:
 	std::fstream file;
 	STR filename;
