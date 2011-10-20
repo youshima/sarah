@@ -2,6 +2,7 @@
 #include "Helpers.h"
 #include "STR.h"
 #include "Form.h"
+#include "File.h"
 
 #include <iostream> //traitement de fichiers
 #include <fstream>
@@ -45,7 +46,7 @@ public:
 		fonction getOffset
 		=> {retourne la valeur de l'offset}
 	*/
-	UINT getOffset();
+	UINT* getOffset();
 	/*
 		fonction getSynonym
 		=> {retourne le prochain synonime du mot}
@@ -74,7 +75,7 @@ public:
 		fonction Find [recursive]
 		=> { offset du mot recherché, 0 sinon, name en minuscules }
 	*/
-	UINT Find(STR name);
+	UINT Find(STR& name);
 private:
 	/*
 		fonction getChild
@@ -125,17 +126,17 @@ public:
 		procedure setName
 		{affecte la valeur de name à self.name}
 	*/
-	void setName(STR name);
+	void setName(STR& name);
 	/*
 		procedure setDef
 		{affecte la valeur de def à self.def}
 	*/
-	void setDef(STR def);
+	void setDef(STR& def);
 	/*
 		procedure setType
 		{affecte la valeur de type à self.type}
 	*/
-	void setType(TYPE type);
+	void setType(TYPE& type);
 
 private:
 	STR name;
@@ -174,7 +175,7 @@ public:
 		fonction getForm
 		=> {le pointeur sur la forme à la position i}
 	*/
-	Form* getForm(UINT i);
+	Form* getForm(UINT& i);
 	/*
 		procedure setIrregular
 		{affecte la valeur de irregular à self.irregular}
@@ -188,7 +189,7 @@ public:
 			E_FAIL si la forme existe dejà dans la liste
 		}
 	*/
-	HRESULT AddForm(Form form);
+	HRESULT AddForm(Form& form);
 	/*
 		fonction RemoveForm
 		{trouve et enleve une forme de la liste des formes du verbe}
@@ -197,7 +198,7 @@ public:
 			E_FAIL si la forme n'a pas été trouvée
 		}
 	*/
-	HRESULT RemoveForm(Form form);
+	HRESULT RemoveForm(Form& form);
 
 private:
 	//LIST(Form*) form;
@@ -241,7 +242,7 @@ public:
 			E_FAIL sinon 
 			}
 	*/
-	HRESULT AddWord(DBWORD* word);
+	HRESULT AddWord(DBWORD& word);
 
 private:
 	/*
@@ -253,31 +254,10 @@ private:
 			}
 	*/
 	HRESULT MapNextWord();
-	/*
-		procedure write
-		{ecrit dans le fichier un élement de type STR}
-	*/
-	void write(STR* str);
-	/*
-		procedure write
-		{ecrit dans le fichier un élement de type Form}
-	*/
-	void write(Form* form);
-
-	/*
-		procedure read
-		{lit dans le fichier un élement de type STR}
-	*/
-	void read(STR* str);
-	/*
-		procedure read
-		{litdans le fichier un élement de type Form}
-	*/
-	void read(Form* form);
 
 private:
 	MapWord* map[8]; //maps des offsets pour la BDD classées par type dans l'ordre de l'enuméré TYPE
-	std::fstream file;
+	File file;
 	
 
 };

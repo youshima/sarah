@@ -7,11 +7,11 @@
 
 */
 Form::Form(STR name, TENSE tense, MOOD mood, ASPECT aspect, VOICE voice) {
-	setName(name);
-	setTense(tense);
-	setMood(mood);
-	setAspect(aspect);
-	setVoice(voice);
+	setName(&name);
+	setTense(&tense);
+	setMood(&mood);
+	setAspect(&aspect);
+	setVoice(&voice);
 }
 
 Form::~Form() {
@@ -41,18 +41,18 @@ ASPECT* Form::getAspect() {
 VOICE* Form::getVoice() {
 	return &this->voice;
 }
-void Form::setName(STR name) {
-	this->name = name;
+void Form::setName(STR* name) {
+	this->name = *name;
 }
-void Form::setTense(TENSE tense) {
-	this->tense = tense;
+void Form::setTense(TENSE* tense) {
+	this->tense = *tense;
 }
-void Form::setMood(MOOD mood) {
-	this->mood = mood;
+void Form::setMood(MOOD* mood) {
+	this->mood = *mood;
 }
-void Form::setAspect(ASPECT aspect) {
-	this->aspect = aspect;
+void Form::setAspect(ASPECT* aspect) {
+	this->aspect = *aspect;
 }
-void Form::setVoice(VOICE voice) {
-	this->voice = voice;
+void Form::setVoice(VOICE* voice) {
+	this->voice = *voice;
 }

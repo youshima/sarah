@@ -70,7 +70,7 @@ public:
 		fonction getLength
 		=> {le pointeur de length}
 	*/
-	UINT* getLength() const;
+	UINT* getLength();
 	/*
 		procedure setString
 		{affecte la chaine de caracteres à celle de l'élement}

@@ -70,6 +70,8 @@ bool Value::operator ==(Value value) {
 		case VARCHAR :
 			return ( this->getType() == value.getType() && memcmp(this->getValue(),value.getValue(), sizeof(char)) == 0 );
 			break;
+		default :
+			return false;
 	}
 	
 }

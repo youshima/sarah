@@ -30,8 +30,8 @@ bool MapWord::operator !=(MapWord* word) {
 	return !( *this == word );
 }
 	
-UINT MapWord::getOffset() {
-	return this->offset;
+UINT* MapWord::getOffset() {
+	return &this->offset;
 }
 
 MapWord* MapWord::getSynonym()
@@ -62,13 +62,13 @@ HRESULT MapWord::Add(MapWord* mw, STR name) {
 	}
 	else //on a trouvé l'emplacement
 	{
-		setOffset(mw->getOffset());
+		setOffset(*mw->getOffset());
 		return S_OK; //ajouté avec succès
 	}
 }
 
 
-UINT MapWord::Find(STR name)
+UINT MapWord::Find(STR& name)
 {
 	if(name != "")
 	{
@@ -83,7 +83,7 @@ UINT MapWord::Find(STR name)
 	}
 	else
 	{
-		return getOffset(); //on a trouvé l'élément
+		return *getOffset(); //on a trouvé l'élément
 	}
 }
 
@@ -103,8 +103,6 @@ MapWord* MapWord::getChild(char c) {
 */
 DBWORD::DBWORD(STR name) {
 	setName(name);
-	setDef("");
-	setType(TYPE_NONE);
 }
 
 DBWORD::~DBWORD() {
@@ -125,15 +123,15 @@ TYPE* DBWORD::getType() {
 	return &this->type;
 }
 
-void DBWORD::setName(STR name) {
+void DBWORD::setName(STR& name) {
 	this->name = name;
 }
 	
-void DBWORD::setDef(STR def) {
+void DBWORD::setDef(STR& def) {
 	this->def = def;
 }
 	
-void DBWORD::setType(TYPE type) {
+void DBWORD::setType(TYPE& type) {
 	this->type = type;
 }
 
@@ -161,7 +159,7 @@ UINT DBVERB::getFormCount() const {
 	return this->form.size();
 }
 
-Form* DBVERB::getForm(UINT i) {
+Form* DBVERB::getForm(UINT& i) {
 	return this->form[i];
 }
 
@@ -169,7 +167,7 @@ void DBVERB::setIrregular(bool irregular) {
 	this->irregular = irregular;
 }
 
-HRESULT DBVERB::AddForm(Form form) {
+HRESULT DBVERB::AddForm(Form& form) {
 	for(UINT i = 0; i < this->form.size(); i++)
 	{
 		if(*this->form[i] == form)
@@ -180,7 +178,7 @@ HRESULT DBVERB::AddForm(Form form) {
 	return S_OK; //forme ajoutée avec succès
 }
 
-HRESULT DBVERB::RemoveForm(Form form) {
+HRESULT DBVERB::RemoveForm(Form& form) {
 	UINT i = 0;
 	while(i < this->form.size() && *this->form[i] != form); //boucler tant qu'on ne trouve pas la forme
 
@@ -202,64 +200,82 @@ Database::Database() {
 		map[i] = new MapWord();
 		map[i]->setOffset(0);
 	}
-	//tester si le fichier est vide
-	file.open( FILENAME , std::fstream::binary | std::fstream::in );
+	bool existed;
+	file.open(FILENAME, existed);
 
-	if( !file.is_open() ) //le fichier n'existe pas encore
-	{
-			file.open(FILENAME,std::ios_base::binary | std::ios_base::in | std::ios_base::out);
-			if(file.is_open() )
-			file.write("DATABASE", sizeof(char) * 8);
+	if(file.isEmpty() ) //le fichier est vide
+	{	
+		STR check = "DATABASE";
+		file.write(check); //poser la signature
 	}
-	else
-		file.open(FILENAME,std::ios_base::binary | std::ios_base::in | std::ios_base::out); //juste ouvrir le fichier normalement
-
-	
+	file.close(); //fermer le fichier
 }
 
 Database::~Database() {
-	if(file.is_open())
-		file.close();
+	file.~File();
 }
 
 HRESULT Database::LoadMap() {
-	if(file.is_open())
+
+	bool existed;
+	file.open(FILENAME, existed);
+	if(file.isOpen())
 	{
-		file.seekg(std::ios_base::beg); //se mettre au début du fichier
+		if( file.isEmpty() )
+		{
+			file.close();
+			return E_FAIL;
+		}
+		//
+		STR check; //signature
+		file.read(check);
+		if(check != "DATABASE") //il y a erreur
+			return E_FAIL;
+
 		while(! file.eof() )
 		{
 			MapNextWord();
 		}
+		file.close();
 		return S_OK;
 	}
 	else
+	{
+		file.close();
 		return E_FILENOTFOUND;
+	}
 }
 	
-HRESULT Database::AddWord(DBWORD* word) {
-	if(file.is_open())
+HRESULT Database::AddWord(DBWORD& word) {
+
+	bool existed;
+	file.open(FILENAME, existed);
+
+	if(file.isOpen())
 	{
-		file.seekg(std::ios_base::end); //se mettre à la fin du fichier
+		file.toEnd();
 		
 
-		file.write((char*)word->getType(), sizeof(TYPE)); //ecrire le type
+		file.write(*word.getType()); //ecrire le type
 
-		write(word->getName());
+		file.write(word.getName());
 
-		write(word->getDef());
+		file.write(word.getDef());
 
-		if(*word->getType() == VERB)	//tester si le mot est un verbe
+		if(*word.getType() == VERB)	//tester si le mot est un verbe
 		{
-			DBVERB* verb = (DBVERB*)word; //caster le mot en verbe
+			DBVERB* verb = (DBVERB*)&word; //caster le mot en verbe
 			
-			file.write((char*)verb->isIrregular(), sizeof(bool)); //ecrire le booleen spécifiant l'irrégularité du verbe
+			file.write(verb->isIrregular()); //ecrire le booleen spécifiant l'irrégularité du verbe
 
-			file.write((char*)verb->getFormCount(), sizeof(UINT));  //ecrire le nombre de formes
+			int val = verb->getFormCount();
+
+			file.write(val); //ecrire le nombre de formes
 
 			for(UINT i = 0; i < verb->getFormCount(); i++)
 			{
 				//ecrire la forme
-				write(verb->getForm(i));
+				file.write(verb->getForm(i));
 
 			}
 			verb = 0; //abandonner le pointeur
@@ -273,34 +289,34 @@ HRESULT Database::AddWord(DBWORD* word) {
 HRESULT Database::MapNextWord() {
 
 		TYPE type;
-		UINT offset = (UINT)file.tellg();
-		file.read((char*)&type, sizeof(TYPE)); //lire le type
+		UINT offset = file.getCursor();
+		file.read(type);//lire le type
 
 		STR str;
 		DBVERB* verb = new DBVERB();
 
-		read(&str);
+		file.read(str);
 		verb->setName(str);
 
-		read(&str);
+		file.read(str);
 		verb->setDef(str);
 
 		if(type == VERB)	//tester si le mot est un verbe
 		{
 
 			bool irregular;
-			file.read((char*)&irregular, sizeof(bool)); //lire le booleen spécifiant l'irrégularité du verbe
+			file.read(irregular);//lire le booleen spécifiant l'irrégularité du verbe
 
 			verb->setIrregular(irregular);
 			
-			UINT formCount;
-			file.read((char*)&formCount, sizeof(UINT));  //lire le nombre de formes
+			int formCount;
+			file.read(formCount);//lire le nombre de formes
 
 			for(UINT i = 0; i < formCount; i++)
 			{
 				Form form;
 				//lire la forme
-				read(&form);
+				file.read(form);
 
 				HRESULT hr = verb->AddForm(form);
 				if(hr != S_OK)
@@ -331,38 +347,3 @@ HRESULT Database::MapNextWord() {
 		return S_OK;
 }
 
-void Database::write(STR* str) {
-
-	file.write((char*)str->getLength(), sizeof(UINT)); //ecrire la longueur
-	file.write((char*)str->getString(), sizeof(char) * *str->getLength() ); //ecrire la chaine de caracteres
-}
-void Database::write(Form *form) {
-
-	//ecrire la forme
-	write(form->getName());
-
-	file.write((char*)form->getTense(), sizeof(TENSE));
-	file.write((char*)form->getMood(), sizeof(MOOD)); 
-	file.write((char*)form->getAspect(), sizeof(ASPECT));
-	file.write((char*)form->getVoice(), sizeof(VOICE)); 
-}
-void Database::read(STR* str) {
-
-		UINT strLength;
-		file.read((char*)&strLength, sizeof(UINT)); //lire la longueur du nom
-		char* buf = new char[strLength+1];
-		file.read(buf, sizeof(char) * strLength ); //lire la chaine de caracteres
-		buf[strLength] = '\0';
-		str->setString(buf);
-
-		delete[] buf;
-}
-void Database::read(Form* form) {
-
-		read(form->getName());
-
-		file.read((char*)form->getTense(), sizeof(TENSE));
-		file.read((char*)form->getMood(), sizeof(MOOD)); 
-		file.read((char*)form->getAspect(), sizeof(ASPECT));
-		file.read((char*)form->getVoice(), sizeof(VOICE)); 
-}

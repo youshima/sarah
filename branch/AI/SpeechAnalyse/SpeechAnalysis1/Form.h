@@ -63,27 +63,27 @@ public:
 		procedure setName
 		{ attribue le nom de la forme }
 	*/
-	void setName(STR name);
+	void setName(STR* name);
 	/*
 		procedure setTense
 		{ attribue le tense de la forme }
 	*/
-	void setTense(TENSE tense);
+	void setTense(TENSE* tense);
 	/*
 		procedure setMood
 		{ attribue le mood de la forme }
 	*/
-	void setMood(MOOD mood);
+	void setMood(MOOD* mood);
 	/*
 		procedure setAspect
 		{ attribue l'aspect de la forme }
 	*/
-	void setAspect(ASPECT aspect);
+	void setAspect(ASPECT* aspect);
 	/*
 		fonction getVoice
 		{ attribue le voice de la forme }
 	*/
-	void setVoice(VOICE voice);
+	void setVoice(VOICE* voice);
 private:
 	STR name;
 	TENSE tense;
