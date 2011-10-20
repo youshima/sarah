@@ -51,7 +51,7 @@ bool File::isEmpty() {
 
 	return empty;
 }
-HRESULT File::write(const STR& str) {
+HRESULT File::write(STR& str) {
 
 	if(isOpen())
 	{
@@ -123,7 +123,7 @@ HRESULT File::read(Form& form) {
 	else
 		return E_FAIL;
 }
-HRESULT File::write(const VAR& var) {
+HRESULT File::write(VAR& var) {
 	if(isOpen())
 	{
 		write(*var.getName());
@@ -139,14 +139,15 @@ HRESULT File::write(const VAR& var) {
 			case REAL :
 				file.write(val->getValue(), sizeof(float));
 			break;
-			case STRING :
-				STR str;
-				str = (STR)val->getValue();
-				write(str);
-			break;
 			case VARCHAR :
 				file.write(val->getValue(), sizeof(char));
 			break;
+			case STRING :
+				STR* str = new STR();
+				str = (STR*)val->getValue();
+				write(*str);
+			break;
+			
 		}
 		return S_OK;
 	}

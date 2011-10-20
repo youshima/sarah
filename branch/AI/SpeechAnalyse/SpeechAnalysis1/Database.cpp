@@ -258,9 +258,9 @@ HRESULT Database::AddWord(DBWORD& word) {
 
 		file.write(*word.getType()); //ecrire le type
 
-		file.write(word.getName());
+		file.write(*word.getName());
 
-		file.write(word.getDef());
+		file.write(*word.getDef());
 
 		if(*word.getType() == VERB)	//tester si le mot est un verbe
 		{
@@ -275,7 +275,7 @@ HRESULT Database::AddWord(DBWORD& word) {
 			for(UINT i = 0; i < verb->getFormCount(); i++)
 			{
 				//ecrire la forme
-				file.write(verb->getForm(i));
+				file.write(*verb->getForm(i));
 
 			}
 			verb = 0; //abandonner le pointeur
@@ -312,7 +312,7 @@ HRESULT Database::MapNextWord() {
 			int formCount;
 			file.read(formCount);//lire le nombre de formes
 
-			for(UINT i = 0; i < formCount; i++)
+			for(UINT i = 0; i < (UINT)formCount; i++)
 			{
 				Form form;
 				//lire la forme

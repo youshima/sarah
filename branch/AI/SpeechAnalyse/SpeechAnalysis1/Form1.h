@@ -372,7 +372,7 @@ namespace SpeechAnalysis1 {
 				Button^ button = (gcnew System::Windows::Forms::Button());
 				UINT size = 5 * *elements->at(i)->getLength();
 
-				if(offset + size + 25 >= this->ElementContainer->Size.Width - 5)
+				if(offset + size + 25 >= (UINT)this->ElementContainer->Size.Width - 5)
 				{
 					offset = 0;
 					topOffset += 35;
