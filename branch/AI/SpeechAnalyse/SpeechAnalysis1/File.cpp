@@ -158,7 +158,39 @@ HRESULT File::write(VAR& var) {
 HRESULT File::read(VAR& var) {
 	if(isOpen())
 	{
-		return S_OK; // à finir 
+		STR str;
+		read(str);
+		var.setName(str);
+
+		Value val(VAR_TYPE_NONE);
+		
+		VAR_TYPE type;
+		file.read((char*)&type, sizeof(VAR_TYPE));
+		switch(type)
+		{
+			case INTEGER :
+				int i;
+				read(i);
+				val.setValue((char*)&i);
+			break;
+			case REAL :
+				float f;
+				read(f);
+				val.setValue((char*)&f);
+			break;
+			case VARCHAR :
+				char c;
+				read(c);
+				val.setValue((char*)&c);
+			break;
+			case STRING :
+				STR str;
+				read(str);
+				val.setValue((char*)&str);
+			break;
+			
+		}
+		return S_OK;
 	}
 	else
 		return E_FAIL;
@@ -181,6 +213,24 @@ HRESULT File::read(int& integer) {
 	else
 		return E_FAIL;
 }
+HRESULT File::write(const float& real) {
+	if(isOpen())
+	{
+		file.write((char*)&real, sizeof(float));
+		return S_OK;
+	}
+	else
+		return E_FAIL;
+}
+HRESULT File::read(float& real) {
+	if(isOpen())
+	{
+		file.read((char*)&real, sizeof(float));
+		return S_OK;
+	}
+	else
+		return E_FAIL;
+}
 HRESULT File::write(const bool& boolean) {
 	if(isOpen())
 	{
@@ -190,10 +240,28 @@ HRESULT File::write(const bool& boolean) {
 	else
 		return E_FAIL;
 }
-HRESULT File::read(bool& boolean) {
+HRESULT File::read(char& boolean) {
 	if(isOpen())
 	{
 		file.read((char*)&boolean, sizeof(bool));
+		return S_OK;
+	}
+	else
+		return E_FAIL;
+}
+HRESULT File::write(const char& caracter) {
+	if(isOpen())
+	{
+		file.write((char*)&caracter, sizeof(char));
+		return S_OK;
+	}
+	else
+		return E_FAIL;
+}
+HRESULT File::read(bool& caracter) {
+	if(isOpen())
+	{
+		file.read((char*)&caracter, sizeof(char));
 		return S_OK;
 	}
 	else

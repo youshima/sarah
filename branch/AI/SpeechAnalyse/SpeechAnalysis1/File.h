@@ -119,6 +119,22 @@ public:
 	HRESULT read(int& integer);
 	/*
 		fonction write
+		{ecrit dans le fichier un élement de type float}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
+	*/
+	HRESULT write(const float& real);
+	/*
+		fonction read
+		{lit dans le fichier un élement de type float}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
+	*/
+	HRESULT read(float& real);
+	/*
+		fonction write
 		{ecrit dans le fichier un élement de type bool}
 		=> {
 			S_OK si l'opération c'est effectuée correctement,
@@ -133,6 +149,22 @@ public:
 			E_FAIL si le fichier n'était pas ouvert }
 	*/
 	HRESULT read(bool& boolean);
+	/*
+		fonction write
+		{ecrit dans le fichier un élement de type char}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
+	*/
+	HRESULT write(const char& caracter);
+	/*
+		fonction read
+		{lit dans le fichier un élement de type char}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
+	*/
+	HRESULT read(char& caracter);
 		/*
 		fonction write
 		{ecrit dans le fichier un élement de type TYPE}
