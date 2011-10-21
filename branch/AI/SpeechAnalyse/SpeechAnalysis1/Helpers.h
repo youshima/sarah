@@ -9,9 +9,9 @@
 namespace AI
 {
 
-#define DWORD unsigned short
+#define WORD unsigned short
 #define UINT unsigned int
-#define HRESULT DWORD
+#define HRESULT WORD
 //#define E_FAIL 0x00
 //#define S_OK 0x01
 #define E_FILENOTFOUND 0x6a
