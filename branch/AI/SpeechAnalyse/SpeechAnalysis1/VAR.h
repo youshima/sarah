@@ -3,7 +3,7 @@
 #include "Helpers.h"
 #include "STR.h"
 
-enum VAR_TYPE { INTEGER, STRING, VARCHAR, REAL };
+enum VAR_TYPE { INTEGER, STRING, VARCHAR, REAL, VAR_TYPE_NONE };
 /*
 	classe Value
 	represente une valeur de type quelconque
