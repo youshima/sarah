@@ -3,6 +3,7 @@
 #include "SentenceParser.h"
 
 #include "WindowRule.h"
+#include "Environment.h"
 
 using namespace System;
 using namespace System::ComponentModel;
@@ -77,10 +78,10 @@ namespace SpeechAnalysis1 {
 
 
 
+	private : AI::Environment* environment;
 
 
-
-
+			  
 
 
 

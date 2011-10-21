@@ -1,6 +1,8 @@
 #pragma once
 #include "Helpers.h"
 #include "STR.h"
+namespace AI
+{
 /*
 	classe Rule
 	definit une regle utilisée pour l'analyse
@@ -66,3 +68,4 @@ private:
 	STR about; //descriptif de la regle
 	bool enabled; //activer ou desactiver la regle
 };
+}

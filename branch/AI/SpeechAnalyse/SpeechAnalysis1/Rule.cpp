@@ -1,36 +1,36 @@
 #include "StdAfx.h"
 #include "Rule.h"
 
-Rule::Rule() : enabled(false) {
+AI::Rule::Rule() : enabled(false) {
 
 }
-Rule::~Rule() {
+AI::Rule::~Rule() {
 	script.~STR();
 	name.~STR();
 	about.~STR();
 }
-bool Rule::getEnabled() {
+bool AI::Rule::getEnabled() {
 	return this->enabled;
 }
-STR* Rule::getScript() {
+STR* AI::Rule::getScript() {
 	return &this->script;
 }
-STR* Rule::getName() {
+STR* AI::Rule::getName() {
 	return &this->name;
 }
-STR* Rule::getAbout() {
+STR* AI::Rule::getAbout() {
 	return &this->about;
 }
-void Rule::setScript(STR& script) {
+void AI::Rule::setScript(STR& script) {
 	this->script = script;
 }
-void Rule::setName(STR& name) {
+void AI::Rule::setName(STR& name) {
 	this->name = name;
 }
-void Rule::setAbout(STR& about) {
+void AI::Rule::setAbout(STR& about) {
 	this->about = about;
 }
-void Rule::setEnabled(bool& enabled) {
+void AI::Rule::setEnabled(bool& enabled) {
 	this->enabled = enabled;
 }
 

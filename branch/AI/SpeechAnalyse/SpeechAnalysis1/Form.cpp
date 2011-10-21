@@ -1,12 +1,12 @@
 #include "StdAfx.h"
 #include "Form.h"
-
+using namespace AI;
 /*
 	
 		CLASS Form
 
 */
-Form::Form(STR name, TENSE tense, MOOD mood, ASPECT aspect, VOICE voice) {
+AI::Form::Form(STR name, TENSE tense, MOOD mood, ASPECT aspect, VOICE voice) {
 	setName(&name);
 	setTense(&tense);
 	setMood(&mood);
@@ -14,45 +14,45 @@ Form::Form(STR name, TENSE tense, MOOD mood, ASPECT aspect, VOICE voice) {
 	setVoice(&voice);
 }
 
-Form::~Form() {
+AI::Form::~Form() {
 	this->name.~STR();
 }
 
-bool Form::operator==(Form form) {
+bool AI::Form::operator==(Form form) {
 	return ( this->name == form.name && this->mood == form.mood && this->aspect == form.aspect && this->tense == form.tense && this->voice == form.voice ); 
 }
 
-bool Form::operator!=(Form form) {
+bool AI::Form::operator!=(Form form) {
 	return !(*this == form) ; 
 }
 
-STR* Form::getName() {
+STR* AI::Form::getName() {
 	return &this->name;
 }
-TENSE* Form::getTense() {
+TENSE* AI::Form::getTense() {
 	return &this->tense;
 }
-MOOD* Form::getMood() {
+MOOD* AI::Form::getMood() {
 	return &this->mood;
 }
-ASPECT* Form::getAspect() {
+ASPECT* AI::Form::getAspect() {
 	return &this->aspect;
 }
-VOICE* Form::getVoice() {
+VOICE* AI::Form::getVoice() {
 	return &this->voice;
 }
-void Form::setName(STR* name) {
+void AI::Form::setName(STR* name) {
 	this->name = *name;
 }
-void Form::setTense(TENSE* tense) {
+void AI::Form::setTense(TENSE* tense) {
 	this->tense = *tense;
 }
-void Form::setMood(MOOD* mood) {
+void AI::Form::setMood(MOOD* mood) {
 	this->mood = *mood;
 }
-void Form::setAspect(ASPECT* aspect) {
+void AI::Form::setAspect(ASPECT* aspect) {
 	this->aspect = *aspect;
 }
-void Form::setVoice(VOICE* voice) {
+void AI::Form::setVoice(VOICE* voice) {
 	this->voice = *voice;
 }
