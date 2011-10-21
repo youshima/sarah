@@ -8,14 +8,12 @@
 
 */
 STR::STR(const char *c) {
-	setLength(strlen(c)); //recuperation de la taille de la chaine
-	if(*getLength() > 0)
-	{
-		setString(new char[*getLength()]);
-		strcpy_s(this->c, *getLength(), c); //copie de la chaine
-	}
+	char* myc = new char[strlen(c)]; //copie du const char
+	if(strlen(c) > 0)
+	strcpy_s(myc, sizeof(char) * strlen(c) , c);
 	else
-		this->c = 0;
+		myc = new char;
+	setString(myc);
 }
 STR::~STR() {
 	empty();
@@ -23,18 +21,9 @@ STR::~STR() {
 
 
 void STR::operator =(const char *c) {
-	setLength(strlen(c)); //recuperation de la taille de la chaine
 
-	if(this->c)
-	delete[] this->c;
-
-	if(*getLength() > 0)
-	{
-		this->c = new char[*getLength()] ;
-		strcpy(this->c, c); //copie de la chaine
-	}
-	else
-		this->c = 0;
+	setString(c);
+	
 }
 bool STR::operator ==(const char *c) {
 	return strcmp(getString(),c) == 0;	//comparaison des deux chaines
@@ -49,7 +38,7 @@ void STR::operator =(STR str) {
 	if(*getLength() > 0)
 	{
 		this->c = new char[*getLength()];
-		strcpy(this->c, c); //copie de la chaine
+		strcpy_s(this->c, sizeof(char) * *getLength(), str.getString()); //copie de la chaine
 	}
 }
 bool STR::operator ==(STR str) {
@@ -68,14 +57,17 @@ char* STR::getString() const {
 UINT* STR::getLength() {
 	return &this->length;
 }
-void STR::setString(char *c) {
+void STR::setString(const char *c) {
 	setLength(strlen(c)); //recuperation de la taille de la chaine
-	delete[] c;
 	if(*getLength() > 0)
 	{
+		if(this->c)
+			delete[] this->c;
 		this->c = new char[*getLength()];
-		strcpy(this->c, c); //copie de la chaine
+		strcpy_s(this->c, sizeof(char) * *getLength(), c); //copie de la chaine
 	}
+	else
+		this->c = 0;
 }
 void STR::setLength(UINT length) {
 	this->length = length;//recuperation de la taille de la chaine

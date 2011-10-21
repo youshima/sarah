@@ -76,7 +76,7 @@ public:
 		procedure setString
 		{affecte la chaine de caracteres à celle de l'élement}
 	*/
-	void setString(char* c);
+	void setString(const char* c);
 	/*
 		procedure popHead
 		{enlève le premier caractere}

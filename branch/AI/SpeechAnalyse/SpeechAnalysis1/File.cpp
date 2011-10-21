@@ -10,12 +10,12 @@ File::~File() {
 HRESULT File::open(STR filename, bool& existed) {
 
 	this->filename = filename;
-	file.open( filename.getString() , std::fstream::binary | std::fstream::in | std::fstream::app );
+	file.open( this->filename.getString() , std::fstream::binary | std::fstream::in | std::fstream::app );
 	existed = file.is_open() ; //test si le fichier existait dejà
 
 	this->close(); //fermer le fichier
 
-	file.open(filename.getString(),std::ios_base::binary | std::ios_base::in | std::ios_base::out | std::fstream::app); //juste ouvrir le fichier normalement
+	file.open(this->filename.getString(),std::ios_base::binary | std::ios_base::in | std::ios_base::out | std::fstream::app); //juste ouvrir le fichier normalement
 
 	if(file.is_open())
 		return S_OK;
@@ -26,8 +26,6 @@ HRESULT File::close() {
 	if(this->isOpen())
 	{
 		file.close();
-
-		filename = "";
 		return S_OK;
 	}
 	else
@@ -64,7 +62,12 @@ void File::toEnd() {
 bool File::isEmpty() {
 	int cursor = file.tellg();
 	toBegin();
-	bool empty = file.eof(); // la fin est t'elle aussi le debut?
+	int cursorPos1 = file.tellg();
+	toEnd();
+	int cursorPos2 = file.tellg();
+
+	bool empty = cursorPos1 == cursorPos2 - 2;
+
 	file.seekg(std::ios_base::beg + cursor); // se remettre où nous etions avant l'opération
 
 	return empty;

@@ -145,7 +145,7 @@ private:
 	*/
 	bool isSeparator(char c);
 
-	DWORD cursor;
+	WORD cursor;
 	STR str;
 	vector<Element*> elements;
 };

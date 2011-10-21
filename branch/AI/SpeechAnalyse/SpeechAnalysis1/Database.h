@@ -11,7 +11,8 @@
 
 #define FILENAME "database.data"
 
-
+namespace AI
+{
 
 /*
 	classe MapWord
@@ -263,3 +264,4 @@ private:
 };
 
 
+}
