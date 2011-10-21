@@ -35,6 +35,9 @@
 
 =P=
 
+     ==Paradigm== 
+_Logiciel de rétroconception pouvant générer des diagrammes UML et autres
+
      ==Photoshop CS==
  _Logiciel de traitement d'images_
 
