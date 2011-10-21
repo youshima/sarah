@@ -10,12 +10,12 @@ File::~File() {
 HRESULT File::open(STR filename, bool& existed) {
 
 	this->filename = filename;
-	file.open( filename.getString() , std::fstream::binary | std::fstream::in );
+	file.open( filename.getString() , std::fstream::binary | std::fstream::in | std::fstream::app );
 	existed = file.is_open() ; //test si le fichier existait dejà
 
 	this->close(); //fermer le fichier
 
-	file.open(filename.getString(),std::ios_base::binary | std::ios_base::in | std::ios_base::out); //juste ouvrir le fichier normalement
+	file.open(filename.getString(),std::ios_base::binary | std::ios_base::in | std::ios_base::out | std::fstream::app); //juste ouvrir le fichier normalement
 
 	if(file.is_open())
 		return S_OK;
@@ -33,6 +33,24 @@ HRESULT File::close() {
 	else
 		return E_FAIL;
 
+}
+HRESULT File::empty() {
+	if(this->isOpen())
+	{
+		close(); //fermer le fichier
+		file.open( filename.getString() , std::fstream::binary | std::fstream::out );
+		if(file.is_open()) //le fichier a été vidé par fstream
+		{
+			close(); //fermer le fichier
+			bool existed;
+			open(filename, existed); //réouvrir le fichier
+			return S_OK;
+		}
+		else
+			return E_FAIL;
+	}
+	else
+		return E_FAIL;
 }
 int File::getCursor() {
 	return file.tellg();
@@ -280,6 +298,42 @@ HRESULT File::read(TYPE& type) {
 	if(isOpen())
 	{
 		file.read((char*)&type, sizeof(TYPE));
+		return S_OK;
+	}
+	else
+		return E_FAIL;
+}
+HRESULT File::write(Rule& rule) {
+	if(isOpen())
+	{
+		write(*rule.getName());
+		write(*rule.getScript());
+		write(*rule.getAbout());
+		write(rule.getEnabled());
+		return S_OK;
+	}
+	else
+		return E_FAIL;
+}
+HRESULT File::read(Rule& rule) {
+	if(isOpen())
+	{
+		STR name,script,about;
+		bool enabled;
+		read(name);
+		read(script);
+		read(about);
+		read(enabled);
+
+		rule.setName(name);
+		rule.setScript(script);
+		rule.setAbout(about);
+		rule.setEnabled(enabled);
+
+		name.~STR();
+		script.~STR();
+		about.~STR();
+
 		return S_OK;
 	}
 	else

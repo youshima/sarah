@@ -3,7 +3,9 @@
 #include "Helpers.h"
 #include "STR.h"
 #include "VAR.h"
+#include "Rule.h"
 #include "File.h"
+
 
 #define FILENAME "environment.data"
 
@@ -64,7 +66,7 @@ private:
 	int FindVarIndex(STR& name);
 	/*
 		fonction getVar
-		=> { pointeur sur la variable à l'index, 0 si nono trouvé }
+		=> { pointeur sur la variable à l'index, 0 si non trouvé }
 	*/
 	VAR* getVar(UINT& index);
 	/*
@@ -89,13 +91,74 @@ private:
 	*/
 	HRESULT setVar(UINT& index, Value& value);
 	/*
+		fonction AddRule
+		{ ajoute une regle à l'environnement } 
+		=> { 
+			 S_OK si l'opération a réussi
+			 E_FAIL si l'élément existe dejà dans la liste }
+	*/
+	HRESULT AddRule(Rule& rule);
+	/*
+		fonction RemoveRule
+		{ supprime une regle de l'environnement en fonction de son nom } 
+		=> { 
+			 S_OK si l'opération a réussi
+			 E_FAIL si l'élément n'existe pas dans la liste }
+	*/
+	HRESULT RemoveRule(STR& name);
+	/*
+		fonction RemoveRule
+		{ supprime une regle de l'environnement en fonction de son index } 
+		=> { 
+			 S_OK si l'opération a réussi
+			 E_FAIL si l'élément n'existe pas dans la liste (index > nombre d'elements - 1)}
+	*/
+	HRESULT RemoveRule(UINT& index);
+	/*
+		fonction FindRuleIndex
+		=> { index de la regle dans la liste }
+	*/
+	int FindRuleIndex(STR& name);
+	/*
+		fonction getRule
+		=> { pointeur sur la regle à l'index, 0 si non trouvé }
+	*/
+	Rule* getRule(UINT& index);
+	/*
+		fonction getRule
+		=> { pointeur sur la regle portant le nom choisi, 0 si non trouvé }
+	*/
+	Rule* getRule(STR& name);
+	/*
+		fonction setRule
+		{modifie les valeurs d'une regle d'environnement en la retrouvant avec son nom}
+		=> { 
+			 S_OK si l'opération a réussi
+			 E_FAIL si l'élément n'existe pas dans la liste}
+	*/
+	HRESULT setRule(STR& name, STR& script, STR& about, bool active);
+	/*
+		fonction setRule
+		{modifie les valeurs d'une regle d'environnement en la retrouvant avec son index}
+		=> { 
+			 S_OK si l'opération a réussi
+			 E_FAIL si l'élément n'existe pas dans la liste (selon l'index)}
+	*/
+	HRESULT setRule(UINT& index, STR& script, STR& about, bool active);
+	/*
 		fonction getVarCount
 		=> { nombre de variables }
 	*/
 	UINT getVarCount();
+	/*
+		fonction getRulesCount
+		=> { nombre de regles }
+	*/
+	UINT getRulesCount();
 
 
 private:
 	std::vector<VAR> Vars; //liste des variables d'environnement
+	std::vector<Rule> Rules; //liste des regles de l'environnement
 	File file; //fichier de sauvegarde
 };

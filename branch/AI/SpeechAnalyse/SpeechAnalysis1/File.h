@@ -6,6 +6,7 @@
 #include "VAR.h"
 #include "STR.h"
 #include "Form.h"
+#include "Rule.h"
 
 class File
 {
@@ -36,6 +37,14 @@ public:
 			E_FAIL si le fichier n'était pas ouvert }
 	*/
 	HRESULT close();
+	/*
+		fonction empty
+		{}
+		=> {
+			S_OK si le fichier a bien été vidé,
+			E_FAIL si le fichier n'était pas ouvert }
+	*/
+	HRESULT empty();
 	/*
 		fonction getCursor
 		=> { position du curseur dans le fichier, -1 si le fichier n'est pas ouvert}
@@ -165,7 +174,7 @@ public:
 			E_FAIL si le fichier n'était pas ouvert }
 	*/
 	HRESULT read(char& caracter);
-		/*
+	/*
 		fonction write
 		{ecrit dans le fichier un élement de type TYPE}
 		=> {
@@ -181,6 +190,22 @@ public:
 			E_FAIL si le fichier n'était pas ouvert }
 	*/
 	HRESULT read(TYPE& type);
+	/*
+		fonction write
+		{ecrit dans le fichier un élement de type Rule}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
+	*/
+	HRESULT write(Rule& rule);
+	/*
+		fonction read
+		{lit dans le fichier un élement de type Rule}
+		=> {
+			S_OK si l'opération c'est effectuée correctement,
+			E_FAIL si le fichier n'était pas ouvert }
+	*/
+	HRESULT read(Rule& rule);
 	/*
 		fonction eof
 		=> { vrai si nous sommes à la fin du fichier }

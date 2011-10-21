@@ -1,3 +1,4 @@
+#pragma once
 #include "Helpers.h"
 #include "STR.h"
 /*
@@ -17,7 +18,11 @@ public:
 		{nettoie la mémoire}
 	*/
 	~Rule();
-	
+	/*
+		fonction getEnabled
+		=> { vrai si la regle est activée }
+	*/
+	bool getEnabled();
 	/*
 		fonction getScript
 		=> { pointeur sur le script de la regle }
@@ -48,10 +53,16 @@ public:
 		{ affecte la valeur de about }
 	*/
 	void setAbout(STR& about);
+	/*
+		procedure setEnabled
+		{ affecte la valeur d'enabled }
+	*/
+	void setEnabled(bool& enabled);
 private:
 
 private:
 	STR script; //code de la regle
 	STR name; //nom de la regle
 	STR about; //descriptif de la regle
+	bool enabled; //activer ou desactiver la regle
 };

@@ -270,7 +270,7 @@ HRESULT Database::AddWord(DBWORD& word) {
 
 			int val = verb->getFormCount();
 
-			file.write(val); //ecrire le nombre de formes
+			file.write((int)val); //ecrire le nombre de formes
 
 			for(UINT i = 0; i < verb->getFormCount(); i++)
 			{
