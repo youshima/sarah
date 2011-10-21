@@ -6,6 +6,9 @@
 #include <string>
 #include <vector>
 
+namespace AI
+{
+
 #define DWORD unsigned short
 #define UINT unsigned int
 #define HRESULT DWORD
@@ -15,3 +18,4 @@
 //#define E_OUTOFMEMORY 0x03
 
 #define DESTROY(x) { (x).~x() ;}
+}

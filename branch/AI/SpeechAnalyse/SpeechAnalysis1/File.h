@@ -8,6 +8,8 @@
 #include "Form.h"
 #include "Rule.h"
 
+using namespace AI;
+
 class File
 {
 public:
@@ -101,7 +103,7 @@ public:
 			S_OK si l'opération c'est effectuée correctement,
 			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	HRESULT write(Form& form);
+	HRESULT write(AI::Form& form);
 	/*
 		fonction read
 		{lit dans le fichier un élement de type Form}
@@ -109,7 +111,7 @@ public:
 			S_OK si l'opération c'est effectuée correctement,
 			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	HRESULT read(Form& form);
+	HRESULT read(AI::Form& form);
 	/*
 		fonction write
 		{ecrit dans le fichier un élement de type int}
@@ -197,7 +199,7 @@ public:
 			S_OK si l'opération c'est effectuée correctement,
 			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	HRESULT write(Rule& rule);
+	HRESULT write(AI::Rule& rule);
 	/*
 		fonction read
 		{lit dans le fichier un élement de type Rule}
@@ -205,7 +207,7 @@ public:
 			S_OK si l'opération c'est effectuée correctement,
 			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	HRESULT read(Rule& rule);
+	HRESULT read(AI::Rule& rule);
 	/*
 		fonction eof
 		=> { vrai si nous sommes à la fin du fichier }

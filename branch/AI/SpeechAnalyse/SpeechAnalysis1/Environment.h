@@ -9,6 +9,9 @@
 
 #define FILENAME "environment.data"
 
+namespace AI
+{
+
 /*
 	classe Environment
 	represente l'ensemble de l'environnement IA
@@ -162,3 +165,5 @@ private:
 	std::vector<Rule> Rules; //liste des regles de l'environnement
 	File file; //fichier de sauvegarde
 };
+
+}

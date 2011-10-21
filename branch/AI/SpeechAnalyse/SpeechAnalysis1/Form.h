@@ -1,6 +1,9 @@
 #pragma once
 #include "STR.h"
 
+namespace AI
+{
+
 enum TYPE {VERB, NOUN, ADJECTIVE, ADVERB, PRONOUN, PREPOSITION, FORMUNCTION, INTERJECTION, TYPE_NONE};
 enum TENSE {PAST, NON_PAST, TENSE_NONE};
 enum MOOD {INDICATIVE, SUBJUNCTIVE, IMPERATIVE, MOOD_NONE};
@@ -91,3 +94,4 @@ private:
 	ASPECT aspect;
 	VOICE voice;
 };
+}

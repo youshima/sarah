@@ -1,17 +1,17 @@
 #include "StdAfx.h"
 #include "Browser.h"
 
-RechercheInfo::RechercheInfo(STR mot)
+AI::RechercheInfo::RechercheInfo(STR mot)
 {
 	strcpy(this->mot, mot.getString());
 	//Par defaut, le constructeur définira les regle de parsing et le site visé
 }
 
-RechercheInfo::~RechercheInfo()
+AI::RechercheInfo::~RechercheInfo()
 {
 }
 
-HRESULT RechercheInfo::rechercheEtAjout()
+HRESULT AI::RechercheInfo::rechercheEtAjout()
 {
 	//Le parseur sera ici.
 
@@ -20,7 +20,7 @@ HRESULT RechercheInfo::rechercheEtAjout()
 	return S_OK;
 }
 
-int RechercheInfo::strrch (char * string, char * recherche)
+int AI::RechercheInfo::strrch (char * string, char * recherche)
 {
 	int i,j;
 	int max1 = (strlen(string) - strlen(recherche));//Calcule une fois pour toutes les longueurs de string et de recherche
@@ -43,7 +43,7 @@ int RechercheInfo::strrch (char * string, char * recherche)
 	return -1;
 }
 
-int RechercheInfo::taille_corps(char *reponse)
+int AI::RechercheInfo::taille_corps(char *reponse)
 {
 	int corps = 0;
 	char * str;
@@ -56,7 +56,7 @@ int RechercheInfo::taille_corps(char *reponse)
 	return corps;
 }
 
-char * RechercheInfo::http_get(char * url_path, char * url_server)
+char * AI::RechercheInfo::http_get(char * url_path, char * url_server)
 {
 	//Envoie la requête donnée en paramètre et retourne la réponse du serveur
 	SOCKET s;

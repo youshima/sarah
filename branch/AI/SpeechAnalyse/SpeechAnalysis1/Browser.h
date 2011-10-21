@@ -1,7 +1,8 @@
 #pragma once
 
 #include "Database.h"
-
+namespace AI
+{
 /*
 	classe RechercheInfo
 	Permet de rechercher les informations d'un mot a partir d'un dictionnaire en ligne
@@ -72,3 +73,4 @@ private:
 	char * finParseDef;
 	//...
 };
+}
