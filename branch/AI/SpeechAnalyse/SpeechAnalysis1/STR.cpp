@@ -8,12 +8,7 @@
 
 */
 STR::STR(const char *c) {
-	char* myc = new char[strlen(c)]; //copie du const char
-	if(strlen(c) > 0)
-	strcpy_s(myc, sizeof(char) * strlen(c) , c);
-	else
-		myc = new char;
-	setString(myc);
+	*this = c;
 }
 STR::~STR() {
 	empty();
@@ -21,8 +16,17 @@ STR::~STR() {
 
 
 void STR::operator =(const char *c) {
-
-	setString(c);
+	if(strlen(c) > 0)
+	{
+		char* myc = new char[strlen(c)]; //copie du const char
+		strcpy_s(myc, sizeof(char) * strlen(c) , c);
+		setString(myc);
+	}
+	else
+	{
+		setString("");
+	}
+	
 	
 }
 bool STR::operator ==(const char *c) {
