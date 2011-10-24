@@ -13,16 +13,16 @@ Element::Element(char str)
 
 Element::~Element()
 {
-	this->str.~STR();
+	this->str.~basic_string();
 }
-const UINT* Element::getLength() {
-	return this->str.getLength();
+const UINT Element::getLength() {
+	return this->str.size();
 }
 
-STR* Element::getString() {
+std::string* Element::getString() {
 	return &str;
 }
-void Element::setString(STR str) {
+void Element::setString(std::string str) {
 	this->str = str;
 }
 Word::Word(std::string str) : Element(str)
@@ -57,7 +57,7 @@ SentenceParser::SentenceParser()
 
 SentenceParser::~SentenceParser(void)
 {
-	str.~STR();
+	str.~basic_string();
 }
 vector<Element*>* SentenceParser::Analyse(System::String ^ str) {
 
@@ -84,12 +84,12 @@ vector<Element*>* SentenceParser::Analyse(System::String ^ str) {
 UINT SentenceParser::readElement() {
 	UINT i = 0;
 	string element = "";
-	if(*this->str.getLength() == 0 || cursor >= *this->str.getLength()) //si la chaine est vide ou bien on a atteint la fin, retourner ""
+	if(this->str.size() == 0 || cursor >= this->str.size()) //si la chaine est vide ou bien on a atteint la fin, retourner ""
 		return 0;
 
-	while(!isSeparator(*str[cursor]))
+	while(!isSeparator(str[cursor]))
 	{
-		element += *str[cursor];
+		element += str[cursor];
 		cursor++;
 		i++;
 	}
@@ -98,10 +98,10 @@ UINT SentenceParser::readElement() {
 		Word* word = new Word(element);
 		elements.push_back((Element*)word);
 	}
-	if(cursor < *this->str.getLength()) //si on a fini de lire, inutile de continuer
+	if(cursor < this->str.size()) //si on a fini de lire, inutile de continuer
 	{
 		//ajouter le separateur à la liste d'elements
-		Separator* separator = new Separator(*str[cursor]);
+		Separator* separator = new Separator(str[cursor]);
 		if(*separator->getString() != " " && *separator->getString() != "\r" && *separator->getString() != "\n" )
 			elements.push_back((Element*)separator);
 		//sauter le separateur

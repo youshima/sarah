@@ -6,7 +6,7 @@ using namespace AI;
 		CLASS Form
 
 */
-AI::Form::Form(STR name, TENSE tense, MOOD mood, ASPECT aspect, VOICE voice) {
+AI::Form::Form(std::string name, TENSE tense, MOOD mood, ASPECT aspect, VOICE voice) {
 	setName(&name);
 	setTense(&tense);
 	setMood(&mood);
@@ -15,7 +15,7 @@ AI::Form::Form(STR name, TENSE tense, MOOD mood, ASPECT aspect, VOICE voice) {
 }
 
 AI::Form::~Form() {
-	this->name.~STR();
+	this->name.~basic_string();
 }
 
 bool AI::Form::operator==(Form form) {
@@ -26,7 +26,7 @@ bool AI::Form::operator!=(Form form) {
 	return !(*this == form) ; 
 }
 
-STR* AI::Form::getName() {
+std::string* AI::Form::getName() {
 	return &this->name;
 }
 TENSE* AI::Form::getTense() {
@@ -41,7 +41,7 @@ ASPECT* AI::Form::getAspect() {
 VOICE* AI::Form::getVoice() {
 	return &this->voice;
 }
-void AI::Form::setName(STR* name) {
+void AI::Form::setName(std::string* name) {
 	this->name = *name;
 }
 void AI::Form::setTense(TENSE* tense) {

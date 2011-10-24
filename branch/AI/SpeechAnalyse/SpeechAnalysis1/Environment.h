@@ -1,7 +1,6 @@
 #pragma once
 
 #include "Helpers.h"
-#include "STR.h"
 #include "VAR.h"
 #include "Rule.h"
 #include "File.h"
@@ -53,7 +52,7 @@ private:
 			 S_OK si l'opération a réussi
 			 E_FAIL si l'élément n'existe pas dans la liste }
 	*/
-	HRESULT RemoveVar(STR& name);
+	HRESULT RemoveVar(std::string& name);
 	/*
 		fonction RemoveVar
 		{ supprime une variable d'environnement en fonction de son index } 
@@ -66,7 +65,7 @@ private:
 		fonction FindVarIndex
 		=> { index de la variable dans la liste }
 	*/
-	int FindVarIndex(STR& name);
+	int FindVarIndex(std::string& name);
 	/*
 		fonction getVar
 		=> { pointeur sur la variable à l'index, 0 si non trouvé }
@@ -76,7 +75,7 @@ private:
 		fonction getVar
 		=> { pointeur sur la variable portant le nom choisi, 0 si non trouvé }
 	*/
-	VAR* getVar(STR& name);
+	VAR* getVar(std::string& name);
 	/*
 		fonction setVar
 		{modifie la valeur d'une variable d'environnement}
@@ -84,7 +83,7 @@ private:
 			 S_OK si l'opération a réussi
 			 E_FAIL si l'élément n'existe pas dans la liste}
 	*/
-	HRESULT setVar(STR& name, Value& value);
+	HRESULT setVar(std::string& name, Value& value);
 	/*
 		fonction setVar
 		{modifie la valeur d'une variable d'environnement}
@@ -108,7 +107,7 @@ private:
 			 S_OK si l'opération a réussi
 			 E_FAIL si l'élément n'existe pas dans la liste }
 	*/
-	HRESULT RemoveRule(STR& name);
+	HRESULT RemoveRule(std::string& name);
 	/*
 		fonction RemoveRule
 		{ supprime une regle de l'environnement en fonction de son index } 
@@ -121,7 +120,7 @@ private:
 		fonction FindRuleIndex
 		=> { index de la regle dans la liste }
 	*/
-	int FindRuleIndex(STR& name);
+	int FindRuleIndex(std::string& name);
 	/*
 		fonction getRule
 		=> { pointeur sur la regle à l'index, 0 si non trouvé }
@@ -131,7 +130,7 @@ private:
 		fonction getRule
 		=> { pointeur sur la regle portant le nom choisi, 0 si non trouvé }
 	*/
-	Rule* getRule(STR& name);
+	Rule* getRule(std::string& name);
 	/*
 		fonction setRule
 		{modifie les valeurs d'une regle d'environnement en la retrouvant avec son nom}
@@ -139,7 +138,7 @@ private:
 			 S_OK si l'opération a réussi
 			 E_FAIL si l'élément n'existe pas dans la liste}
 	*/
-	HRESULT setRule(STR& name, STR& script, STR& about, bool active);
+	HRESULT setRule(std::string& name, std::string& script, std::string& about, bool active);
 	/*
 		fonction setRule
 		{modifie les valeurs d'une regle d'environnement en la retrouvant avec son index}
@@ -147,7 +146,7 @@ private:
 			 S_OK si l'opération a réussi
 			 E_FAIL si l'élément n'existe pas dans la liste (selon l'index)}
 	*/
-	HRESULT setRule(UINT& index, STR& script, STR& about, bool active);
+	HRESULT setRule(UINT& index, std::string& script, std::string& about, bool active);
 	/*
 		fonction getVarCount
 		=> { nombre de variables }

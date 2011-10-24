@@ -71,12 +71,12 @@ public:
 			E_FAIL si l'élément existe dejà
 			}
 	*/
-	HRESULT Add(MapWord* mw, STR name);
+	HRESULT Add(MapWord* mw, std::string name);
 	/*
 		fonction Find [recursive]
 		=> { offset du mot recherché, 0 sinon, name en minuscules }
 	*/
-	UINT Find(STR& name);
+	UINT Find(std::string& name);
 private:
 	/*
 		fonction getChild
@@ -101,7 +101,7 @@ public:
 		constructeur de DBWORD
 		{initialise les variables]
 	*/
-	DBWORD(STR name = "");
+	DBWORD(std::string name = "");
 	/*
 		destructeur de DBWORD
 		{nettoie la mémoire}
@@ -112,12 +112,12 @@ public:
 		fonction getName
 		=> {le pointeur sur name}
 	*/
-	STR* getName();
+	std::string* getName();
 	/*
 		fonction getDef
 		=> {le pointeur sur def}
 	*/
-	STR* getDef();
+	std::string* getDef();
 	/*
 		fonction getType
 		=> {le pointeur sur type}
@@ -127,12 +127,12 @@ public:
 		procedure setName
 		{affecte la valeur de name à self.name}
 	*/
-	void setName(STR& name);
+	void setName(std::string& name);
 	/*
 		procedure setDef
 		{affecte la valeur de def à self.def}
 	*/
-	void setDef(STR& def);
+	void setDef(std::string& def);
 	/*
 		procedure setType
 		{affecte la valeur de type à self.type}
@@ -140,8 +140,8 @@ public:
 	void setType(TYPE& type);
 
 private:
-	STR name;
-	STR def;
+	std::string name;
+	std::string def;
 	TYPE type;
 };
 /*
@@ -155,7 +155,7 @@ public:
 		constructeur de DBVERB
 		{intialise les variables}
 	*/
-	DBVERB(STR name = "", bool irregular = false);
+	DBVERB(std::string name = "", bool irregular = false);
 	/*
 		destructeur de DBVERB
 		{nettoie la mémoire}

@@ -20,7 +20,7 @@ public:
 		constructeur de Form
 		{initialise les variables par défaut ou selon l'utilisateur}
 	*/
-	Form(STR name = "", TENSE tense = TENSE_NONE, MOOD mood = MOOD_NONE, ASPECT aspect = ASPECT_NONE, VOICE voice = VOICE_NONE);
+	Form(std::string name = "", TENSE tense = TENSE_NONE, MOOD mood = MOOD_NONE, ASPECT aspect = ASPECT_NONE, VOICE voice = VOICE_NONE);
 	/*
 		destructeur de Form
 		{nettoie la mémoire}
@@ -40,7 +40,7 @@ public:
 		fonction getName
 		=> { pointeur sur le nom de la forme }
 	*/
-	STR* getName();
+	std::string* getName();
 	/*
 		fonction getTense
 		=> { pointeur sur le tense de la forme }
@@ -66,7 +66,7 @@ public:
 		procedure setName
 		{ attribue le nom de la forme }
 	*/
-	void setName(STR* name);
+	void setName(std::string* name);
 	/*
 		procedure setTense
 		{ attribue le tense de la forme }
@@ -88,7 +88,7 @@ public:
 	*/
 	void setVoice(VOICE* voice);
 private:
-	STR name;
+	std::string name;
 	TENSE tense;
 	MOOD mood;
 	ASPECT aspect;

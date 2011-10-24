@@ -1,9 +1,9 @@
 #include "StdAfx.h"
 #include "Browser.h"
 
-AI::RechercheInfo::RechercheInfo(STR mot)
+AI::RechercheInfo::RechercheInfo(std::string mot)
 {
-	strcpy(this->mot, mot.getString());
+	strcpy(this->mot, mot.c_str());
 	//Par defaut, le constructeur définira les regle de parsing et le site visé
 }
 

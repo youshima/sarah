@@ -64,7 +64,7 @@ public:
 		constructeur de VAR
 		{initialise les variables par défaut ou selon l'utilisateur}
 	*/
-	VAR(STR name = "");
+	VAR(std::string name = "");
 	/*
 		destructeur de VAR
 		{nettoie la mémoire}
@@ -75,7 +75,7 @@ public:
 		fonction getName
 		=> { pointeur sur le nom de la variable }
 	*/
-	STR* getName();
+	std::string* getName();
 	/*
 		fonction getValue
 		=> { pointeur sur la valeur de la variable }
@@ -85,7 +85,7 @@ public:
 		procedure setName
 		{ attribue la valeur de nom à this->nom }
 	*/
-	void setName( STR name );
+	void setName( std::string name );
 	/*
 		procedure setValue
 		{ attribue la valeur de value à this->val }
@@ -109,7 +109,7 @@ public:
 
 
 private:
-	STR name; //nom effectif de la variable
+	std::string name; //nom effectif de la variable
 	Value* value; //valeur de la variable
 
 };
