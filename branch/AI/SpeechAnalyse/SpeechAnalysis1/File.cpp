@@ -10,12 +10,12 @@ File::~File() {
 HRESULT File::open(std::string filename, bool& existed) {
 
 	this->filename = filename;
-	file.open( this->filename.c_str() , std::fstream::binary | std::fstream::in | std::fstream::app );
+	file.open( this->filename.c_str() , std::fstream::binary | std::fstream::in );
 	existed = file.is_open() ; //test si le fichier existait dejà
 
-	this->close(); //fermer le fichier
+	file.close(); //fermer le fichier
 
-	file.open(this->filename.c_str(),std::ios_base::binary | std::ios_base::in | std::ios_base::out | std::fstream::app); //juste ouvrir le fichier normalement
+	file.open(this->filename.c_str(),std::ios_base::binary | std::ios_base::in | std::ios_base::out | std::ios_base::app); //juste ouvrir le fichier normalement
 
 	if(file.is_open())
 		return S_OK;
@@ -50,14 +50,19 @@ HRESULT File::empty() {
 	else
 		return E_FAIL;
 }
-int File::getCursor() {
+int File::getReadCursor() {
 	return file.tellg();
 }
+int File::getWriteCursor() {
+	return file.tellp();
+}
 void File::toBegin() {
-	file.seekg(std::ios_base::beg); //se mettre au début du fichier
+	file.seekg(0,file.beg); //se mettre au début du fichier
+	file.seekp(0,file.beg); //se mettre au début du fichier
 }
 void File::toEnd() {
-	file.seekg(std::ios_base::end); //se mettre à la fin du fichier
+	file.seekg(0,file.end); //se mettre à la fin du fichier
+	file.seekp(0,file.end); //se mettre au début du fichier
 }
 bool File::isEmpty() {
 	int cursor = file.tellg();
@@ -66,17 +71,17 @@ bool File::isEmpty() {
 	toEnd();
 	int cursorPos2 = file.tellg();
 
-	bool empty = cursorPos1 == cursorPos2 - 2;
+	bool empty = cursorPos1 == cursorPos2;
 
-	file.seekg(std::ios_base::beg + cursor); // se remettre où nous etions avant l'opération
+	file.seekg(file.beg + cursor); // se remettre où nous etions avant l'opération
 
 	return empty;
 }
 HRESULT File::write(std::string& str) {
-
+	toEnd();
 	if(isOpen())
 	{
-		file.write((char*)str.size(), sizeof(int)); //ecrire la longueur
+		write((int)str.size()); //ecrire la longueur
 		file.write((char*)str.c_str(), sizeof(char) * str.size() ); //ecrire la chaine de caracteres
 
 		return S_OK;
@@ -88,8 +93,8 @@ HRESULT File::read(std::string& str) {
 
 	if(isOpen())
 	{
-		UINT strLength;
-		file.read((char*)&strLength, sizeof(int)); //lire la longueur du nom
+		int strLength;
+		read(strLength); //lire la longueur du nom
 		char* buf = new char[strLength+1];
 		file.read(buf, sizeof(char) * strLength ); //lire la chaine de caracteres
 		buf[strLength] = '\0';
@@ -103,7 +108,7 @@ HRESULT File::read(std::string& str) {
 		return E_FAIL;
 }
 HRESULT File::write(Form& form) {
-
+	toEnd();
 	if(isOpen())
 	{
 		//ecrire la forme
@@ -146,6 +151,7 @@ HRESULT File::read(Form& form) {
 		return E_FAIL;
 }
 HRESULT File::write(VAR& var) {
+	toEnd();
 	if(isOpen())
 	{
 		write(*var.getName());
@@ -220,6 +226,7 @@ HRESULT File::read(VAR& var) {
 HRESULT File::write(const int& integer) {
 	if(isOpen())
 	{
+		toEnd();
 		file.write((char*)&integer, sizeof(int));
 		return S_OK;
 	}
@@ -238,6 +245,7 @@ HRESULT File::read(int& integer) {
 HRESULT File::write(const float& real) {
 	if(isOpen())
 	{
+		toEnd();
 		file.write((char*)&real, sizeof(float));
 		return S_OK;
 	}
@@ -256,6 +264,7 @@ HRESULT File::read(float& real) {
 HRESULT File::write(const bool& boolean) {
 	if(isOpen())
 	{
+		toEnd();
 		file.write((char*)&boolean, sizeof(bool));
 		return S_OK;
 	}
@@ -274,6 +283,7 @@ HRESULT File::read(char& boolean) {
 HRESULT File::write(const char& caracter) {
 	if(isOpen())
 	{
+		toEnd();
 		file.write((char*)&caracter, sizeof(char));
 		return S_OK;
 	}
@@ -292,6 +302,7 @@ HRESULT File::read(bool& caracter) {
 HRESULT File::write(const TYPE& type) {
 	if(isOpen())
 	{
+		toEnd();
 		file.write((char*)&type, sizeof(TYPE));
 		return S_OK;
 	}
@@ -310,6 +321,7 @@ HRESULT File::read(TYPE& type) {
 HRESULT File::write(Rule& rule) {
 	if(isOpen())
 	{
+		toEnd();
 		write(*rule.getName());
 		write(*rule.getScript());
 		write(*rule.getAbout());

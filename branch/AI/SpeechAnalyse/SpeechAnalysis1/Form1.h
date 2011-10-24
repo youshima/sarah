@@ -5,6 +5,10 @@
 #include "WindowRule.h"
 #include "Environment.h"
 
+#define PROFILE "user.profile"
+
+#define tostring(x) (char*)(void*)System::Runtime::InteropServices::Marshal::StringToHGlobalAnsi(x)
+
 using namespace System;
 using namespace System::ComponentModel;
 using namespace System::Collections;
@@ -71,15 +75,19 @@ namespace SpeechAnalysis1 {
 	private: System::Windows::Forms::GroupBox^  ElementContainer;
 	private: System::Windows::Forms::Panel^  dialogTree;
 	private: System::Windows::Forms::DataGridView^  rules;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  order;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  name;
-	private: System::Windows::Forms::DataGridViewTextBoxColumn^  result;
-	private: System::Windows::Forms::DataGridViewComboBoxColumn^  active;
+
+
+
+
 
 
 
 	private : AI::Environment* environment;
 	private: Form^ ruleForm;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  order;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  name;
+	private: System::Windows::Forms::DataGridViewTextBoxColumn^  result;
+	private: System::Windows::Forms::DataGridViewCheckBoxColumn^  active;
 
 			  
 
@@ -121,7 +129,7 @@ namespace SpeechAnalysis1 {
 			this->order = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->name = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->result = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
-			this->active = (gcnew System::Windows::Forms::DataGridViewComboBoxColumn());
+			this->active = (gcnew System::Windows::Forms::DataGridViewCheckBoxColumn());
 			this->menu->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->rules))->BeginInit();
 			this->SuspendLayout();
@@ -274,6 +282,7 @@ namespace SpeechAnalysis1 {
 			this->rules->Size = System::Drawing::Size(448, 388);
 			this->rules->TabIndex = 6;
 			this->rules->Visible = false;
+			this->rules->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::rules_Paint);
 			// 
 			// order
 			// 
@@ -303,11 +312,9 @@ namespace SpeechAnalysis1 {
 			// 
 			// active
 			// 
-			this->active->DividerWidth = 2;
 			this->active->HeaderText = L"active";
 			this->active->Name = L"active";
 			this->active->ReadOnly = true;
-			this->active->Width = 50;
 			// 
 			// Form1
 			// 
@@ -355,7 +362,18 @@ namespace SpeechAnalysis1 {
 				this->rules->Location = System::Drawing::Point(648, 36);
 			 else
 				 this->rules->Location = System::Drawing::Point(648 - this->dialogTree->Width, 36);
+
+			// ToolStripMenuItem^ item = (ToolStripMenuItem^)this->menu->Items[this->menu->Items->IndexOfKey("dialogTreeToolStripMenuItem")];
+			 ToolStripMenuItem^ item = (ToolStripMenuItem^)this->menu->Items->Find("dialogTreeToolStripMenuItem",true)[0];
+			 item->Checked = this->dialogTree->Visible;
+		
+			 item = (ToolStripMenuItem^)this->menu->Items->Find("rulesToolStripMenuItem",true)[0];
+			 item->Checked = this->rules->Visible;
+			
+			 item = (ToolStripMenuItem^)this->menu->Items->Find("wordsToolStripMenuItem",true)[0];
+			 item->Checked = this->ElementContainer->Visible;
 		 }
+
 		 void GenerateButtons(vector<Element*>* elements) {
 			
 			 //enlever les boutons d'abord
@@ -402,9 +420,30 @@ namespace SpeechAnalysis1 {
 		 }
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 				 ButtonElements = gcnew Collections::Generic::List<Button^>();
-				 environment = new AI::Environment();
+				 environment = new AI::Environment(); //chargement de l'environnement
+				 File file; //chargement des données utilisateur
+				 bool existed;
+				 file.open(PROFILE,existed);
+				 if(existed)
+				 {
+					 bool boolean;
+					 file.read(boolean);
+					 this->dialogTree->Visible = boolean;
+					 file.read(boolean);
+					 this->rules->Visible = boolean;
+					 file.read(boolean);
+					 this->ElementContainer->Visible = boolean;
+				 }
+				 file.close();
 				 ruleForm = gcnew WindowRule();
-				 ruleForm->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Form1::RuleForm_FormClosing);
+				 int elementIndex = ruleForm->Controls->IndexOfKey("buttonOK");
+				 Control^ buttonOK = (Control^)ruleForm->Controls[elementIndex];
+				 
+				 buttonOK->Click += gcnew System::EventHandler(this, &Form1::WindowRule_buttonOK_Click);
+
+				 RedrawRules();
+				 RefreshElements();
+				
 			 }
 
 private: System::Void exitToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -424,33 +463,72 @@ private: System::Void textEntry_PreviewKeyDown(System::Object^  sender, System::
 private: System::Void dialogTreeToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 
 			 this->dialogTree->Visible = !this->dialogTree->Visible; //toogle la visibilité
-			 ToolStripMenuItem^ item = (ToolStripMenuItem^)sender;
-			 item->Checked = this->dialogTree->Visible;
 			 RefreshElements();
 		 }
 private: System::Void rulesToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 			 this->rules->Visible = !this->rules->Visible; //toogle la visibilité
-			 ToolStripMenuItem^ item = (ToolStripMenuItem^)sender;
-			 item->Checked = this->rules->Visible;
 			 RefreshElements();
 		 }
 
 private: System::Void wordsToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 			 this->ElementContainer->Visible = !this->ElementContainer->Visible; //toogle la visibilité
-			 ToolStripMenuItem^ item = (ToolStripMenuItem^)sender;
-			 item->Checked = this->ElementContainer->Visible;
-			 this->RefreshElements();
+			 RefreshElements();
 		 }
 private: System::Void addToolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
 			 ruleForm->Show();
 		 }
 private: System::Void Form1_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
-			 environment->~Environment();
+			 environment->~Environment(); // sauvegarde et destruction de l'environnement
+			 File file; //sauvegarde des données utilisateur
+			 bool existed;
+		     file.open(PROFILE,existed);
+			 file.empty();
+			 file.write(this->dialogTree->Visible);
+			 file.write(this->rules->Visible);
+			 file.write(this->ElementContainer->Visible);
+		     file.close();
 			 
 		 }
-private : System::Void RuleForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
-				int x = 0;
+private : System::Void WindowRule_buttonOK_Click(System::Object^  sender, System::EventArgs^  e) {
+			  WindowRule^ window = (WindowRule^)this->ruleForm;
+			  
+			  
+			  AI::Rule* rule = new AI::Rule();
+			  
+			  std::string str = tostring(window->LName->Text);
+			  rule->setName(str);
+			  str = tostring(window->LDef->Text);
+			  rule->setAbout(str);
+			  str = tostring(window->LScript->Text);
+			  rule->setScript(str);
+			  bool enabled = true;
+			  rule->setEnabled(enabled);
+			  environment->AddRule(*rule); //ajouter ou modifier la regle
+
+			  rule->~Rule();
+
+			  str.~basic_string();
+			  window->Hide();
+			  RedrawRules();
 		  }
+private: System::Void rules_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
+			 
+		 }
+private: System::Void RedrawRules() {
+			 this->rules->Rows->Clear();
+
+			 for(UINT i = 0; i < environment->getRulesCount(); i++)
+			 {
+				 this->rules->Rows->Add();
+				//array< System::Object^>^  values;
+				
+				// this->rules->Rows[i]->SetValues(values);
+				 this->rules->Rows[i]->Cells[0]->Value = i;
+				 this->rules->Rows[i]->Cells[1]->Value = gcnew String(environment->getRule(i)->getName()->c_str());
+				// this->rules->Rows[i]->Cells[2]->Value = gcnew String(environment->getRule(i)->getAbout()->c_str());
+				 this->rules->Rows[i]->Cells[3]->Value = environment->getRule(i)->getEnabled();
+			 }
+		 }
 };
 }
 

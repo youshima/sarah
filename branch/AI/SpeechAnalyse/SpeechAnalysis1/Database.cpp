@@ -290,7 +290,7 @@ HRESULT Database::AddWord(DBWORD& word) {
 HRESULT Database::MapNextWord() {
 
 		TYPE type;
-		UINT offset = file.getCursor();
+		UINT offset = file.getReadCursor();
 		file.read(type);//lire le type
 
 		std::string str;

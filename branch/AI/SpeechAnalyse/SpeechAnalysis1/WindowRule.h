@@ -41,16 +41,16 @@ namespace SpeechAnalysis1 {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::RichTextBox^  LScript;
+	public: System::Windows::Forms::RichTextBox^  LScript;
 	protected: 
 
 	protected: 
 	private: System::Windows::Forms::Label^  Name;
-	private: System::Windows::Forms::TextBox^  LName;
+	public: System::Windows::Forms::TextBox^  LName;
 
-	private: System::Windows::Forms::Button^  buttonOK;
-	private: System::Windows::Forms::Button^  buttonCompile;
-	private: System::Windows::Forms::TextBox^  LDef;
+	public: System::Windows::Forms::Button^  buttonOK;
+	public: System::Windows::Forms::Button^  buttonCompile;
+	public: System::Windows::Forms::TextBox^  LDef;
 
 	private: System::Windows::Forms::Label^  label1;
 	private: System::Windows::Forms::Label^  label2;
@@ -92,9 +92,9 @@ namespace SpeechAnalysis1 {
 			this->Name->AutoSize = true;
 			this->Name->Location = System::Drawing::Point(12, 9);
 			this->Name->Name = L"Name";
-			this->Name->Size = System::Drawing::Size(41, 13);
+			this->Name->Size = System::Drawing::Size(68, 13);
 			this->Name->TabIndex = 1;
-			this->Name->Text = L"Name :";
+			this->Name->Text = L"WindowRule";
 			// 
 			// LName
 			// 
@@ -111,6 +111,7 @@ namespace SpeechAnalysis1 {
 			this->buttonOK->TabIndex = 3;
 			this->buttonOK->Text = L"OK";
 			this->buttonOK->UseVisualStyleBackColor = true;
+			this->buttonOK->Click += gcnew System::EventHandler(this, &WindowRule::buttonOK_Click);
 			// 
 			// buttonCompile
 			// 
@@ -152,6 +153,7 @@ namespace SpeechAnalysis1 {
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(532, 313);
+			this->ControlBox = false;
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->LDef);
 			this->Controls->Add(this->label1);
@@ -160,7 +162,7 @@ namespace SpeechAnalysis1 {
 			this->Controls->Add(this->LName);
 			this->Controls->Add(this->Name);
 			this->Controls->Add(this->LScript);
-			this->Name->Text = L"WindowRuleLabel";
+			this->Name->Text = L"WindowRule";
 			this->Text = L"WindowRule";
 			this->Load += gcnew System::EventHandler(this, &WindowRule::WindowRule_Load);
 			this->ResumeLayout(false);
@@ -170,5 +172,7 @@ namespace SpeechAnalysis1 {
 #pragma endregion
 	private: System::Void WindowRule_Load(System::Object^  sender, System::EventArgs^  e) {
 			 }
+private: System::Void buttonOK_Click(System::Object^  sender, System::EventArgs^  e) {
+		 }
 };
 }

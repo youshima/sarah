@@ -5,13 +5,47 @@
 	CLASS ENVIRONMENT
 */
 AI::Environment::Environment() {
+	Load(); //charger l'environnement à partir du fichier
+}
+
+AI::Environment::~Environment() {
+	Save();
+	for(UINT i = 0; i < getVarCount() ; i++)
+		Vars[i].~VAR();
+	for(UINT i = 0; i < getRulesCount() ; i++)
+		Rules[i].~Rule();
+}
+
+HRESULT AI::Environment::Save() {
+	bool exists;
+	if(file.open(FILENAME, exists) != S_OK) //ouvrir le fichier
+		return E_FILENOTFOUND;
+	
+	file.empty(); //vider le fichier
+	int val = getVarCount();
+	file.write(val); //ecriture du nombre de variables à stocker
+	for(UINT i = 0; i < (UINT)val; i++)
+		file.write(Vars[i]);
+	val = getRulesCount();
+	file.write(val); //ecriture du nombre de regles à stocker
+	for(UINT i = 0; i < (UINT)val; i++)
+		file.write(Rules[i]);
+	file.close();
+	return S_OK;
+}
+
+HRESULT AI::Environment::Load() {
 	bool exists;
 	file.open(FILENAME, exists); //ouvrir le fichier
+	if(!exists)
+		return E_FILENOTFOUND; //fichier non trouvé
+
 	if(file.isOpen()) //tentative de chargement en mémoire de l'environnement
 	{
 		if(!file.isEmpty()) //tester si le fichier est vide
 		{
 			//fichier existant et avec données, les charger en mémoire
+			file.toBegin();
 			int val;
 			file.read(val); //lecture du nombre de variables stockées
 
@@ -32,39 +66,14 @@ AI::Environment::Environment() {
 			}
 			var.~VAR();
 			rule.~Rule();
-
 			
 		}
 
 		file.close();
+		return S_OK;
 	}
-}
-
-AI::Environment::~Environment() {
-	Save();
-	for(UINT i = 0; i < getVarCount() ; i++)
-		Vars[i].~VAR();
-	for(UINT i = 0; i < getRulesCount() ; i++)
-		Rules[i].~Rule();
-}
-
-HRESULT AI::Environment::Save() {
-	bool exists;
-	file.open(FILENAME, exists); //ouvrir le fichier
-	if(!file.isOpen())
-		return E_FILENOTFOUND;
-	
-	file.empty(); //vider le fichier
-	int val = getVarCount();
-	file.write(val); //ecriture du nombre de variables à stocker
-	for(UINT i = 0; i < (UINT)val; i++)
-		file.write(Vars[i]);
-	val = getRulesCount();
-	file.write(val); //ecriture du nombre de regles à stocker
-	for(UINT i = 0; i < (UINT)val; i++)
-		file.write(Rules[i]);
-	file.close();
-	return S_OK;
+	else
+		return E_FAIL;
 }
 
 HRESULT AI::Environment::AddVar(VAR& var) {
@@ -153,10 +162,18 @@ HRESULT AI::Environment::setVar(UINT& index, Value& value) {
 }
 /**************************************************/
 HRESULT AI::Environment::AddRule(Rule& rule) {
-	if(getRule(*rule.getName())) // si la ruleiable existe
+	if(getRule(*rule.getName()) == 0) // si la rule n'existe pas dejà
 		Rules.push_back(rule);
 	else
-		return E_FAIL;
+	{
+		Rule* mrule = getRule(*rule.getName());
+		mrule->setName(*rule.getName());
+		mrule->setAbout(*rule.getAbout());
+		mrule->setEnabled(rule.getEnabled());
+		mrule->setScript(*rule.getScript());
+
+		return E_FAIL; //modification
+	}
 
 	return S_OK;
 }
@@ -186,7 +203,7 @@ HRESULT AI::Environment::RemoveRule(UINT& index) {
 int AI::Environment::FindRuleIndex(std::string& name) {
 	UINT i = 0;
 
-	while( i < getRulesCount() && *Rules[i].getName() != name);
+	while( i < getRulesCount() && *Rules[i].getName() != name) i++;
 
 	if(i == getRulesCount())
 		return -1;
@@ -206,7 +223,7 @@ Rule* AI::Environment::getRule(UINT& index) {
 
 Rule* AI::Environment::getRule(std::string& name) {
 	int index = FindRuleIndex(name);
-	if(index > 0)
+	if(index >= 0)
 	{
 		UINT i = index;
 		return getRule(i);

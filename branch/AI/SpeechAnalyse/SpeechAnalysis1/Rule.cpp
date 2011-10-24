@@ -30,7 +30,7 @@ void AI::Rule::setName(std::string& name) {
 void AI::Rule::setAbout(std::string& about) {
 	this->about = about;
 }
-void AI::Rule::setEnabled(bool& enabled) {
+void AI::Rule::setEnabled(bool enabled) {
 	this->enabled = enabled;
 }
 
