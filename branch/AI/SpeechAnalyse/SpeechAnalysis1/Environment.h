@@ -28,7 +28,7 @@ public:
 		{nettoie la mémoire}
 	*/
 	~Environment();
-private:
+public:
 	/*
 		fonction Save
 		{enregistre l'environnement dans un fichier}
@@ -37,6 +37,15 @@ private:
 			 E_FAIL si le fichier n'a pas pu être créé }
 	*/
 	HRESULT Save();
+	/*
+		fonction Load
+		{charge l'environnement depuis un fichier}
+		=> { 
+			 S_OK si l'opération a réussi
+			 E_FILENOTFOUND si le fichier n'existe pas
+			 E_FAIL si le fichier n'a pas pu être ouvert }
+	*/
+	HRESULT Load();
 	/*
 		fonction AddVar
 		{ ajoute une variable d'environnement } 

@@ -48,10 +48,15 @@ public:
 	*/
 	HRESULT empty();
 	/*
-		fonction getCursor
+		fonction getReadCursor
 		=> { position du curseur dans le fichier, -1 si le fichier n'est pas ouvert}
 	*/
-	int getCursor();
+	int getReadCursor();
+	/*
+		fonction getWriteCursor
+		=> { position du curseur dans le fichier, -1 si le fichier n'est pas ouvert}
+	*/
+	int getWriteCursor();
 	/*
 		procedure toBegin
 		{ place le curseur au début du fichier }

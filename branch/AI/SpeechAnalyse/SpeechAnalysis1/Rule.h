@@ -59,7 +59,7 @@ public:
 		procedure setEnabled
 		{ affecte la valeur d'enabled }
 	*/
-	void setEnabled(bool& enabled);
+	void setEnabled(bool enabled);
 private:
 
 private:
