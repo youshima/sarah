@@ -134,7 +134,7 @@ public:
 		fonction getRule
 		=> { pointeur sur la regle à l'index, 0 si non trouvé }
 	*/
-	Rule* getRule(UINT& index);
+	Rule* getRule(UINT index);
 	/*
 		fonction getRule
 		=> { pointeur sur la regle portant le nom choisi, 0 si non trouvé }

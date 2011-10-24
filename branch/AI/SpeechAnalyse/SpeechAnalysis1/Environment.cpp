@@ -212,7 +212,7 @@ int AI::Environment::FindRuleIndex(std::string& name) {
 
 }
 
-Rule* AI::Environment::getRule(UINT& index) {
+Rule* AI::Environment::getRule(UINT index) {
 	if(index < getRulesCount())
 	{
 		return &Rules[index];
