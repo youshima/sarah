@@ -46,8 +46,6 @@ AI::Environment::~Environment() {
 		Vars[i].~VAR();
 	for(UINT i = 0; i < getRulesCount() ; i++)
 		Rules[i].~Rule();
-
-	file.~File();
 }
 
 HRESULT AI::Environment::Save() {
@@ -79,7 +77,7 @@ HRESULT AI::Environment::AddVar(VAR& var) {
 	return S_OK;
 }
 
-HRESULT AI::Environment::RemoveVar(STR& name) {
+HRESULT AI::Environment::RemoveVar(std::string& name) {
 	int index = FindVarIndex(name);
 	if(index > 0)
 	{
@@ -101,7 +99,7 @@ HRESULT AI::Environment::RemoveVar(UINT& index) {
 		return E_FAIL;
 }
 
-int AI::Environment::FindVarIndex(STR& name) {
+int AI::Environment::FindVarIndex(std::string& name) {
 	UINT i = 0;
 
 	while( i < getVarCount() && *Vars[i].getName() != name);
@@ -122,7 +120,7 @@ VAR* AI::Environment::getVar(UINT& index) {
 		return 0;
 }
 
-VAR* AI::Environment::getVar(STR& name) {
+VAR* AI::Environment::getVar(std::string& name) {
 	int index = FindVarIndex(name);
 	if(index > 0)
 	{
@@ -133,7 +131,7 @@ VAR* AI::Environment::getVar(STR& name) {
 		return 0;
 }
 
-HRESULT AI::Environment::setVar(STR& name, Value& value) {
+HRESULT AI::Environment::setVar(std::string& name, Value& value) {
 	int index = FindVarIndex(name);
 	if(index > 0)
 	{
@@ -163,7 +161,7 @@ HRESULT AI::Environment::AddRule(Rule& rule) {
 	return S_OK;
 }
 
-HRESULT AI::Environment::RemoveRule(STR& name) {
+HRESULT AI::Environment::RemoveRule(std::string& name) {
 	int index = FindRuleIndex(name);
 	if(index > 0)
 	{
@@ -185,7 +183,7 @@ HRESULT AI::Environment::RemoveRule(UINT& index) {
 		return E_FAIL;
 }
 
-int AI::Environment::FindRuleIndex(STR& name) {
+int AI::Environment::FindRuleIndex(std::string& name) {
 	UINT i = 0;
 
 	while( i < getRulesCount() && *Rules[i].getName() != name);
@@ -206,7 +204,7 @@ Rule* AI::Environment::getRule(UINT& index) {
 		return 0;
 }
 
-Rule* AI::Environment::getRule(STR& name) {
+Rule* AI::Environment::getRule(std::string& name) {
 	int index = FindRuleIndex(name);
 	if(index > 0)
 	{
@@ -217,7 +215,7 @@ Rule* AI::Environment::getRule(STR& name) {
 		return 0;
 }
 
-HRESULT AI::Environment::setRule(STR& name, STR& script, STR& about, bool active) {
+HRESULT AI::Environment::setRule(std::string& name, std::string& script, std::string& about, bool active) {
 	int index = FindRuleIndex(name);
 	if(index > 0)
 	{
@@ -228,7 +226,7 @@ HRESULT AI::Environment::setRule(STR& name, STR& script, STR& about, bool active
 		return E_FAIL;
 }
 
-HRESULT AI::Environment::setRule(UINT& index, STR& script, STR& about, bool active) {
+HRESULT AI::Environment::setRule(UINT& index, std::string& script, std::string& about, bool active) {
 	if(index < getRulesCount())
 	{
 		Rules[index].setScript(script);

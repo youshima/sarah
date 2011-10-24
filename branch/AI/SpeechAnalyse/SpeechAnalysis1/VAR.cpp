@@ -81,7 +81,7 @@ bool Value::operator !=(Value value) {
 /*
 	CLASS VAR
 */
-VAR::VAR(STR name) : name(name) {
+VAR::VAR(std::string name) : name(name) {
 	this->value = 0;
 }
 
@@ -90,7 +90,7 @@ VAR::~VAR() {
 		value->~Value();
 }
 
-STR* VAR::getName() {
+std::string* VAR::getName() {
 	return &this->name;
 }
 
@@ -98,7 +98,7 @@ Value* VAR::getValue() {
 	return value;
 }
 
-void VAR::setName( STR name ) {
+void VAR::setName( std::string name ) {
 	this->name = name;
 }
 

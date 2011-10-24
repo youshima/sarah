@@ -253,10 +253,6 @@
 				</FileConfiguration>
 			</File>
 			<File
-				RelativePath=".\STR.cpp"
-				>
-			</File>
-			<File
 				RelativePath=".\VAR.cpp"
 				>
 			</File>
@@ -314,10 +310,6 @@
 			</File>
 			<File
 				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
-				RelativePath=".\STR.h"
 				>
 			</File>
 			<File

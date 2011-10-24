@@ -5,29 +5,29 @@ AI::Rule::Rule() : enabled(false) {
 
 }
 AI::Rule::~Rule() {
-	script.~STR();
-	name.~STR();
-	about.~STR();
+	script.~basic_string();
+	name.~basic_string();
+	about.~basic_string();
 }
 bool AI::Rule::getEnabled() {
 	return this->enabled;
 }
-STR* AI::Rule::getScript() {
+std::string* AI::Rule::getScript() {
 	return &this->script;
 }
-STR* AI::Rule::getName() {
+std::string* AI::Rule::getName() {
 	return &this->name;
 }
-STR* AI::Rule::getAbout() {
+std::string* AI::Rule::getAbout() {
 	return &this->about;
 }
-void AI::Rule::setScript(STR& script) {
+void AI::Rule::setScript(std::string& script) {
 	this->script = script;
 }
-void AI::Rule::setName(STR& name) {
+void AI::Rule::setName(std::string& name) {
 	this->name = name;
 }
-void AI::Rule::setAbout(STR& about) {
+void AI::Rule::setAbout(std::string& about) {
 	this->about = about;
 }
 void AI::Rule::setEnabled(bool& enabled) {

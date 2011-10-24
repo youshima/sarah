@@ -79,7 +79,7 @@ namespace SpeechAnalysis1 {
 
 
 	private : AI::Environment* environment;
-
+	private: Form^ ruleForm;
 
 			  
 
@@ -372,7 +372,7 @@ namespace SpeechAnalysis1 {
 			 {
 				
 				Button^ button = (gcnew System::Windows::Forms::Button());
-				UINT size = 5 * *elements->at(i)->getLength();
+				UINT size = 5 * elements->at(i)->getLength();
 
 				if(offset + size + 25 >= (UINT)this->ElementContainer->Size.Width - 5)
 				{
@@ -384,7 +384,7 @@ namespace SpeechAnalysis1 {
 				button->Name = L"ButtonAnalyse";
 				button->Size = System::Drawing::Size(size+25,30);
 				button->TabIndex = 1+i;
-				button->Text = gcnew String(elements->at(i)->getString()->getString());
+				button->Text = gcnew String(elements->at(i)->getString()->c_str());
 				button->UseVisualStyleBackColor = true;
 
 				if(elements->at(i)->isSeparator())
@@ -403,6 +403,8 @@ namespace SpeechAnalysis1 {
 	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 				 ButtonElements = gcnew Collections::Generic::List<Button^>();
 				 environment = new AI::Environment();
+				 ruleForm = gcnew WindowRule();
+				 ruleForm->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Form1::RuleForm_FormClosing);
 			 }
 
 private: System::Void exitToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -440,13 +442,15 @@ private: System::Void wordsToolStripMenuItem_Click(System::Object^  sender, Syst
 			 this->RefreshElements();
 		 }
 private: System::Void addToolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
-			 Form^ ruleForm = gcnew WindowRule();
 			 ruleForm->Show();
-			 ruleForm->~Form();
 		 }
 private: System::Void Form1_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 			 environment->~Environment();
+			 
 		 }
+private : System::Void RuleForm_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
+				int x = 0;
+		  }
 };
 }
 

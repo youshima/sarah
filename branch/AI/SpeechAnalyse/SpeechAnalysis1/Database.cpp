@@ -49,17 +49,17 @@ void MapWord::setSynonym(MapWord* synonym)
 	this->synonym = synonym;
 }
 
-HRESULT MapWord::Add(MapWord* mw, STR name) {
+HRESULT MapWord::Add(MapWord* mw, std::string name) {
 	if(this == mw)
 		return E_FAIL; //on essaye d'ajouter le même élément
 
 	if(name != "")
 	{
 		
-		if(this->getChild(name.getString()[0]) == 0) //si le fils n'existe pas encore
-			this->child[ name.getString()[0] ] = new MapWord(); //en creer un
-		name.popBack();//enlever le premier caractere 
-		return this->getChild(name.getString()[0])->Add(mw, name); //calculer à quelle branche continuer récursivement
+		if(this->getChild(name[0]) == 0) //si le fils n'existe pas encore
+			this->child[ name[0] ] = new MapWord(); //en creer un
+		name.erase(name.begin());//enlever le premier caractere 
+		return this->getChild(name[0])->Add(mw, name); //calculer à quelle branche continuer récursivement
 	}
 	else //on a trouvé l'emplacement
 	{
@@ -69,15 +69,15 @@ HRESULT MapWord::Add(MapWord* mw, STR name) {
 }
 
 
-UINT MapWord::Find(STR& name)
+UINT MapWord::Find(std::string& name)
 {
 	if(name != "")
 	{
 		
-		if(this->getChild(name.getString()[0]) == 0) //si le fils existe
+		if(this->getChild(name[0]) == 0) //si le fils existe
 		{
-			name.popBack();//enlever le premier caractere
-			return this->getChild(name.getString()[0])->Find(name); //calculer à quelle branche continuer récursivement
+			name.erase(name.begin());//enlever le premier caractere
+			return this->getChild(name[0])->Find(name); //calculer à quelle branche continuer récursivement
 		}
 		else
 			return 0; //n'existe pas
@@ -102,7 +102,7 @@ MapWord* MapWord::getChild(char c) {
 
 
 */
-DBWORD::DBWORD(STR name) {
+DBWORD::DBWORD(std::string name) {
 	setName(name);
 }
 
@@ -112,11 +112,11 @@ DBWORD::~DBWORD() {
 }
 	
 
-STR* DBWORD::getName() {
+std::string* DBWORD::getName() {
 	return &this->name;
 }
 	
-STR* DBWORD::getDef() {
+std::string* DBWORD::getDef() {
 	return &this->def;
 }
 	
@@ -124,11 +124,11 @@ TYPE* DBWORD::getType() {
 	return &this->type;
 }
 
-void DBWORD::setName(STR& name) {
+void DBWORD::setName(std::string& name) {
 	this->name = name;
 }
 	
-void DBWORD::setDef(STR& def) {
+void DBWORD::setDef(std::string& def) {
 	this->def = def;
 }
 	
@@ -142,7 +142,7 @@ void DBWORD::setType(TYPE& type) {
 
 
 */
-DBVERB::DBVERB(STR name, bool irregular) : DBWORD(name) {
+DBVERB::DBVERB(std::string name, bool irregular) : DBWORD(name) {
 	
 	setIrregular(irregular);
 }
@@ -206,7 +206,7 @@ Database::Database() {
 
 	if(file.isEmpty() ) //le fichier est vide
 	{	
-		STR check = "DATABASE";
+		std::string check = "DATABASE";
 		file.write(check); //poser la signature
 	}
 	file.close(); //fermer le fichier
@@ -228,7 +228,7 @@ HRESULT Database::LoadMap() {
 			return E_FAIL;
 		}
 		//
-		STR check; //signature
+		std::string check; //signature
 		file.read(check);
 		if(check != "DATABASE") //il y a erreur
 			return E_FAIL;
@@ -293,7 +293,7 @@ HRESULT Database::MapNextWord() {
 		UINT offset = file.getCursor();
 		file.read(type);//lire le type
 
-		STR str;
+		std::string str;
 		DBVERB* verb = new DBVERB();
 
 		file.read(str);

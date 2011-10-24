@@ -29,32 +29,32 @@ public:
 		fonction getScript
 		=> { pointeur sur le script de la regle }
 	*/
-	STR* getScript();
+	std::string* getScript();
 	/*
 		fonction getName
 		=> { pointeur sur le nom de la regle }
 	*/
-	STR* getName();
+	std::string* getName();
 	/*
 		fonction getAbout
 		+> { pointeur sur le descriptif de la regle }
 	*/
-	STR* getAbout();
+	std::string* getAbout();
 	/*
 		procedure getScript
 		{ affecte la valeur de script }
 	*/
-	void setScript(STR& script);
+	void setScript(std::string& script);
 	/*
 		procedure getName
 		{ affecte la valeur de name }
 	*/
-	void setName(STR& name);
+	void setName(std::string& name);
 	/*
 		procedure getAbout
 		{ affecte la valeur de about }
 	*/
-	void setAbout(STR& about);
+	void setAbout(std::string& about);
 	/*
 		procedure setEnabled
 		{ affecte la valeur d'enabled }
@@ -63,9 +63,9 @@ public:
 private:
 
 private:
-	STR script; //code de la regle
-	STR name; //nom de la regle
-	STR about; //descriptif de la regle
+	std::string script; //code de la regle
+	std::string name; //nom de la regle
+	std::string about; //descriptif de la regle
 	bool enabled; //activer ou desactiver la regle
 };
 }

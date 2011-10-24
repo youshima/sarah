@@ -7,15 +7,15 @@ File::File() {
 File::~File() {
 		this->close(); //fermer le fichier
 }
-HRESULT File::open(STR filename, bool& existed) {
+HRESULT File::open(std::string filename, bool& existed) {
 
 	this->filename = filename;
-	file.open( this->filename.getString() , std::fstream::binary | std::fstream::in | std::fstream::app );
+	file.open( this->filename.c_str() , std::fstream::binary | std::fstream::in | std::fstream::app );
 	existed = file.is_open() ; //test si le fichier existait dejà
 
 	this->close(); //fermer le fichier
 
-	file.open(this->filename.getString(),std::ios_base::binary | std::ios_base::in | std::ios_base::out | std::fstream::app); //juste ouvrir le fichier normalement
+	file.open(this->filename.c_str(),std::ios_base::binary | std::ios_base::in | std::ios_base::out | std::fstream::app); //juste ouvrir le fichier normalement
 
 	if(file.is_open())
 		return S_OK;
@@ -36,7 +36,7 @@ HRESULT File::empty() {
 	if(this->isOpen())
 	{
 		close(); //fermer le fichier
-		file.open( filename.getString() , std::fstream::binary | std::fstream::out );
+		file.open( filename.c_str() , std::fstream::binary | std::fstream::out );
 		if(file.is_open()) //le fichier a été vidé par fstream
 		{
 			close(); //fermer le fichier
@@ -72,28 +72,29 @@ bool File::isEmpty() {
 
 	return empty;
 }
-HRESULT File::write(STR& str) {
+HRESULT File::write(std::string& str) {
 
 	if(isOpen())
 	{
-		file.write((char*)str.getLength(), sizeof(UINT)); //ecrire la longueur
-		file.write((char*)str.getString(), sizeof(char) * *str.getLength() ); //ecrire la chaine de caracteres
+		file.write((char*)str.size(), sizeof(int)); //ecrire la longueur
+		file.write((char*)str.c_str(), sizeof(char) * str.size() ); //ecrire la chaine de caracteres
 
 		return S_OK;
 	}
 	else
 		return E_FAIL;
 }
-HRESULT File::read(STR& str) {
+HRESULT File::read(std::string& str) {
 
 	if(isOpen())
 	{
 		UINT strLength;
-		file.read((char*)&strLength, sizeof(UINT)); //lire la longueur du nom
+		file.read((char*)&strLength, sizeof(int)); //lire la longueur du nom
 		char* buf = new char[strLength+1];
 		file.read(buf, sizeof(char) * strLength ); //lire la chaine de caracteres
 		buf[strLength] = '\0';
-		str.setString(buf);
+
+		str = buf;
 
 		delete[] buf;
 		return S_OK;
@@ -121,7 +122,7 @@ HRESULT File::write(Form& form) {
 HRESULT File::read(Form& form) {
 	if(isOpen())
 	{
-		STR str;
+		std::string str;
 		TENSE* tense = new TENSE();
 		MOOD* mood = new MOOD();
 		ASPECT* aspect = new ASPECT();
@@ -164,8 +165,8 @@ HRESULT File::write(VAR& var) {
 				file.write(val->getValue(), sizeof(char));
 			break;
 			case STRING :
-				STR* str = new STR();
-				str = (STR*)val->getValue();
+				std::string* str;
+				str = (std::string*)val->getValue();
 				write(*str);
 			break;
 			
@@ -179,7 +180,7 @@ HRESULT File::write(VAR& var) {
 HRESULT File::read(VAR& var) {
 	if(isOpen())
 	{
-		STR str;
+		std::string str;
 		read(str);
 		var.setName(str);
 
@@ -205,7 +206,7 @@ HRESULT File::read(VAR& var) {
 				val.setValue((char*)&c);
 			break;
 			case STRING :
-				STR str;
+				std::string str;
 				read(str);
 				val.setValue((char*)&str);
 			break;
@@ -321,7 +322,7 @@ HRESULT File::write(Rule& rule) {
 HRESULT File::read(Rule& rule) {
 	if(isOpen())
 	{
-		STR name,script,about;
+		std::string name,script,about;
 		bool enabled;
 		read(name);
 		read(script);
@@ -333,9 +334,9 @@ HRESULT File::read(Rule& rule) {
 		rule.setAbout(about);
 		rule.setEnabled(enabled);
 
-		name.~STR();
-		script.~STR();
-		about.~STR();
+		name.~basic_string();
+		script.~basic_string();
+		about.~basic_string();
 
 		return S_OK;
 	}

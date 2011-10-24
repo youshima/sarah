@@ -41,12 +41,19 @@ namespace SpeechAnalysis1 {
 				delete components;
 			}
 		}
-	private: System::Windows::Forms::RichTextBox^  scriptEntry;
+	private: System::Windows::Forms::RichTextBox^  LScript;
+	protected: 
+
 	protected: 
 	private: System::Windows::Forms::Label^  Name;
-	private: System::Windows::Forms::TextBox^  labelName;
+	private: System::Windows::Forms::TextBox^  LName;
+
 	private: System::Windows::Forms::Button^  buttonOK;
 	private: System::Windows::Forms::Button^  buttonCompile;
+	private: System::Windows::Forms::TextBox^  LDef;
+
+	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::Label^  label2;
 
 	private:
 		/// <summary>
@@ -61,37 +68,40 @@ namespace SpeechAnalysis1 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			this->scriptEntry = (gcnew System::Windows::Forms::RichTextBox());
+			this->LScript = (gcnew System::Windows::Forms::RichTextBox());
 			this->Name = (gcnew System::Windows::Forms::Label());
-			this->labelName = (gcnew System::Windows::Forms::TextBox());
+			this->LName = (gcnew System::Windows::Forms::TextBox());
 			this->buttonOK = (gcnew System::Windows::Forms::Button());
 			this->buttonCompile = (gcnew System::Windows::Forms::Button());
+			this->LDef = (gcnew System::Windows::Forms::TextBox());
+			this->label1 = (gcnew System::Windows::Forms::Label());
+			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->SuspendLayout();
 			// 
-			// scriptEntry
+			// LScript
 			// 
-			this->scriptEntry->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
-			this->scriptEntry->Location = System::Drawing::Point(12, 45);
-			this->scriptEntry->Name = L"scriptEntry";
-			this->scriptEntry->Size = System::Drawing::Size(512, 182);
-			this->scriptEntry->TabIndex = 0;
-			this->scriptEntry->Text = L"";
+			this->LScript->BorderStyle = System::Windows::Forms::BorderStyle::FixedSingle;
+			this->LScript->Location = System::Drawing::Point(84, 98);
+			this->LScript->Name = L"LScript";
+			this->LScript->Size = System::Drawing::Size(440, 129);
+			this->LScript->TabIndex = 0;
+			this->LScript->Text = L"";
 			// 
 			// Name
 			// 
 			this->Name->AutoSize = true;
-			this->Name->Location = System::Drawing::Point(12, 15);
+			this->Name->Location = System::Drawing::Point(12, 9);
 			this->Name->Name = L"Name";
-			this->Name->Size = System::Drawing::Size(35, 13);
+			this->Name->Size = System::Drawing::Size(41, 13);
 			this->Name->TabIndex = 1;
-			this->Name->Text = L"Name";
+			this->Name->Text = L"Name :";
 			// 
-			// labelName
+			// LName
 			// 
-			this->labelName->Location = System::Drawing::Point(53, 12);
-			this->labelName->Name = L"labelName";
-			this->labelName->Size = System::Drawing::Size(161, 20);
-			this->labelName->TabIndex = 2;
+			this->LName->Location = System::Drawing::Point(84, 6);
+			this->LName->Name = L"LName";
+			this->LName->Size = System::Drawing::Size(161, 20);
+			this->LName->TabIndex = 2;
 			// 
 			// buttonOK
 			// 
@@ -111,17 +121,46 @@ namespace SpeechAnalysis1 {
 			this->buttonCompile->Text = L"Compile";
 			this->buttonCompile->UseVisualStyleBackColor = true;
 			// 
+			// LDef
+			// 
+			this->LDef->Location = System::Drawing::Point(84, 42);
+			this->LDef->Multiline = true;
+			this->LDef->Name = L"LDef";
+			this->LDef->Size = System::Drawing::Size(436, 50);
+			this->LDef->TabIndex = 6;
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(12, 45);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(66, 13);
+			this->label1->TabIndex = 5;
+			this->label1->Text = L"Description :";
+			// 
+			// label2
+			// 
+			this->label2->AutoSize = true;
+			this->label2->Location = System::Drawing::Point(9, 100);
+			this->label2->Name = L"label2";
+			this->label2->Size = System::Drawing::Size(40, 13);
+			this->label2->TabIndex = 7;
+			this->label2->Text = L"Script :";
+			// 
 			// WindowRule
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(532, 313);
+			this->Controls->Add(this->label2);
+			this->Controls->Add(this->LDef);
+			this->Controls->Add(this->label1);
 			this->Controls->Add(this->buttonCompile);
 			this->Controls->Add(this->buttonOK);
-			this->Controls->Add(this->labelName);
+			this->Controls->Add(this->LName);
 			this->Controls->Add(this->Name);
-			this->Controls->Add(this->scriptEntry);
-			this->Name->Text = L"WindowRule";
+			this->Controls->Add(this->LScript);
+			this->Name->Text = L"WindowRuleLabel";
 			this->Text = L"WindowRule";
 			this->Load += gcnew System::EventHandler(this, &WindowRule::WindowRule_Load);
 			this->ResumeLayout(false);

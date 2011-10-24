@@ -23,11 +23,6 @@ public:
 	*/
 	Element(char str);
 	/*
-		Constructeur de Element
-		{initialise les variables par défaut ou selon l'utilisateur}
-	*/
-	Element(STR str);
-	/*
 		Destructeur de Element
 		{nettoie la mémoire}
 	*/
@@ -36,24 +31,24 @@ public:
 		fonction getLength
 		=> { la taille de l'élément }
 	*/
-	const UINT* getLength();
+	const UINT getLength();
 	/*
 		fonction getData
 		=> { pointeur sur le string de l'élément }
 	*/
-	STR* getString();
+	std::string* getString();
 	/*
 		procedure setSata
 		{ affecte this->str à str }
 	*/
-	void setString(STR str);
+	void setString(std::string str);
 	/*
 		fonction isSeparator (virtuelle)
 		=> { vrai si l'élément est un séparateur }
 	*/
 	virtual bool isSeparator() = 0;
 private:
-	STR str;
+	std::string str;
 };
 /*
 	classe Word
@@ -146,7 +141,7 @@ private:
 	bool isSeparator(char c);
 
 	WORD cursor;
-	STR str;
+	std::string str;
 	vector<Element*> elements;
 };
 

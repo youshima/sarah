@@ -15,7 +15,7 @@ public:
 		constructeur de RechercheInfo
 		{initialise les variables}
 	*/
-	RechercheInfo(STR mot);
+	RechercheInfo(std::string mot);
 
 	/*
 		destructeur de RechercheInfo

@@ -30,7 +30,7 @@ public:
 			S_OK si fichier bien ouvert,
 			E_FILENOTFOUND si fichier non trouvé }
 	*/
-	HRESULT open(STR filename, bool& existed);
+	HRESULT open(std::string filename, bool& existed);
 	/*
 		fonction close
 		{}
@@ -71,7 +71,7 @@ public:
 		fonction write
 		{ecrit dans le fichier un élement de type STR}
 	*/
-	HRESULT write(STR& str);
+	HRESULT write(std::string& str);
 	/*
 		fonction read
 		{lit dans le fichier un élement de type STR}
@@ -79,7 +79,7 @@ public:
 			S_OK si l'opération c'est effectuée correctement,
 			E_FAIL si le fichier n'était pas ouvert }
 	*/
-	HRESULT read(STR& str);
+	HRESULT read(std::string& str);
 	/*
 		fonction write
 		{ecrit dans le fichier un élement de type VAR}
@@ -220,5 +220,5 @@ public:
 	bool isOpen();
 private:
 	std::fstream file;
-	STR filename;
+	std::string filename;
 };
