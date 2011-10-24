@@ -84,10 +84,18 @@ namespace SpeechAnalysis1 {
 
 	private : AI::Environment* environment;
 	private: Form^ ruleForm;
+
+
+
+
+	private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip1;
+	private: System::Windows::Forms::ToolStripMenuItem^  editToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  deleteToolStripMenuItem;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  order;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  name;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  result;
 	private: System::Windows::Forms::DataGridViewCheckBoxColumn^  active;
+	private: System::ComponentModel::IContainer^  components;
 
 			  
 
@@ -101,7 +109,7 @@ namespace SpeechAnalysis1 {
 		/// <summary>
 		/// Variable nécessaire au concepteur.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
@@ -110,6 +118,7 @@ namespace SpeechAnalysis1 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
+			this->components = (gcnew System::ComponentModel::Container());
 			this->textEntry = (gcnew System::Windows::Forms::TextBox());
 			this->menu = (gcnew System::Windows::Forms::MenuStrip());
 			this->fileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -126,12 +135,16 @@ namespace SpeechAnalysis1 {
 			this->ElementContainer = (gcnew System::Windows::Forms::GroupBox());
 			this->dialogTree = (gcnew System::Windows::Forms::Panel());
 			this->rules = (gcnew System::Windows::Forms::DataGridView());
+			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->editToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->deleteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->order = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->name = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->result = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->active = (gcnew System::Windows::Forms::DataGridViewCheckBoxColumn());
 			this->menu->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->rules))->BeginInit();
+			this->contextMenuStrip1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// textEntry
@@ -153,7 +166,7 @@ namespace SpeechAnalysis1 {
 			this->menu->Location = System::Drawing::Point(0, 0);
 			this->menu->Name = L"menu";
 			this->menu->RenderMode = System::Windows::Forms::ToolStripRenderMode::Professional;
-			this->menu->Size = System::Drawing::Size(1103, 24);
+			this->menu->Size = System::Drawing::Size(1090, 24);
 			this->menu->TabIndex = 3;
 			this->menu->Text = L"menu";
 			// 
@@ -224,7 +237,7 @@ namespace SpeechAnalysis1 {
 			this->dialogTreeToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->dialogTreeToolStripMenuItem->Name = L"dialogTreeToolStripMenuItem";
 			this->dialogTreeToolStripMenuItem->ShowShortcutKeys = false;
-			this->dialogTreeToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->dialogTreeToolStripMenuItem->Size = System::Drawing::Size(131, 22);
 			this->dialogTreeToolStripMenuItem->Text = L"Dialog tree";
 			this->dialogTreeToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::dialogTreeToolStripMenuItem_Click);
 			// 
@@ -232,7 +245,7 @@ namespace SpeechAnalysis1 {
 			// 
 			this->rulesToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->rulesToolStripMenuItem->Name = L"rulesToolStripMenuItem";
-			this->rulesToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->rulesToolStripMenuItem->Size = System::Drawing::Size(131, 22);
 			this->rulesToolStripMenuItem->Text = L"Rules";
 			this->rulesToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::rulesToolStripMenuItem_Click);
 			// 
@@ -240,7 +253,7 @@ namespace SpeechAnalysis1 {
 			// 
 			this->wordsToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->wordsToolStripMenuItem->Name = L"wordsToolStripMenuItem";
-			this->wordsToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->wordsToolStripMenuItem->Size = System::Drawing::Size(131, 22);
 			this->wordsToolStripMenuItem->Text = L"Words";
 			this->wordsToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::wordsToolStripMenuItem_Click);
 			// 
@@ -248,7 +261,7 @@ namespace SpeechAnalysis1 {
 			// 
 			this->databaseToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->databaseToolStripMenuItem->Name = L"databaseToolStripMenuItem";
-			this->databaseToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->databaseToolStripMenuItem->Size = System::Drawing::Size(131, 22);
 			this->databaseToolStripMenuItem->Text = L"Database";
 			// 
 			// ElementContainer
@@ -273,19 +286,40 @@ namespace SpeechAnalysis1 {
 			// 
 			this->rules->AllowUserToAddRows = false;
 			this->rules->AllowUserToDeleteRows = false;
-			this->rules->SelectionMode = DataGridViewSelectionMode::FullRowSelect;
 			this->rules->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->rules->Columns->AddRange(gcnew cli::array< System::Windows::Forms::DataGridViewColumn^  >(4) {this->order, this->name, 
 				this->result, this->active});
 			this->rules->Location = System::Drawing::Point(648, 36);
 			this->rules->Name = L"rules";
 			this->rules->ReadOnly = true;
-			this->rules->Size = System::Drawing::Size(448, 388);
+			this->rules->SelectionMode = System::Windows::Forms::DataGridViewSelectionMode::FullRowSelect;
+			this->rules->Size = System::Drawing::Size(435, 388);
 			this->rules->TabIndex = 6;
 			this->rules->Visible = false;
+			this->rules->CellMouseDown += gcnew System::Windows::Forms::DataGridViewCellMouseEventHandler(this, &Form1::rules_CellMouseDown);
 			this->rules->CellMouseDoubleClick += gcnew System::Windows::Forms::DataGridViewCellMouseEventHandler(this, &Form1::rules_CellMouseDoubleClick);
 			this->rules->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::rules_Paint);
-			
+			// 
+			// contextMenuStrip1
+			// 
+			this->contextMenuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->editToolStripMenuItem, 
+				this->deleteToolStripMenuItem});
+			this->contextMenuStrip1->Name = L"contextMenuStrip1";
+			this->contextMenuStrip1->Size = System::Drawing::Size(114, 48);
+			// 
+			// editToolStripMenuItem
+			// 
+			this->editToolStripMenuItem->Name = L"editToolStripMenuItem";
+			this->editToolStripMenuItem->Size = System::Drawing::Size(113, 22);
+			this->editToolStripMenuItem->Text = L"Edit";
+			this->editToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::editToolStripMenuItem_Click);
+			// 
+			// deleteToolStripMenuItem
+			// 
+			this->deleteToolStripMenuItem->Name = L"deleteToolStripMenuItem";
+			this->deleteToolStripMenuItem->Size = System::Drawing::Size(113, 22);
+			this->deleteToolStripMenuItem->Text = L"Delete";
+			this->deleteToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::deleteToolStripMenuItem_Click);
 			// 
 			// order
 			// 
@@ -318,6 +352,7 @@ namespace SpeechAnalysis1 {
 			this->active->HeaderText = L"active";
 			this->active->Name = L"active";
 			this->active->ReadOnly = true;
+			this->active->Width = 40;
 			// 
 			// Form1
 			// 
@@ -325,7 +360,7 @@ namespace SpeechAnalysis1 {
 			this->AutoSize = true;
 			this->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
 			this->BackColor = System::Drawing::Color::Gray;
-			this->ClientSize = System::Drawing::Size(1103, 440);
+			this->ClientSize = System::Drawing::Size(1090, 440);
 			this->Controls->Add(this->rules);
 			this->Controls->Add(this->dialogTree);
 			this->Controls->Add(this->ElementContainer);
@@ -342,6 +377,7 @@ namespace SpeechAnalysis1 {
 			this->menu->ResumeLayout(false);
 			this->menu->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->rules))->EndInit();
+			this->contextMenuStrip1->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -534,7 +570,14 @@ private: System::Void RedrawRules() {
 		 }
 private: System::Void rules_CellMouseDoubleClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellMouseEventArgs^  e) {
 
-			 WindowRule^ window = (WindowRule^)this->ruleForm;
+			 EditRule();
+		 }
+private: System::Void editToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+			 EditRule();
+		 }
+		 void EditRule()
+		 {
+			WindowRule^ window = (WindowRule^)this->ruleForm;
 			 //recuperer la regle selectionnée par l'utilisateur
 			 
 			 UINT index = (UINT)this->rules->SelectedRows[0]->Index;
@@ -543,6 +586,27 @@ private: System::Void rules_CellMouseDoubleClick(System::Object^  sender, System
 			 window->LDef->Text = gcnew String(rule->getAbout()->c_str());
 			 window->LScript->Text = gcnew String(rule->getScript()->c_str());
 			 window->Show();
+		 }
+		 void DeleteRule()
+		 {
+			WindowRule^ window = (WindowRule^)this->ruleForm;
+			 //recuperer la regle selectionnée par l'utilisateur
+			 
+			 UINT index = (UINT)this->rules->SelectedRows[0]->Index;
+			 environment->RemoveRule(index);
+		 }
+private: System::Void deleteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+			 DeleteRule();
+			 this->RedrawRules();
+		 }
+private: System::Void rules_CellMouseDown(System::Object^  sender, System::Windows::Forms::DataGridViewCellMouseEventArgs^  e) {
+
+			 if(e->Button == System::Windows::Forms::MouseButtons::Right)
+			 {
+				 this->contextMenuStrip1->Location = Point(e->Location.X + this->Location.X, e->Location.Y + this->Location.Y);
+				 this->contextMenuStrip1->Refresh();
+				 this->contextMenuStrip1->Show();
+			 }
 		 }
 };
 }
