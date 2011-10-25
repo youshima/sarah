@@ -602,11 +602,7 @@ private: System::Void deleteToolStripMenuItem_Click(System::Object^  sender, Sys
 private: System::Void rules_CellMouseDown(System::Object^  sender, System::Windows::Forms::DataGridViewCellMouseEventArgs^  e) {
 
 			 if(e->Button == System::Windows::Forms::MouseButtons::Right)
-			 {
-				 this->contextMenuStrip1->Location = Point(e->Location.X + this->Location.X, e->Location.Y + this->Location.Y);
-				 this->contextMenuStrip1->Refresh();
-				 this->contextMenuStrip1->Show();
-			 }
+				 this->contextMenuStrip1->Show(Point(Cursor->Position.X, Cursor->Position.Y));
 		 }
 };
 }
