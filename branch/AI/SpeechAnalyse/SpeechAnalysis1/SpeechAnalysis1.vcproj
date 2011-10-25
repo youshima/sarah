@@ -256,6 +256,10 @@
 				RelativePath=".\VAR.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\WindowDatabase.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Fichiers d&apos;en-tête"
@@ -314,6 +318,11 @@
 			</File>
 			<File
 				RelativePath=".\VAR.h"
+				>
+			</File>
+			<File
+				RelativePath=".\WindowDatabase.h"
+				FileType="3"
 				>
 			</File>
 			<File
