@@ -324,6 +324,11 @@
 				RelativePath=".\WindowDatabase.h"
 				FileType="3"
 				>
+				<File
+					RelativePath=".\WindowDatabase.resx"
+					SubType="Designer"
+					>
+				</File>
 			</File>
 			<File
 				RelativePath=".\WindowRule.h"
