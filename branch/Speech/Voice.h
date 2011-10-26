@@ -16,9 +16,10 @@ private:
 	CComPtr<ISpVoice> cpVoice;
 public:
 	Voice(string voiceName = "Microsoft Anna");
-	void speak(string message); // TODO Mood?
-	void setRate(long speed);
-	~Voice(void);
+	void say(string message = "I have nothing to say"); // TODO Mood?
+	void setVoiceSpeed(long speed = 1);
+	void setVoiceVolume(int volume = 50);
+	~Voice();
 };
 
 #endif
