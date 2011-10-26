@@ -130,6 +130,7 @@ System::Void Form1::Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 				 dataForm->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Form1::data_FormClosing);
 				 dataForm->buttonAdd->Click += gcnew System::EventHandler(this, &Form1::buttonAdd_Click);
 				 dataForm->textWord->TextChanged += gcnew System::EventHandler(this, &Form1::WordTextChanged);
+
 					 
 					 
 				 
@@ -213,12 +214,21 @@ System::Void Form1::databaseToolStripMenuItem_Click(System::Object^  sender, Sys
 			 this->dataForm->Show();
 
 }
+/*
+
+
+
+*/
 System::Void Form1::data_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 				
 }
 System::Void Form1::buttonAdd_Click(System::Object^  sender, System::EventArgs^  e) {
 
 }
+/*
+
+
+*/
 System::Void Form1::WindowRule_buttonOK_Click(System::Object^  sender, System::EventArgs^  e) {
 
 			  WindowRule^ window = (WindowRule^)this->ruleForm;
@@ -243,5 +253,9 @@ System::Void Form1::WindowRule_buttonOK_Click(System::Object^  sender, System::E
 }
 
 System::Void Form1::WordTextChanged(System::Object^ sender, System::EventArgs^ e) {
-	
+	this->browserThread->RunWorkerAsync();
+}
+System::Void Form1::browserThread_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e) {
+
+	this->environment->findWords(tostring(this->dataForm->textWord->Text));
 }
