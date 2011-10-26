@@ -1,76 +1,51 @@
 #pragma once
 
 #include "Database.h"
+#include "HTTPGET.h"
 namespace AI
 {
-/*
-	classe RechercheInfo
-	Permet de rechercher les informations d'un mot a partir d'un dictionnaire en ligne
-*/
 
-class RechercheInfo
-{
-public:
-	/*
-		constructeur de RechercheInfo
-		{initialise les variables}
-	*/
-	RechercheInfo(std::string mot);
+	namespace BROWSER
+	{
+			/*
+				classe Browser
+				Permet de rechercher les informations d'un mot a partir d'un dictionnaire en ligne
+			*/
 
-	/*
-		destructeur de RechercheInfo
-		{nettoie la mémoire}
-	*/
-	~RechercheInfo();
+			class Browser
+			{
+			public:
+				/*
+					constructeur de Browser
+					{initialise les variables}
+				*/
+				Browser(std::string mot);
 
-	/*
-		fonction rechercheEtAjout
-		=> {
-			S_OK si le mot a été trouvé, et ajouté à la Database 
-			E_OUTOFMEMORY si problème de mémoire,
-			E_FAIL sinon 
-			}
-	*/
-	HRESULT rechercheEtAjout();
-private:
-	/*
-		fonction http_get
-		{Envoie une requete HTTP de type GET à l'url donnée sur la page donnée}
-		=> {
-				retourne la réponse du serveur
-		   }
-	*/
-	char * http_get(char * url_path, char * url_server);
+				/*
+					destructeur de Browser
+					{nettoie la mémoire}
+				*/
+				~Browser();
 
-	/*
-		fonction strrch
-		{Cherche une chaine dans une autre chaine}
-		=> {
-				retourne la position de la chaine recherchée ou -1 si la chaine n'est pas trouvée
-		   }
-	*/
-	int strrch (char * string, char * recherche);
+				/*
+					fonction rechercheEtAjout
+					=> {
+						S_OK si le mot a été trouvé, et ajouté à la Database 
+						E_OUTOFMEMORY si problème de mémoire,
+						E_FAIL sinon 
+						}
+				*/
+				HRESULT rechercheEtAjout();
+			private:
 
-	/*
-		fonction taille_corps
-		{Calcule la taille du corps d'une réponse HTTP}
-		=> {
-				retourne la taille du corps de la réponse HTTP
-		   }
-	*/
-	int taille_corps(char *requete);
 
-	char * mot;
+			private:
 
-	DBWORD word;
-	DBVERB verb;
+				Database* DB;
 
-	char * urlPath;
-	char * urlServer;
-	char * debutParseType;
-	char * finParseType;
-	char * debutParseDef;
-	char * finParseDef;
-	//...
-};
+				DBWORD word;
+				DBVERB verb;
+				//...
+			};
+	}
 }

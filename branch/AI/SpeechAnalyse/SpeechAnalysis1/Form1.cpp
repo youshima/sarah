@@ -129,6 +129,7 @@ System::Void Form1::Form1_Load(System::Object^  sender, System::EventArgs^  e) {
 				 dataForm = gcnew WindowDatabase();
 				 dataForm->FormClosing += gcnew System::Windows::Forms::FormClosingEventHandler(this, &Form1::data_FormClosing);
 				 dataForm->buttonAdd->Click += gcnew System::EventHandler(this, &Form1::buttonAdd_Click);
+				 dataForm->textWord->TextChanged += gcnew System::EventHandler(this, &Form1::WordTextChanged);
 					 
 					 
 				 
@@ -239,4 +240,8 @@ System::Void Form1::WindowRule_buttonOK_Click(System::Object^  sender, System::E
 			  str.~basic_string();
 			  window->Hide();
 			  RedrawRules();
+}
+
+System::Void Form1::WordTextChanged(System::Object^ sender, System::EventArgs^ e) {
+	
 }

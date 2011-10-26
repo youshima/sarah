@@ -9,7 +9,7 @@
 
 #define LIST(x) std::vector<x>
 
-#define FILENAME "database.data"
+#define FILENAME_DATA "database.data"
 
 namespace AI
 {

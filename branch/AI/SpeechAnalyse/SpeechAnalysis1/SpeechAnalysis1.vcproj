@@ -225,6 +225,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\HTTPGET.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Rule.cpp"
 				>
 			</File>
@@ -302,6 +306,10 @@
 			</File>
 			<File
 				RelativePath=".\Helpers.h"
+				>
+			</File>
+			<File
+				RelativePath=".\HTTPGET.h"
 				>
 			</File>
 			<File

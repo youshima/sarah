@@ -437,6 +437,8 @@ private:
 
 			System::Void WindowRule_buttonOK_Click(System::Object^  sender, System::EventArgs^  e);
 
+			System::Void WordTextChanged(System::Object^ sender, System::EventArgs^ e);
+
 };
 }
 
