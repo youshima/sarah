@@ -18,7 +18,7 @@ AI::Environment::~Environment() {
 
 HRESULT AI::Environment::Save() {
 	bool exists;
-	if(file.open(FILENAME, exists) != S_OK) //ouvrir le fichier
+	if(file.open(FILENAME_ENV, exists) != S_OK) //ouvrir le fichier
 		return E_FILENOTFOUND;
 	
 	file.empty(); //vider le fichier
@@ -36,7 +36,7 @@ HRESULT AI::Environment::Save() {
 
 HRESULT AI::Environment::Load() {
 	bool exists;
-	file.open(FILENAME, exists); //ouvrir le fichier
+	file.open(FILENAME_ENV, exists); //ouvrir le fichier
 	if(!exists)
 		return E_FILENOTFOUND; //fichier non trouvé
 

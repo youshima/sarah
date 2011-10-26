@@ -202,7 +202,7 @@ Database::Database() {
 		map[i]->setOffset(0);
 	}
 	bool existed;
-	file.open(FILENAME, existed);
+	file.open(FILENAME_DATA, existed);
 
 	if(file.isEmpty() ) //le fichier est vide
 	{	
@@ -219,7 +219,7 @@ Database::~Database() {
 HRESULT Database::LoadMap() {
 
 	bool existed;
-	file.open(FILENAME, existed);
+	file.open(FILENAME_DATA, existed);
 	if(file.isOpen())
 	{
 		if( file.isEmpty() )
@@ -250,7 +250,7 @@ HRESULT Database::LoadMap() {
 HRESULT Database::AddWord(DBWORD& word) {
 
 	bool existed;
-	file.open(FILENAME, existed);
+	file.open(FILENAME_DATA, existed);
 
 	if(file.isOpen())
 	{

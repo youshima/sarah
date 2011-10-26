@@ -4,9 +4,10 @@
 #include "VAR.h"
 #include "Rule.h"
 #include "File.h"
+#include "Browser.h"
 
 
-#define FILENAME "environment.data"
+#define FILENAME_ENV "environment.data"
 
 namespace AI
 {

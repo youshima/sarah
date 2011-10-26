@@ -42,7 +42,7 @@ namespace SpeechAnalysis1 {
 			}
 		}
 	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::TextBox^  textWord;
+	public: System::Windows::Forms::TextBox^  textWord;
 	private: System::Windows::Forms::ListBox^  listWords;
 
 
