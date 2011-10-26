@@ -3,6 +3,7 @@
 #include "SentenceParser.h"
 
 #include "WindowRule.h"
+#include "WindowDatabase.h"
 #include "Environment.h"
 
 #define PROFILE "user.profile"
@@ -83,7 +84,8 @@ namespace SpeechAnalysis1 {
 
 
 	private : AI::Environment* environment;
-	private: Form^ ruleForm;
+	private: WindowRule^ ruleForm;
+	private: WindowDatabase^ dataForm;
 
 
 
@@ -135,13 +137,13 @@ namespace SpeechAnalysis1 {
 			this->ElementContainer = (gcnew System::Windows::Forms::GroupBox());
 			this->dialogTree = (gcnew System::Windows::Forms::Panel());
 			this->rules = (gcnew System::Windows::Forms::DataGridView());
-			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
-			this->editToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->deleteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->order = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->name = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->result = (gcnew System::Windows::Forms::DataGridViewTextBoxColumn());
 			this->active = (gcnew System::Windows::Forms::DataGridViewCheckBoxColumn());
+			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->editToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->deleteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menu->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->rules))->BeginInit();
 			this->contextMenuStrip1->SuspendLayout();
@@ -204,14 +206,14 @@ namespace SpeechAnalysis1 {
 				this->removeToolStripMenuItem});
 			this->ruleToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->ruleToolStripMenuItem->Name = L"ruleToolStripMenuItem";
-			this->ruleToolStripMenuItem->Size = System::Drawing::Size(101, 22);
+			this->ruleToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->ruleToolStripMenuItem->Text = L"New";
 			// 
 			// addToolStripMenuItem1
 			// 
 			this->addToolStripMenuItem1->ForeColor = System::Drawing::Color::Black;
 			this->addToolStripMenuItem1->Name = L"addToolStripMenuItem1";
-			this->addToolStripMenuItem1->Size = System::Drawing::Size(110, 22);
+			this->addToolStripMenuItem1->Size = System::Drawing::Size(152, 22);
 			this->addToolStripMenuItem1->Text = L"Rule";
 			this->addToolStripMenuItem1->Click += gcnew System::EventHandler(this, &Form1::addToolStripMenuItem1_Click);
 			// 
@@ -219,7 +221,7 @@ namespace SpeechAnalysis1 {
 			// 
 			this->removeToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->removeToolStripMenuItem->Name = L"removeToolStripMenuItem";
-			this->removeToolStripMenuItem->Size = System::Drawing::Size(110, 22);
+			this->removeToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->removeToolStripMenuItem->Text = L"Script";
 			// 
 			// viewToolStripMenuItem
@@ -237,7 +239,7 @@ namespace SpeechAnalysis1 {
 			this->dialogTreeToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->dialogTreeToolStripMenuItem->Name = L"dialogTreeToolStripMenuItem";
 			this->dialogTreeToolStripMenuItem->ShowShortcutKeys = false;
-			this->dialogTreeToolStripMenuItem->Size = System::Drawing::Size(131, 22);
+			this->dialogTreeToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->dialogTreeToolStripMenuItem->Text = L"Dialog tree";
 			this->dialogTreeToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::dialogTreeToolStripMenuItem_Click);
 			// 
@@ -245,7 +247,7 @@ namespace SpeechAnalysis1 {
 			// 
 			this->rulesToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->rulesToolStripMenuItem->Name = L"rulesToolStripMenuItem";
-			this->rulesToolStripMenuItem->Size = System::Drawing::Size(131, 22);
+			this->rulesToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->rulesToolStripMenuItem->Text = L"Rules";
 			this->rulesToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::rulesToolStripMenuItem_Click);
 			// 
@@ -253,7 +255,7 @@ namespace SpeechAnalysis1 {
 			// 
 			this->wordsToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->wordsToolStripMenuItem->Name = L"wordsToolStripMenuItem";
-			this->wordsToolStripMenuItem->Size = System::Drawing::Size(131, 22);
+			this->wordsToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->wordsToolStripMenuItem->Text = L"Words";
 			this->wordsToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::wordsToolStripMenuItem_Click);
 			// 
@@ -261,8 +263,9 @@ namespace SpeechAnalysis1 {
 			// 
 			this->databaseToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->databaseToolStripMenuItem->Name = L"databaseToolStripMenuItem";
-			this->databaseToolStripMenuItem->Size = System::Drawing::Size(131, 22);
+			this->databaseToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->databaseToolStripMenuItem->Text = L"Database";
+			this->databaseToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::databaseToolStripMenuItem_Click);
 			// 
 			// ElementContainer
 			// 
@@ -300,27 +303,6 @@ namespace SpeechAnalysis1 {
 			this->rules->CellMouseDoubleClick += gcnew System::Windows::Forms::DataGridViewCellMouseEventHandler(this, &Form1::rules_CellMouseDoubleClick);
 			this->rules->Paint += gcnew System::Windows::Forms::PaintEventHandler(this, &Form1::rules_Paint);
 			// 
-			// contextMenuStrip1
-			// 
-			this->contextMenuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->editToolStripMenuItem, 
-				this->deleteToolStripMenuItem});
-			this->contextMenuStrip1->Name = L"contextMenuStrip1";
-			this->contextMenuStrip1->Size = System::Drawing::Size(114, 48);
-			// 
-			// editToolStripMenuItem
-			// 
-			this->editToolStripMenuItem->Name = L"editToolStripMenuItem";
-			this->editToolStripMenuItem->Size = System::Drawing::Size(113, 22);
-			this->editToolStripMenuItem->Text = L"Edit";
-			this->editToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::editToolStripMenuItem_Click);
-			// 
-			// deleteToolStripMenuItem
-			// 
-			this->deleteToolStripMenuItem->Name = L"deleteToolStripMenuItem";
-			this->deleteToolStripMenuItem->Size = System::Drawing::Size(113, 22);
-			this->deleteToolStripMenuItem->Text = L"Delete";
-			this->deleteToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::deleteToolStripMenuItem_Click);
-			// 
 			// order
 			// 
 			this->order->DividerWidth = 2;
@@ -354,6 +336,27 @@ namespace SpeechAnalysis1 {
 			this->active->ReadOnly = true;
 			this->active->Width = 40;
 			// 
+			// contextMenuStrip1
+			// 
+			this->contextMenuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->editToolStripMenuItem, 
+				this->deleteToolStripMenuItem});
+			this->contextMenuStrip1->Name = L"contextMenuStrip1";
+			this->contextMenuStrip1->Size = System::Drawing::Size(114, 48);
+			// 
+			// editToolStripMenuItem
+			// 
+			this->editToolStripMenuItem->Name = L"editToolStripMenuItem";
+			this->editToolStripMenuItem->Size = System::Drawing::Size(113, 22);
+			this->editToolStripMenuItem->Text = L"Edit";
+			this->editToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::editToolStripMenuItem_Click);
+			// 
+			// deleteToolStripMenuItem
+			// 
+			this->deleteToolStripMenuItem->Name = L"deleteToolStripMenuItem";
+			this->deleteToolStripMenuItem->Size = System::Drawing::Size(113, 22);
+			this->deleteToolStripMenuItem->Text = L"Delete";
+			this->deleteToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::deleteToolStripMenuItem_Click);
+			// 
 			// Form1
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
@@ -384,226 +387,53 @@ namespace SpeechAnalysis1 {
 		}
 #pragma endregion
 
-	private: System::Void button1_Click(System::Object^  sender, System::EventArgs^  e) {
-				
+//mes méthodes
+public:
+			void RefreshElements();
 
-			 }
-		//mes méthodes
-	 public:
-		 void RefreshElements()
-		 {
-			 if(this->ElementContainer->Visible)
-				this->textEntry->Location = System::Drawing::Point(12, 404);
-			 else
-				this->textEntry->Location = System::Drawing::Point(12, 40);
+			void GenerateButtons(vector<Element*>* elements);
 
-			 if(this->dialogTree->Visible)
-				this->rules->Location = System::Drawing::Point(648, 36);
-			 else
-				 this->rules->Location = System::Drawing::Point(648 - this->dialogTree->Width, 36);
+			void EditRule();
 
-			// ToolStripMenuItem^ item = (ToolStripMenuItem^)this->menu->Items[this->menu->Items->IndexOfKey("dialogTreeToolStripMenuItem")];
-			 ToolStripMenuItem^ item = (ToolStripMenuItem^)this->menu->Items->Find("dialogTreeToolStripMenuItem",true)[0];
-			 item->Checked = this->dialogTree->Visible;
-		
-			 item = (ToolStripMenuItem^)this->menu->Items->Find("rulesToolStripMenuItem",true)[0];
-			 item->Checked = this->rules->Visible;
-			
-			 item = (ToolStripMenuItem^)this->menu->Items->Find("wordsToolStripMenuItem",true)[0];
-			 item->Checked = this->ElementContainer->Visible;
-		 }
+			void DeleteRule();
 
-		 void GenerateButtons(vector<Element*>* elements) {
-			
-			 //enlever les boutons d'abord
+			void RedrawRules();
 
-			 for(UINT i = 0; i < (UINT)ButtonElements->Count; i++)
-				 this->ElementContainer->Controls->Remove(ButtonElements[i]);
+private: 
+			System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e);
 
-			 ButtonElements->Clear();
+			System::Void exitToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 
-			 UINT offset = 0; //decalage depuis la gauche
-			 UINT topOffset = 0; //decalage depuis le haut
+			System::Void textEntry_PreviewKeyDown(System::Object^  sender, System::Windows::Forms::PreviewKeyDownEventArgs^  e);
 
-			 for(UINT i = 0; i < elements->size(); i++)
-			 {
-				
-				Button^ button = (gcnew System::Windows::Forms::Button());
-				UINT size = 5 * elements->at(i)->getLength();
+			System::Void dialogTreeToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 
-				if(offset + size + 25 >= (UINT)this->ElementContainer->Size.Width - 5)
-				{
-					offset = 0;
-					topOffset += 35;
-				}
+			System::Void rulesToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 
-				button->Location = System::Drawing::Point(5 + offset, 10 + topOffset);
-				button->Name = L"ButtonAnalyse";
-				button->Size = System::Drawing::Size(size+25,30);
-				button->TabIndex = 1+i;
-				button->Text = gcnew String(elements->at(i)->getString()->c_str());
-				button->UseVisualStyleBackColor = true;
+			System::Void wordsToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 
-				if(elements->at(i)->isSeparator())
-					button->BackColor = Color::Red;
-				
-		//	    button->Click += gcnew System::EventHandler(this, &Form1::buttonElements_Click);
-				this->ElementContainer->Controls->Add(button);
-				
-				
-				ButtonElements->Add(button);
+			System::Void addToolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e);
 
-				offset += (size + 25);
-			 }
-				
-		 }
-	private: System::Void Form1_Load(System::Object^  sender, System::EventArgs^  e) {
-				 ButtonElements = gcnew Collections::Generic::List<Button^>();
-				 environment = new AI::Environment(); //chargement de l'environnement
-				 File file; //chargement des données utilisateur
-				 bool existed;
-				 file.open(PROFILE,existed);
-				 if(existed)
-				 {
-					 bool boolean;
-					 file.read(boolean);
-					 this->dialogTree->Visible = boolean;
-					 file.read(boolean);
-					 this->rules->Visible = boolean;
-					 file.read(boolean);
-					 this->ElementContainer->Visible = boolean;
-				 }
-				 file.close();
-				 ruleForm = gcnew WindowRule();
-				 int elementIndex = ruleForm->Controls->IndexOfKey("buttonOK");
-				 Control^ buttonOK = (Control^)ruleForm->Controls[elementIndex];
-				 
-				 buttonOK->Click += gcnew System::EventHandler(this, &Form1::WindowRule_buttonOK_Click);
+			System::Void Form1_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e);
 
-				 RedrawRules();
-				 RefreshElements();
-				
-			 }
+			System::Void WindowRule_buttonOK_Click(System::Object^  sender, System::EventArgs^  e);
 
-private: System::Void exitToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-			 this->Close();
-		 }
+			System::Void rules_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e);
 
-private: System::Void textEntry_PreviewKeyDown(System::Object^  sender, System::Windows::Forms::PreviewKeyDownEventArgs^  e) {
-			 if(e->KeyCode == Keys::Enter)
-			 {
-				SentenceParser* sp = new SentenceParser();
-				vector<Element*>* elements = sp->Analyse(this->textEntry->Text);
-				
-				GenerateButtons(elements);
-			 }
-		 }
+			System::Void rules_CellMouseDoubleClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellMouseEventArgs^  e);
 
-private: System::Void dialogTreeToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+			System::Void editToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 
-			 this->dialogTree->Visible = !this->dialogTree->Visible; //toogle la visibilité
-			 RefreshElements();
-		 }
-private: System::Void rulesToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-			 this->rules->Visible = !this->rules->Visible; //toogle la visibilité
-			 RefreshElements();
-		 }
+			System::Void deleteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 
-private: System::Void wordsToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-			 this->ElementContainer->Visible = !this->ElementContainer->Visible; //toogle la visibilité
-			 RefreshElements();
-		 }
-private: System::Void addToolStripMenuItem1_Click(System::Object^  sender, System::EventArgs^  e) {
-			 ruleForm->Show();
-		 }
-private: System::Void Form1_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
-			 environment->~Environment(); // sauvegarde et destruction de l'environnement
-			 File file; //sauvegarde des données utilisateur
-			 bool existed;
-		     file.open(PROFILE,existed);
-			 file.empty();
-			 file.write(this->dialogTree->Visible);
-			 file.write(this->rules->Visible);
-			 file.write(this->ElementContainer->Visible);
-		     file.close();
-			 
-		 }
-private : System::Void WindowRule_buttonOK_Click(System::Object^  sender, System::EventArgs^  e) {
-			  WindowRule^ window = (WindowRule^)this->ruleForm;
-			  
-			  
-			  AI::Rule* rule = new AI::Rule();
-			  
-			  std::string str = tostring(window->LName->Text);
-			  rule->setName(str);
-			  str = tostring(window->LDef->Text);
-			  rule->setAbout(str);
-			  str = tostring(window->LScript->Text);
-			  rule->setScript(str);
-			  bool enabled = true;
-			  rule->setEnabled(enabled);
-			  environment->AddRule(*rule); //ajouter ou modifier la regle
+			System::Void rules_CellMouseDown(System::Object^  sender, System::Windows::Forms::DataGridViewCellMouseEventArgs^  e);
 
-			  rule->~Rule();
+			System::Void databaseToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 
-			  str.~basic_string();
-			  window->Hide();
-			  RedrawRules();
-		  }
-private: System::Void rules_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
-			 
-		 }
-private: System::Void RedrawRules() {
-			 this->rules->Rows->Clear();
+			System::Void data_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e);
 
-			 for(UINT i = 0; i < environment->getRulesCount(); i++)
-			 {
-				 this->rules->Rows->Add();
-				//array< System::Object^>^  values;
-				
-				// this->rules->Rows[i]->SetValues(values);
-				 this->rules->Rows[i]->Cells[0]->Value = i;
-				 this->rules->Rows[i]->Cells[1]->Value = gcnew String(environment->getRule(i)->getName()->c_str());
-				// this->rules->Rows[i]->Cells[2]->Value = gcnew String(environment->getRule(i)->getAbout()->c_str());
-				 this->rules->Rows[i]->Cells[3]->Value = environment->getRule(i)->getEnabled();
-			 }
-		 }
-private: System::Void rules_CellMouseDoubleClick(System::Object^  sender, System::Windows::Forms::DataGridViewCellMouseEventArgs^  e) {
+			System::Void buttonAdd_Click(System::Object^  sender, System::EventArgs^  e);
 
-			 EditRule();
-		 }
-private: System::Void editToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-			 EditRule();
-		 }
-		 void EditRule()
-		 {
-			WindowRule^ window = (WindowRule^)this->ruleForm;
-			 //recuperer la regle selectionnée par l'utilisateur
-			 
-			 UINT index = (UINT)this->rules->SelectedRows[0]->Index;
-			 AI::Rule* rule = environment->getRule(index);
-			 window->LName->Text = gcnew String(rule->getName()->c_str());
-			 window->LDef->Text = gcnew String(rule->getAbout()->c_str());
-			 window->LScript->Text = gcnew String(rule->getScript()->c_str());
-			 window->Show();
-		 }
-		 void DeleteRule()
-		 {
-			WindowRule^ window = (WindowRule^)this->ruleForm;
-			 //recuperer la regle selectionnée par l'utilisateur
-			 
-			 UINT index = (UINT)this->rules->SelectedRows[0]->Index;
-			 environment->RemoveRule(index);
-		 }
-private: System::Void deleteToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
-			 DeleteRule();
-			 this->RedrawRules();
-		 }
-private: System::Void rules_CellMouseDown(System::Object^  sender, System::Windows::Forms::DataGridViewCellMouseEventArgs^  e) {
-
-			 if(e->Button == System::Windows::Forms::MouseButtons::Right)
-				 this->contextMenuStrip1->Show(Point(Cursor->Position.X, Cursor->Position.Y));
-		 }
 };
 }
 
