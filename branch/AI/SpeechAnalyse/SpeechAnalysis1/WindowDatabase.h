@@ -42,10 +42,13 @@ namespace SpeechAnalysis1 {
 			}
 		}
 	private: System::Windows::Forms::Label^  label1;
-	private: System::Windows::Forms::TextBox^  textBox1;
-	private: System::Windows::Forms::ListBox^  listBox1;
+	private: System::Windows::Forms::TextBox^  textWord;
+	private: System::Windows::Forms::ListBox^  listWords;
+
+
 	private: System::Windows::Forms::GroupBox^  groupBox1;
-	private: System::Windows::Forms::ComboBox^  comboBox1;
+	private: System::Windows::Forms::ComboBox^  comboType;
+
 	private: System::Windows::Forms::Label^  label3;
 	private: System::Windows::Forms::GroupBox^  mainInfo;
 
@@ -57,6 +60,13 @@ namespace SpeechAnalysis1 {
 	private: System::Windows::Forms::Label^  label5;
 	private: System::Windows::Forms::GroupBox^  groupBox2;
 	private: System::Windows::Forms::DataGridView^  dataGridView1;
+	private: System::Windows::Forms::GroupBox^  addword;
+	public: System::Windows::Forms::Button^  buttonAdd;
+	private: System::ComponentModel::BackgroundWorker^  browserThread;
+	public: 
+
+
+
 	protected: 
 
 	private:
@@ -73,24 +83,28 @@ namespace SpeechAnalysis1 {
 		void InitializeComponent(void)
 		{
 			this->label1 = (gcnew System::Windows::Forms::Label());
-			this->textBox1 = (gcnew System::Windows::Forms::TextBox());
-			this->listBox1 = (gcnew System::Windows::Forms::ListBox());
+			this->textWord = (gcnew System::Windows::Forms::TextBox());
+			this->listWords = (gcnew System::Windows::Forms::ListBox());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->comboType = (gcnew System::Windows::Forms::ComboBox());
+			this->label3 = (gcnew System::Windows::Forms::Label());
 			this->mainInfo = (gcnew System::Windows::Forms::GroupBox());
+			this->label4 = (gcnew System::Windows::Forms::Label());
+			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->listBox2 = (gcnew System::Windows::Forms::ListBox());
-			this->label3 = (gcnew System::Windows::Forms::Label());
-			this->comboBox1 = (gcnew System::Windows::Forms::ComboBox());
-			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
-			this->label5 = (gcnew System::Windows::Forms::Label());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
+			this->addword = (gcnew System::Windows::Forms::GroupBox());
+			this->buttonAdd = (gcnew System::Windows::Forms::Button());
+			this->browserThread = (gcnew System::ComponentModel::BackgroundWorker());
 			this->groupBox1->SuspendLayout();
 			this->mainInfo->SuspendLayout();
 			this->groupBox2->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->BeginInit();
+			this->addword->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// label1
@@ -102,38 +116,56 @@ namespace SpeechAnalysis1 {
 			this->label1->TabIndex = 0;
 			this->label1->Text = L"Word :";
 			// 
-			// textBox1
+			// textWord
 			// 
-			this->textBox1->Location = System::Drawing::Point(38, 19);
-			this->textBox1->Name = L"textBox1";
-			this->textBox1->Size = System::Drawing::Size(151, 20);
-			this->textBox1->TabIndex = 1;
+			this->textWord->Location = System::Drawing::Point(38, 19);
+			this->textWord->Name = L"textWord";
+			this->textWord->Size = System::Drawing::Size(151, 20);
+			this->textWord->TabIndex = 1;
 			// 
-			// listBox1
+			// listWords
 			// 
-			this->listBox1->FormattingEnabled = true;
-			this->listBox1->Location = System::Drawing::Point(6, 45);
-			this->listBox1->Name = L"listBox1";
-			this->listBox1->Size = System::Drawing::Size(339, 316);
-			this->listBox1->TabIndex = 2;
+			this->listWords->FormattingEnabled = true;
+			this->listWords->Location = System::Drawing::Point(6, 45);
+			this->listWords->Name = L"listWords";
+			this->listWords->Size = System::Drawing::Size(339, 316);
+			this->listWords->TabIndex = 2;
 			// 
 			// groupBox1
 			// 
-			this->groupBox1->Controls->Add(this->comboBox1);
+			this->groupBox1->Controls->Add(this->comboType);
 			this->groupBox1->Controls->Add(this->label3);
-			this->groupBox1->Controls->Add(this->textBox1);
+			this->groupBox1->Controls->Add(this->textWord);
 			this->groupBox1->Controls->Add(this->label1);
-			this->groupBox1->Controls->Add(this->listBox1);
+			this->groupBox1->Controls->Add(this->listWords);
 			this->groupBox1->Location = System::Drawing::Point(12, 12);
 			this->groupBox1->Name = L"groupBox1";
 			this->groupBox1->Size = System::Drawing::Size(351, 363);
 			this->groupBox1->TabIndex = 3;
 			this->groupBox1->TabStop = false;
 			// 
+			// comboType
+			// 
+			this->comboType->FormattingEnabled = true;
+			this->comboType->Location = System::Drawing::Point(238, 19);
+			this->comboType->Name = L"comboType";
+			this->comboType->Size = System::Drawing::Size(107, 21);
+			this->comboType->TabIndex = 4;
+			// 
+			// label3
+			// 
+			this->label3->AutoSize = true;
+			this->label3->Location = System::Drawing::Point(195, 22);
+			this->label3->Name = L"label3";
+			this->label3->Size = System::Drawing::Size(37, 13);
+			this->label3->TabIndex = 3;
+			this->label3->Text = L"Type :";
+			// 
 			// mainInfo
 			// 
 			this->mainInfo->Controls->Add(this->label4);
 			this->mainInfo->Controls->Add(this->label5);
+			this->mainInfo->Controls->Add(this->textBox3);
 			this->mainInfo->Controls->Add(this->textBox2);
 			this->mainInfo->Controls->Add(this->label2);
 			this->mainInfo->Controls->Add(this->listBox2);
@@ -142,6 +174,25 @@ namespace SpeechAnalysis1 {
 			this->mainInfo->Size = System::Drawing::Size(338, 137);
 			this->mainInfo->TabIndex = 4;
 			this->mainInfo->TabStop = false;
+			this->mainInfo->Visible = false;
+			// 
+			// label4
+			// 
+			this->label4->AutoSize = true;
+			this->label4->Location = System::Drawing::Point(2, 45);
+			this->label4->Name = L"label4";
+			this->label4->Size = System::Drawing::Size(30, 13);
+			this->label4->TabIndex = 3;
+			this->label4->Text = L"Def :";
+			// 
+			// label5
+			// 
+			this->label5->AutoSize = true;
+			this->label5->Location = System::Drawing::Point(174, 22);
+			this->label5->Name = L"label5";
+			this->label5->Size = System::Drawing::Size(37, 13);
+			this->label5->TabIndex = 4;
+			this->label5->Text = L"Type :";
 			// 
 			// textBox2
 			// 
@@ -167,76 +218,65 @@ namespace SpeechAnalysis1 {
 			this->listBox2->Size = System::Drawing::Size(294, 82);
 			this->listBox2->TabIndex = 2;
 			// 
-			// label3
-			// 
-			this->label3->AutoSize = true;
-			this->label3->Location = System::Drawing::Point(195, 22);
-			this->label3->Name = L"label3";
-			this->label3->Size = System::Drawing::Size(37, 13);
-			this->label3->TabIndex = 3;
-			this->label3->Text = L"Type :";
-			// 
-			// comboBox1
-			// 
-			this->comboBox1->FormattingEnabled = true;
-			this->comboBox1->Location = System::Drawing::Point(238, 19);
-			this->comboBox1->Name = L"comboBox1";
-			this->comboBox1->Size = System::Drawing::Size(107, 21);
-			this->comboBox1->TabIndex = 4;
-			// 
-			// label4
-			// 
-			this->label4->AutoSize = true;
-			this->label4->Location = System::Drawing::Point(2, 45);
-			this->label4->Name = L"label4";
-			this->label4->Size = System::Drawing::Size(30, 13);
-			this->label4->TabIndex = 3;
-			this->label4->Text = L"Def :";
-			// 
 			// textBox3
 			// 
-			this->textBox3->Location = System::Drawing::Point(589, 31);
+			this->textBox3->Location = System::Drawing::Point(211, 19);
 			this->textBox3->Name = L"textBox3";
 			this->textBox3->Size = System::Drawing::Size(112, 20);
 			this->textBox3->TabIndex = 5;
-			// 
-			// label5
-			// 
-			this->label5->AutoSize = true;
-			this->label5->Location = System::Drawing::Point(177, 22);
-			this->label5->Name = L"label5";
-			this->label5->Size = System::Drawing::Size(37, 13);
-			this->label5->TabIndex = 4;
-			this->label5->Text = L"Type :";
 			// 
 			// groupBox2
 			// 
 			this->groupBox2->Controls->Add(this->dataGridView1);
 			this->groupBox2->Location = System::Drawing::Point(369, 155);
 			this->groupBox2->Name = L"groupBox2";
-			this->groupBox2->Size = System::Drawing::Size(338, 137);
+			this->groupBox2->Size = System::Drawing::Size(338, 267);
 			this->groupBox2->TabIndex = 5;
 			this->groupBox2->TabStop = false;
+			this->groupBox2->Visible = false;
 			// 
 			// dataGridView1
 			// 
 			this->dataGridView1->ColumnHeadersHeightSizeMode = System::Windows::Forms::DataGridViewColumnHeadersHeightSizeMode::AutoSize;
 			this->dataGridView1->Location = System::Drawing::Point(6, 10);
 			this->dataGridView1->Name = L"dataGridView1";
-			this->dataGridView1->Size = System::Drawing::Size(326, 121);
+			this->dataGridView1->Size = System::Drawing::Size(326, 248);
 			this->dataGridView1->TabIndex = 0;
+			// 
+			// addword
+			// 
+			this->addword->Controls->Add(this->buttonAdd);
+			this->addword->Location = System::Drawing::Point(12, 379);
+			this->addword->Name = L"addword";
+			this->addword->Size = System::Drawing::Size(351, 43);
+			this->addword->TabIndex = 6;
+			this->addword->TabStop = false;
+			this->addword->Visible = false;
+			// 
+			// buttonAdd
+			// 
+			this->buttonAdd->Location = System::Drawing::Point(270, 11);
+			this->buttonAdd->Name = L"buttonAdd";
+			this->buttonAdd->Size = System::Drawing::Size(75, 23);
+			this->buttonAdd->TabIndex = 0;
+			this->buttonAdd->Text = L"Add";
+			this->buttonAdd->UseVisualStyleBackColor = true;
 			// 
 			// WindowDatabase
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+			this->AutoSize = true;
 			this->AutoSizeMode = System::Windows::Forms::AutoSizeMode::GrowAndShrink;
-			this->ClientSize = System::Drawing::Size(713, 387);
+			this->ClientSize = System::Drawing::Size(713, 433);
+			this->Controls->Add(this->addword);
 			this->Controls->Add(this->groupBox2);
-			this->Controls->Add(this->textBox3);
 			this->Controls->Add(this->mainInfo);
 			this->Controls->Add(this->groupBox1);
+			this->MaximizeBox = false;
+			this->MinimizeBox = false;
 			this->Name = L"WindowDatabase";
+			this->ShowIcon = false;
 			this->Text = L"WindowDatabase";
 			this->groupBox1->ResumeLayout(false);
 			this->groupBox1->PerformLayout();
@@ -244,10 +284,11 @@ namespace SpeechAnalysis1 {
 			this->mainInfo->PerformLayout();
 			this->groupBox2->ResumeLayout(false);
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->dataGridView1))->EndInit();
+			this->addword->ResumeLayout(false);
 			this->ResumeLayout(false);
-			this->PerformLayout();
 
 		}
 #pragma endregion
-	};
+
+};
 }
