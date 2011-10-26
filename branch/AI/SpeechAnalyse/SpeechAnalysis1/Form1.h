@@ -416,7 +416,7 @@ private:
 
 			System::Void Form1_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e);
 
-			System::Void WindowRule_buttonOK_Click(System::Object^  sender, System::EventArgs^  e);
+			
 
 			System::Void rules_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e);
 
@@ -430,9 +430,12 @@ private:
 
 			System::Void databaseToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 
+
 			System::Void data_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e);
 
 			System::Void buttonAdd_Click(System::Object^  sender, System::EventArgs^  e);
+
+			System::Void WindowRule_buttonOK_Click(System::Object^  sender, System::EventArgs^  e);
 
 };
 }

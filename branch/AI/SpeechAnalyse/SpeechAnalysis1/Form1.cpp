@@ -3,9 +3,7 @@
 
 using namespace SpeechAnalysis1;
 
-System::Void Form1::buttonAdd_Click(System::Object^  sender, System::EventArgs^  e) {
 
-}
 void Form1::RefreshElements() {
 
 			 if(this->ElementContainer->Visible)
@@ -188,28 +186,6 @@ System::Void Form1::Form1_FormClosing(System::Object^  sender, System::Windows::
 		     file.close();
 			 
 }
-System::Void Form1::WindowRule_buttonOK_Click(System::Object^  sender, System::EventArgs^  e) {
-
-			  WindowRule^ window = (WindowRule^)this->ruleForm;
-			  
-			  AI::Rule* rule = new AI::Rule();
-			  
-			  std::string str = tostring(window->LName->Text);
-			  rule->setName(str);
-			  str = tostring(window->LDef->Text);
-			  rule->setAbout(str);
-			  str = tostring(window->LScript->Text);
-			  rule->setScript(str);
-			  bool enabled = true;
-			  rule->setEnabled(enabled);
-			  environment->AddRule(*rule); //ajouter ou modifier la regle
-
-			  rule->~Rule();
-
-			  str.~basic_string();
-			  window->Hide();
-			  RedrawRules();
-}
 System::Void Form1::rules_Paint(System::Object^  sender, System::Windows::Forms::PaintEventArgs^  e) {
 			 
 }
@@ -238,4 +214,29 @@ System::Void Form1::databaseToolStripMenuItem_Click(System::Object^  sender, Sys
 }
 System::Void Form1::data_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 				
+}
+System::Void Form1::buttonAdd_Click(System::Object^  sender, System::EventArgs^  e) {
+
+}
+System::Void Form1::WindowRule_buttonOK_Click(System::Object^  sender, System::EventArgs^  e) {
+
+			  WindowRule^ window = (WindowRule^)this->ruleForm;
+			  
+			  AI::Rule* rule = new AI::Rule();
+			  
+			  std::string str = tostring(window->LName->Text);
+			  rule->setName(str);
+			  str = tostring(window->LDef->Text);
+			  rule->setAbout(str);
+			  str = tostring(window->LScript->Text);
+			  rule->setScript(str);
+			  bool enabled = true;
+			  rule->setEnabled(enabled);
+			  environment->AddRule(*rule); //ajouter ou modifier la regle
+
+			  rule->~Rule();
+
+			  str.~basic_string();
+			  window->Hide();
+			  RedrawRules();
 }
