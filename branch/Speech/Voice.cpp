@@ -7,8 +7,6 @@ Voice::Voice(string voiceName)
 {
 	HRESULT hr = S_OK;
 
-	//::CoInitialize(NULL);
-
 	hr = CoCreateInstance(CLSID_SpVoice, NULL, CLSCTX_ALL, IID_ISpVoice, (void **)&(this->cpVoice));
 	if (!SUCCEEDED(hr)) {
 		//Exception : on a pas réussi à... J'en sais rien. Mais en tout cas ça a pas marché.
@@ -21,7 +19,7 @@ Voice::Voice(string voiceName)
 	}
 }
 
-void Voice::speak(string message)
+void Voice::say(string message)
 {
 	HRESULT hr = S_OK;
 	wstring stmp = string_to_wstring(message);
@@ -31,12 +29,25 @@ void Voice::speak(string message)
 	}
 }
 
-void Voice::setRate(long speed) {
+void Voice::setVoiceSpeed(long speed) {
 	this->cpVoice->SetRate(speed);
 }
 
+void Voice::setVoiceVolume(int volume) {
+	USHORT vol;
+	if (volume<0) {
+		vol = 0;
+	} else if (volume>100) {
+		vol = 100;
+	} else {
+		vol = volume;
+	}
+	this->cpVoice->SetVolume(vol);
+}
 
-Voice::~Voice(void)
+
+Voice::~Voice()
 {
-	//::CoUninitialize();
+	this->cpVoice = NULL;
+	this->cpVoiceToken = NULL;
 }

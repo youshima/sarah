@@ -4,8 +4,8 @@
 class Ears
 {
 public:
-	Ears(void);
-	~Ears(void);
+	Ears();
+	~Ears();
 };
 
 #endif
