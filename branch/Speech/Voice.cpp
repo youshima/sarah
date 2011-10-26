@@ -7,7 +7,7 @@ Voice::Voice(string voiceName)
 {
 	HRESULT hr = S_OK;
 
-	::CoInitialize(NULL);
+	//::CoInitialize(NULL);
 
 	hr = CoCreateInstance(CLSID_SpVoice, NULL, CLSCTX_ALL, IID_ISpVoice, (void **)&(this->cpVoice));
 	if (!SUCCEEDED(hr)) {
@@ -31,8 +31,12 @@ void Voice::speak(string message)
 	}
 }
 
+void Voice::setRate(long speed) {
+	this->cpVoice->SetRate(speed);
+}
+
 
 Voice::~Voice(void)
 {
-	::CoUninitialize();
+	//::CoUninitialize();
 }

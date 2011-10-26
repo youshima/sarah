@@ -1,4 +1,6 @@
 #pragma once
+#ifndef EARS_H
+#define EARS_H
 class Ears
 {
 public:
@@ -6,3 +8,4 @@ public:
 	~Ears(void);
 };
 
+#endif

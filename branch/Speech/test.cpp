@@ -10,7 +10,15 @@
 using namespace std;
 
 int main() {
+
+	::CoInitialize(NULL);
+
+
 	Sound * sound = new Sound();
-	sound->getVoice().speak("This is a test program");
+	sound->setVoiceSpeed(1);
+	sound->say("This is a test program");
+
+
+	::CoUninitialize();
 	return 0;
 }
