@@ -62,7 +62,7 @@ namespace SpeechAnalysis1 {
 	private: System::Windows::Forms::DataGridView^  dataGridView1;
 	private: System::Windows::Forms::GroupBox^  addword;
 	public: System::Windows::Forms::Button^  buttonAdd;
-	private: System::ComponentModel::BackgroundWorker^  browserThread;
+
 	public: 
 
 
@@ -91,15 +91,14 @@ namespace SpeechAnalysis1 {
 			this->mainInfo = (gcnew System::Windows::Forms::GroupBox());
 			this->label4 = (gcnew System::Windows::Forms::Label());
 			this->label5 = (gcnew System::Windows::Forms::Label());
+			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->textBox2 = (gcnew System::Windows::Forms::TextBox());
 			this->label2 = (gcnew System::Windows::Forms::Label());
 			this->listBox2 = (gcnew System::Windows::Forms::ListBox());
-			this->textBox3 = (gcnew System::Windows::Forms::TextBox());
 			this->groupBox2 = (gcnew System::Windows::Forms::GroupBox());
 			this->dataGridView1 = (gcnew System::Windows::Forms::DataGridView());
 			this->addword = (gcnew System::Windows::Forms::GroupBox());
 			this->buttonAdd = (gcnew System::Windows::Forms::Button());
-			this->browserThread = (gcnew System::ComponentModel::BackgroundWorker());
 			this->groupBox1->SuspendLayout();
 			this->mainInfo->SuspendLayout();
 			this->groupBox2->SuspendLayout();
@@ -194,6 +193,13 @@ namespace SpeechAnalysis1 {
 			this->label5->TabIndex = 4;
 			this->label5->Text = L"Type :";
 			// 
+			// textBox3
+			// 
+			this->textBox3->Location = System::Drawing::Point(211, 19);
+			this->textBox3->Name = L"textBox3";
+			this->textBox3->Size = System::Drawing::Size(112, 20);
+			this->textBox3->TabIndex = 5;
+			// 
 			// textBox2
 			// 
 			this->textBox2->Location = System::Drawing::Point(38, 19);
@@ -217,13 +223,6 @@ namespace SpeechAnalysis1 {
 			this->listBox2->Name = L"listBox2";
 			this->listBox2->Size = System::Drawing::Size(294, 82);
 			this->listBox2->TabIndex = 2;
-			// 
-			// textBox3
-			// 
-			this->textBox3->Location = System::Drawing::Point(211, 19);
-			this->textBox3->Name = L"textBox3";
-			this->textBox3->Size = System::Drawing::Size(112, 20);
-			this->textBox3->TabIndex = 5;
 			// 
 			// groupBox2
 			// 
@@ -289,6 +288,7 @@ namespace SpeechAnalysis1 {
 
 		}
 #pragma endregion
+
 
 };
 }

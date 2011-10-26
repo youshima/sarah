@@ -1,10 +1,11 @@
 #pragma once
 
 #include "SentenceParser.h"
-
+#include "Environment.h"
+#include "Browser.h"
 #include "WindowRule.h"
 #include "WindowDatabase.h"
-#include "Environment.h"
+
 
 #define PROFILE "user.profile"
 
@@ -97,6 +98,7 @@ namespace SpeechAnalysis1 {
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  name;
 	private: System::Windows::Forms::DataGridViewTextBoxColumn^  result;
 	private: System::Windows::Forms::DataGridViewCheckBoxColumn^  active;
+	private: System::ComponentModel::BackgroundWorker^  browserThread;
 	private: System::ComponentModel::IContainer^  components;
 
 			  
@@ -144,6 +146,7 @@ namespace SpeechAnalysis1 {
 			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->editToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->deleteToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->browserThread = (gcnew System::ComponentModel::BackgroundWorker());
 			this->menu->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^  >(this->rules))->BeginInit();
 			this->contextMenuStrip1->SuspendLayout();
@@ -206,14 +209,14 @@ namespace SpeechAnalysis1 {
 				this->removeToolStripMenuItem});
 			this->ruleToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->ruleToolStripMenuItem->Name = L"ruleToolStripMenuItem";
-			this->ruleToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->ruleToolStripMenuItem->Size = System::Drawing::Size(101, 22);
 			this->ruleToolStripMenuItem->Text = L"New";
 			// 
 			// addToolStripMenuItem1
 			// 
 			this->addToolStripMenuItem1->ForeColor = System::Drawing::Color::Black;
 			this->addToolStripMenuItem1->Name = L"addToolStripMenuItem1";
-			this->addToolStripMenuItem1->Size = System::Drawing::Size(152, 22);
+			this->addToolStripMenuItem1->Size = System::Drawing::Size(110, 22);
 			this->addToolStripMenuItem1->Text = L"Rule";
 			this->addToolStripMenuItem1->Click += gcnew System::EventHandler(this, &Form1::addToolStripMenuItem1_Click);
 			// 
@@ -221,7 +224,7 @@ namespace SpeechAnalysis1 {
 			// 
 			this->removeToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->removeToolStripMenuItem->Name = L"removeToolStripMenuItem";
-			this->removeToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->removeToolStripMenuItem->Size = System::Drawing::Size(110, 22);
 			this->removeToolStripMenuItem->Text = L"Script";
 			// 
 			// viewToolStripMenuItem
@@ -239,7 +242,7 @@ namespace SpeechAnalysis1 {
 			this->dialogTreeToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->dialogTreeToolStripMenuItem->Name = L"dialogTreeToolStripMenuItem";
 			this->dialogTreeToolStripMenuItem->ShowShortcutKeys = false;
-			this->dialogTreeToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->dialogTreeToolStripMenuItem->Size = System::Drawing::Size(131, 22);
 			this->dialogTreeToolStripMenuItem->Text = L"Dialog tree";
 			this->dialogTreeToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::dialogTreeToolStripMenuItem_Click);
 			// 
@@ -247,7 +250,7 @@ namespace SpeechAnalysis1 {
 			// 
 			this->rulesToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->rulesToolStripMenuItem->Name = L"rulesToolStripMenuItem";
-			this->rulesToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->rulesToolStripMenuItem->Size = System::Drawing::Size(131, 22);
 			this->rulesToolStripMenuItem->Text = L"Rules";
 			this->rulesToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::rulesToolStripMenuItem_Click);
 			// 
@@ -255,7 +258,7 @@ namespace SpeechAnalysis1 {
 			// 
 			this->wordsToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->wordsToolStripMenuItem->Name = L"wordsToolStripMenuItem";
-			this->wordsToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->wordsToolStripMenuItem->Size = System::Drawing::Size(131, 22);
 			this->wordsToolStripMenuItem->Text = L"Words";
 			this->wordsToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::wordsToolStripMenuItem_Click);
 			// 
@@ -263,7 +266,7 @@ namespace SpeechAnalysis1 {
 			// 
 			this->databaseToolStripMenuItem->ForeColor = System::Drawing::Color::Black;
 			this->databaseToolStripMenuItem->Name = L"databaseToolStripMenuItem";
-			this->databaseToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->databaseToolStripMenuItem->Size = System::Drawing::Size(131, 22);
 			this->databaseToolStripMenuItem->Text = L"Database";
 			this->databaseToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::databaseToolStripMenuItem_Click);
 			// 
@@ -357,6 +360,10 @@ namespace SpeechAnalysis1 {
 			this->deleteToolStripMenuItem->Text = L"Delete";
 			this->deleteToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::deleteToolStripMenuItem_Click);
 			// 
+			// browserThread
+			// 
+			this->browserThread->DoWork += gcnew System::ComponentModel::DoWorkEventHandler(this, &Form1::browserThread_DoWork);
+			// 
 			// Form1
 			// 
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::None;
@@ -438,6 +445,8 @@ private:
 			System::Void WindowRule_buttonOK_Click(System::Object^  sender, System::EventArgs^  e);
 
 			System::Void WordTextChanged(System::Object^ sender, System::EventArgs^ e);
+
+			System::Void browserThread_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e);
 
 };
 }
