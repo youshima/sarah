@@ -257,5 +257,5 @@ System::Void Form1::WordTextChanged(System::Object^ sender, System::EventArgs^ e
 }
 System::Void Form1::browserThread_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e) {
 
-	this->environment->findWords(tostring(this->dataForm->textWord->Text));
+//this->environment->findWords(tostring(this->dataForm->textWord->Text));
 }
