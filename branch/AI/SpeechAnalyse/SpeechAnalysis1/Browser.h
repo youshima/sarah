@@ -19,7 +19,7 @@ namespace AI
 					constructeur de Browser
 					{initialise les variables}
 				*/
-				Browser(std::string mot);
+				Browser();
 
 				/*
 					destructeur de Browser
@@ -28,24 +28,65 @@ namespace AI
 				~Browser();
 
 				/*
-					fonction rechercheEtAjout
+					fonction find
 					=> {
-						S_OK si le mot a été trouvé, et ajouté à la Database 
-						E_OUTOFMEMORY si problème de mémoire,
-						E_FAIL sinon 
-						}
+							retourne la structure DBWORD avec les infos du mot word
+					   }
 				*/
-				HRESULT rechercheEtAjout();
+				DBWORD findW(STR word);
+
+				/*
+					fonction find
+					=> {
+							retourne la structure DBVERB avec les infos du mot verb
+					   }
+				*/
+				DBVERB findV(STR verb);
+
+				/*
+					fonction getType
+					=> {
+							retourne le type TYPE du mot word
+					   }
+				*/
+				TYPE getType(STR word);
 			private:
+				/*
+					fonction http_get
+					{Envoie une requete HTTP de type GET à l'url donnée sur la page donnée}
+					=> {
+							retourne la réponse du serveur
+					   }
+				*/
+				STR httpGet(STR url_path, STR url_server);
 
+				/*
+					fonction strrch
+					{Cherche une chaine dans une autre chaine}
+					=> {
+							retourne la position de la chaine recherchée ou -1 si la chaine n'est pas trouvée
+					   }
+				*/
+				int strrch (STR string, STR recherche);
 
-			private:
+				/*
+					fonction taille_corps
+					{Calcule la taille du corps d'une réponse HTTP}
+					=> {
+							retourne la taille du corps de la réponse HTTP
+					   }
+				*/
+				int taille_corps(STR requete);
 
-				Database* DB;
+				STR mot;
+
+				Database db;
 
 				DBWORD word;
 				DBVERB verb;
-				//...
+
+				STR urlPath;
+				STR urlServer;
 			};
 	}
 }

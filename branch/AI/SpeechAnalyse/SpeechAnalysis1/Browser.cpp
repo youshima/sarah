@@ -4,24 +4,35 @@
 using namespace AI;
 using namespace AI::BROWSER;
 
-Browser::Browser(std::string mot)
-{
-	//strcpy(this->mot, mot.c_str());
-	
-	//Par defaut, le constructeur définira les regle de parsing et le site visé
-
-	DB = new Database();
-}
-
-Browser::~Browser()
+Browser::Browser(void)
+:
+db()
 {
 }
 
-HRESULT Browser::rechercheEtAjout()
+Browser::~Browser(void)
 {
-	//Le parseur sera ici.
+	this->db.~Database();
+}
 
-	//L'ajout du mot dans la Database se fera ici.
+DBWORD Browser::findW(STR word)
+{
+	/*if (this->db.exist(word, TYPE_NONE))
+	{
+		return this->db.info(word, TYPE_NONE))
+	}
+	else
+	{
+		DBWORD infoWord(word);
 
-	return S_OK;
+	}
+	*/
+}
+
+DBVERB Browser::findV(STR verb)
+{
+}
+
+TYPE Browser::getType(STR word)
+{
 }
