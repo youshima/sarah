@@ -42,6 +42,9 @@
     <ClInclude Include="resource.h">
       <Filter>Bordel</Filter>
     </ClInclude>
+    <ClInclude Include="ASR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Voice.cpp">
@@ -61,6 +64,9 @@
     </ClCompile>
     <ClCompile Include="stdafx.cpp">
       <Filter>Bordel</Filter>
+    </ClCompile>
+    <ClCompile Include="ASR.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

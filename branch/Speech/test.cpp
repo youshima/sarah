@@ -9,8 +9,11 @@
 #include <iostream>
 using namespace std;
 
-int main() {
 
+#include "ASR.h"
+
+int main(int argc, wchar_t **argv) {
+	/*
 	::CoInitialize(NULL);
 
 	string message;
@@ -24,5 +27,6 @@ int main() {
 	sound->say(message);
 
 	::CoUninitialize();
-	return 0;
+	*/
+	return wmain(2,argv);
 }
