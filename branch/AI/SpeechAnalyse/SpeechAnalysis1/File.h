@@ -58,6 +58,11 @@ public:
 	*/
 	int getWriteCursor();
 	/*
+		procedure to
+		{ place le curseur à l'offset indiqué dans le fichier }
+	*/
+	void to(UINT offset);
+	/*
 		procedure toBegin
 		{ place le curseur au début du fichier }
 	*/

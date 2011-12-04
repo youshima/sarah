@@ -104,6 +104,7 @@ MapWord* MapWord::getChild(char c) {
 */
 DBWORD::DBWORD(std::string name) {
 	setName(name);
+	this->type = TYPE_NONE;
 }
 
 DBWORD::~DBWORD() {
@@ -269,11 +270,11 @@ HRESULT Database::AddWord(DBWORD& word) {
 			
 			file.write(verb->isIrregular()); //ecrire le booleen spécifiant l'irrégularité du verbe
 
-			int val = verb->getFormCount();
+			UINT val = verb->getFormCount();
 
 			file.write((int)val); //ecrire le nombre de formes
 
-			for(UINT i = 0; i < verb->getFormCount(); i++)
+			for(UINT i = 0; i < val ; i++)
 			{
 				//ecrire la forme
 				file.write(*verb->getForm(i));
@@ -285,6 +286,60 @@ HRESULT Database::AddWord(DBWORD& word) {
 	}
 	else
 		return E_FILENOTFOUND;
+}
+
+DBWORD * Database::Getword(std::string& name) {
+
+	bool existed;
+	file.open(FILENAME_DATA, existed);
+	DBWORD * word;
+	std::string wname;
+	std::string wdef;
+	bool virregular;
+
+	if(file.isOpen())
+	{
+		TYPE word_type; 
+
+		file.to(this->Find(name));//On se place dans le fichier a l'offset du mot recherché
+
+		file.read(word_type);//On lit le type du mot
+
+		if (word_type == VERB)//On lit le verbe
+		{
+			DBVERB * verb;
+			int nb_forms;
+			AI::Form vform;
+			verb = new DBVERB(name);
+			verb->setType(word_type);
+			file.read(wname);
+			file.read(wdef);
+			verb->setDef(wdef);
+			file.read(virregular); //lire le booleen spécifiant l'irrégularité du verbe
+			verb->setIrregular(virregular);
+			file.read(nb_forms); //lire le nombre de formes
+			for(int i = 0; i < nb_forms ; i++)
+			{
+				//lire la forme
+				file.read(vform);
+				verb->AddFormW(vform);
+			}
+			return (DBWORD*)verb;
+		}
+		else//On lit le mot
+		{
+			DBWORD * word;
+			word = new DBWORD(name);
+			word->setType(word_type);
+			file.read(wname);
+			file.read(wdef);
+			word->setDef(wdef);
+
+			return word;
+		}
+	}
+	else
+		return 0;
 }
 
 HRESULT Database::MapNextWord() {
@@ -348,3 +403,17 @@ HRESULT Database::MapNextWord() {
 		return S_OK;
 }
 
+
+UINT Database::Find(std::string& name) {
+	for(UINT i = 0; i < 8; i++)
+	{
+		UINT off = this->map[i]->Find(name);
+		if(off > 0)
+			return off;
+	}
+	return 0;
+}
+
+bool Database::Exist(std::string& name) {
+	return (this->Find(name) != 0);
+}

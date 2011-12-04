@@ -237,7 +237,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\SourceSite.cpp"
+				RelativePath=".\Source.cpp"
 				>
 			</File>
 			<File
@@ -329,7 +329,7 @@
 				>
 			</File>
 			<File
-				RelativePath=".\SourceSite.h"
+				RelativePath=".\Source.h"
 				>
 			</File>
 			<File
@@ -339,16 +339,6 @@
 			<File
 				RelativePath=".\VAR.h"
 				>
-			</File>
-			<File
-				RelativePath=".\WindowDatabase.h"
-				FileType="3"
-				>
-				<File
-					RelativePath=".\WindowDatabase.resx"
-					SubType="Designer"
-					>
-				</File>
 			</File>
 			<File
 				RelativePath=".\WindowRule.h"
