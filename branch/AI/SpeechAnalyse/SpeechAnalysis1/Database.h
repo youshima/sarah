@@ -245,6 +245,17 @@ public:
 	*/
 	HRESULT AddWord(DBWORD& word);
 
+	/*
+		fonction Exist
+		=> { Retourne vrai si le mot existe dans database, faux sinon }
+	*/
+	bool Exist(std::string& name);
+
+	/*
+		fonction Getword
+		=> { Retourne les information du mot; le mot EST DANS la database, le fichier file EST OUVERT }
+	*/
+	DBWORD * Getword(std::string& name);
 private:
 	/*
 		fonction MapNextWord
@@ -255,6 +266,12 @@ private:
 			}
 	*/
 	HRESULT MapNextWord();
+
+	/*
+		fonction Find
+		=> { offset du mot recherché, 0 sinon, name en minuscules }
+	*/
+	UINT Find(std::string& name);
 
 private:
 	MapWord* map[8]; //maps des offsets pour la BDD classées par type dans l'ordre de l'enuméré TYPE

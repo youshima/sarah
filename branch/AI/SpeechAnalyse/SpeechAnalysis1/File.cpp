@@ -56,6 +56,10 @@ int File::getReadCursor() {
 int File::getWriteCursor() {
 	return file.tellp();
 }
+void File::to(UINT offset) {
+	file.seekg(offset,file.beg); //se mettre a l'offset offset à partir du début du fichier
+	file.seekp(offset,file.beg); //se mettre a l'offset offset à partir du début du fichier
+}
 void File::toBegin() {
 	file.seekg(0,file.beg); //se mettre au début du fichier
 	file.seekp(0,file.beg); //se mettre au début du fichier
