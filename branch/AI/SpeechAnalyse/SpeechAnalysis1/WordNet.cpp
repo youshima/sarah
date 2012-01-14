@@ -19,10 +19,20 @@ void DBWORDLIST::setNext(DBWORD word)
 		this->next = new DBWORDLIST(word);
 }
 
+void DBWORDLIST::addWord(DBWORD word)
+{
+	DBWORDLIST* tmp = this;
+	do
+		tmp=tmp->getNext();
+	while(tmp);
+	tmp = new DBWORDLIST(word);
+
+}
+
 WordNet::WordNet()
 {
 	mysql_init(&mysql);
-	connection = mysql_real_connect(&mysql,"address","login","password","wn_pro_mysql",0,0,0);
+	connection = mysql_real_connect(&mysql,"localhost","wordnet","wordnet","wn_pro_mysql",0,0,0);
 	if (connection == NULL) 
 	{
 		cout << mysql_error(&mysql) << endl;
@@ -49,22 +59,33 @@ HRESULT WordNet::runQuery(char* query)
 
 }
 
-TYPE WordNet::getType(char* word)
+TYPE WordNet::type_of(char type)
 {
-	string query = "SELECT ss_type FROM wn_synset WHERE word = '";
-	query.append(word);
-	query.append("' ;");
-	runQuery((char*)query.c_str());
-	result = mysql_store_result(connection);
-	row = mysql_fetch_row(result);
-
-	return NOUN;
+	//VERB, NOUN, ADJECTIVE, ADVERB, PRONOUN, PREPOSITION, FORMUNCTION, INTERJECTION, TYPE_NONE
+	switch(type)
+	{
+	case 'n':
+		return NOUN;
+		break;
+	case 'v':
+		return VERB;
+		break;
+	case 'a':
+	case 's':
+		return ADJECTIVE;
+		break;
+	case 'r':
+		return ADVERB;
+		break;
+	default:
+		return TYPE_NONE;
+	}
 }
-
 
 HRESULT WordNet::find(DBWORDLIST* wordlist, char* name, int numberOfOccurences)
 {
 	wordlist = NULL;
+	numberOfOccurences = 0;
 	DBWORD word;
 	string query = "SELECT * FROM wn_synset WHERE word = '";
 	query.append(name);
@@ -73,11 +94,23 @@ HRESULT WordNet::find(DBWORDLIST* wordlist, char* name, int numberOfOccurences)
 	result = mysql_store_result(connection);
 	while (row = mysql_fetch_row(result))
 	{
-		/*word.setName();
-		word.setDef();
-		word.setType();
-		wordlist->addWord(word);*/
-		cout << row << endl;
+		word.setName((std::string &)row[2]);
+		word.setType(type_of((char)row[3][0]));
+		string query = "SELECT * FROM wn_gloss WHERE synset_id = '";
+		query.append(row[0]);
+		query.append("' ;");
+		
+		runQuery((char*)query.c_str());
+		result2 = mysql_store_result(connection);
+		row2 = mysql_fetch_row(result2);
+		word.setDef((std::string &)row2[1]);
+
+		if (!wordlist)
+			wordlist = new DBWORDLIST(word);
+		else
+			wordlist->addWord(word);
+
+		numberOfOccurences++;
 	}
 	
 
