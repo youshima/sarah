@@ -133,7 +133,7 @@ void DBWORD::setDef(std::string& def) {
 	this->def = def;
 }
 	
-void DBWORD::setType(TYPE& type) {
+void DBWORD::setType(TYPE type) {
 	this->type = type;
 }
 

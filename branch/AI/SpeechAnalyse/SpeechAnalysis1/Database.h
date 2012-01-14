@@ -137,7 +137,7 @@ public:
 		procedure setType
 		{affecte la valeur de type à self.type}
 	*/
-	void setType(TYPE& type);
+	void setType(TYPE type);
 
 private:
 	std::string name;
