@@ -135,7 +135,68 @@ HRESULT WordNet::find(DBWORDLIST* wordlist, char* name, int numberOfOccurences)
 	return 0;
 }
 
+HRESULT WordNet::findSynonims(DBWORDLIST* wordlist, DBWORD wordQuery, int numberOfSynonims)
+{
+	wordlist = NULL;
+	numberOfSynonims = 0;
+	DBWORD* word;
+	string query = "SELECT synset_id FROM wn_gloss WHERE gloss = '";
+	query.append((char*)wordQuery.getDef());
+	query.append("' ;");
+	runQuery((char*)query.c_str());
+	result = mysql_store_result(connection);
+	while (row = mysql_fetch_row(result))
+	{
+		query = "SELECT * FROM wn_synset WHERE synset_id IN (SELECT synset_id_1 FROM wn_see_also WHERE synset_id_2 ='";
+		query.append((char*)row[0]);
+		query.append("') OR synset_id IN (SELECT synset_id_2 FROM wn_see_also WHERE synset_id_1='");
+		query.append((char*)row[0]);
+		query.append("' ;");
+		runQuery((char*)query.c_str());
+		result2 = mysql_store_result(connection);
+		while (row2 = mysql_fetch_row(result2))
+		{
+			if (type_of((char)row[3][0])!='v')
+			{
+				word = new DBWORD;
+				word->setName((std::string &)row[2]);
+				word->setType(type_of((char)row[3][0]));
+				string query = "SELECT * FROM wn_gloss WHERE synset_id = '";
+				query.append(row2[0]);
+				query.append("' ;");
+		
+				runQuery((char*)query.c_str());
+				result3 = mysql_store_result(connection);
+				row3 = mysql_fetch_row(result3);
+				word->setDef((std::string &)row3[1]);
+			}
+			else //c'est un verbe
+			{
+				word = new DBVERB;
+				word->setName((std::string &)row[3]);
+				word->setType(VERB);
+				string query = "SELECT * FROM wn_gloss WHERE synset_id = '";
+				query.append(row2[0]);
+				query.append("' ;");
+		
+				runQuery((char*)query.c_str());
+				result3 = mysql_store_result(connection);
+				row3 = mysql_fetch_row(result3);
+				word->setDef((std::string &)row3[1]);
 
+			}
+			if (!wordlist)
+				wordlist = new DBWORDLIST(word);
+			else
+				wordlist->addWord(word);
+		}
+			
+		numberOfSynonims++;
+	}
+	
+
+	return 0;
+}
 
 /*
 result = mysql_store_result(connection);
