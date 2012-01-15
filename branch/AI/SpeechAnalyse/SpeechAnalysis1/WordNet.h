@@ -15,15 +15,15 @@ using namespace std;
 class DBWORDLIST
 {
 private:
-	DBWORD word;
+	DBWORD* word;
 	DBWORDLIST* next;
 public:
-	DBWORDLIST(DBWORD word);
-	inline DBWORD getWord() { return this->word; }
+	DBWORDLIST(DBWORD* word);
+	inline DBWORD* getWord() { return this->word; }
 	inline DBWORDLIST* getNext() { return this->next; }
-	void setNext(DBWORD word);
-	void addWord(DBWORD word);
-	inline void setValue(DBWORD word) { this->word = word; } 
+	void setNext(DBWORD* word);
+	void addWord(DBWORD* word);
+	inline void setValue(DBWORD* word) { this->word = word; } 
 
 };
 //
@@ -43,7 +43,8 @@ public:
 	WordNet(); //constructeur qui initialise la connection à la DB
 	~WordNet(); //destructeur, qui ferme la connection à la DB
 	HRESULT find(DBWORDLIST* wordlist, char* name, int numberOfOccurences);
-	//{} => { word = pointeur sur une liste de DBWORD correspondant à name, et numberOfOccurences = nombre de DBWORD dans la liste}
+	//{} => { wordlist = pointeur sur une liste de DBWORD* (pointant sur DBWORD ou DBVERB)
+	//correspondants à name, et numberOfOccurences = nombre de DBWORD dans la liste}
 };
 
 
