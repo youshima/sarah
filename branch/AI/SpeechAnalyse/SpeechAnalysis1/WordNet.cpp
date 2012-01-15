@@ -5,13 +5,13 @@ Implémentation de la classe WordNet
 #include "WordNet.h"
 
 
-DBWORDLIST::DBWORDLIST(DBWORD word)
+DBWORDLIST::DBWORDLIST(DBWORD* word)
 {
 	this->word = word;
 	this->next = NULL;
 }
 
-void DBWORDLIST::setNext(DBWORD word)
+void DBWORDLIST::setNext(DBWORD* word)
 {
 	if (this->next)
 		this->next->setValue(word);
@@ -19,7 +19,7 @@ void DBWORDLIST::setNext(DBWORD word)
 		this->next = new DBWORDLIST(word);
 }
 
-void DBWORDLIST::addWord(DBWORD word)
+void DBWORDLIST::addWord(DBWORD* word)
 {
 	DBWORDLIST* tmp = this;
 	do
@@ -86,7 +86,7 @@ HRESULT WordNet::find(DBWORDLIST* wordlist, char* name, int numberOfOccurences)
 {
 	wordlist = NULL;
 	numberOfOccurences = 0;
-	DBWORD word;
+	DBWORD* word;
 	string query = "SELECT * FROM wn_synset WHERE word = '";
 	query.append(name);
 	query.append("' ;");
@@ -94,17 +94,35 @@ HRESULT WordNet::find(DBWORDLIST* wordlist, char* name, int numberOfOccurences)
 	result = mysql_store_result(connection);
 	while (row = mysql_fetch_row(result))
 	{
-		word.setName((std::string &)row[2]);
-		word.setType(type_of((char)row[3][0]));
-		string query = "SELECT * FROM wn_gloss WHERE synset_id = '";
-		query.append(row[0]);
-		query.append("' ;");
+		if (type_of((char)row[3][0])!='v')
+		{
+			word = new DBWORD;
+			word->setName((std::string &)row[2]);
+			word->setType(type_of((char)row[3][0]));
+			string query = "SELECT * FROM wn_gloss WHERE synset_id = '";
+			query.append(row[0]);
+			query.append("' ;");
 		
-		runQuery((char*)query.c_str());
-		result2 = mysql_store_result(connection);
-		row2 = mysql_fetch_row(result2);
-		word.setDef((std::string &)row2[1]);
+			runQuery((char*)query.c_str());
+			result2 = mysql_store_result(connection);
+			row2 = mysql_fetch_row(result2);
+			word->setDef((std::string &)row2[1]);
+		}
+		else //c'est un verbe
+		{
+			word = new DBVERB;
+			word->setName((std::string &)row[2]);
+			word->setType(VERB);
+			string query = "SELECT * FROM wn_gloss WHERE synset_id = '";
+			query.append(row[0]);
+			query.append("' ;");
+		
+			runQuery((char*)query.c_str());
+			result2 = mysql_store_result(connection);
+			row2 = mysql_fetch_row(result2);
+			word->setDef((std::string &)row2[1]);
 
+		}
 		if (!wordlist)
 			wordlist = new DBWORDLIST(word);
 		else
