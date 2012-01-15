@@ -31,10 +31,10 @@ class WordNet
 {
 private:
 	MYSQL *connection, mysql;
-	MYSQL_RES *result;
+	MYSQL_RES* result;
 	MYSQL_RES* result2;
-	MYSQL_ROW row;
-	MYSQL_ROW row2;
+	MYSQL_RES* result3;
+	MYSQL_ROW row,row2,row3;
 	int query_state;
 	TYPE type_of(char type);
 	HRESULT runQuery(char* query); //fonction utilisée dans toutes les fonctions find
@@ -45,6 +45,9 @@ public:
 	HRESULT find(DBWORDLIST* wordlist, char* name, int numberOfOccurences);
 	//{} => { wordlist = pointeur sur une liste de DBWORD* (pointant sur DBWORD ou DBVERB)
 	//correspondants à name, et numberOfOccurences = nombre de DBWORD dans la liste}
+	HRESULT findSynonims(DBWORDLIST* wordlist, DBWORD word, int numberOfSynonims);
+	//{} => { wordlist = pointeur sur une liste de DBWORD* (pointant sur DBWORD ou DBVERB)
+	//synonimes de word, et numberOfOccurences = nombre de DBWORD dans la liste}
 };
 
 
