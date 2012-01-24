@@ -57,14 +57,8 @@ namespace AI
 
 				private:
 
-					char * mot;
-
 					char * urlPath;
 					char * urlServer;
-					char * debutParseType;
-					char * finParseType;
-					char * debutParseDef;
-					char * finParseDef;
 
 			};
 	}

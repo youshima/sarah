@@ -8,6 +8,8 @@ Browser::Browser(void)
 :
 db()
 {
+	Source * src = new DictionaryReference();
+	this->SourceList.insert(this->SourceList.end(), src);
 }
 
 Browser::~Browser(void)
@@ -76,7 +78,7 @@ DBWORD * Browser::find(std::string word)
 									break;
 							}
 							if (j != v->getFormCount() - 1)
-								v->AddFormW(*vtemp->getForm(i));
+								v->AddForm(*vtemp->getForm(i));
 						}
 						if (i == val - 1)//Il n'y a plus de nouvelles formes donc on a toutes les infos
 							return (DBWORD *)v;
