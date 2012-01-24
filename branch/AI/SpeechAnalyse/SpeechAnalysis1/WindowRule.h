@@ -49,7 +49,7 @@ namespace SpeechAnalysis1 {
 	public: System::Windows::Forms::TextBox^  LName;
 
 	public: System::Windows::Forms::Button^  buttonOK;
-	public: System::Windows::Forms::Button^  buttonCompile;
+
 	public: System::Windows::Forms::TextBox^  LDef;
 
 	private: System::Windows::Forms::Label^  label1;
@@ -72,7 +72,6 @@ namespace SpeechAnalysis1 {
 			this->Name = (gcnew System::Windows::Forms::Label());
 			this->LName = (gcnew System::Windows::Forms::TextBox());
 			this->buttonOK = (gcnew System::Windows::Forms::Button());
-			this->buttonCompile = (gcnew System::Windows::Forms::Button());
 			this->LDef = (gcnew System::Windows::Forms::TextBox());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->label2 = (gcnew System::Windows::Forms::Label());
@@ -113,15 +112,6 @@ namespace SpeechAnalysis1 {
 			this->buttonOK->UseVisualStyleBackColor = true;
 			this->buttonOK->Click += gcnew System::EventHandler(this, &WindowRule::buttonOK_Click);
 			// 
-			// buttonCompile
-			// 
-			this->buttonCompile->Location = System::Drawing::Point(12, 233);
-			this->buttonCompile->Name = L"buttonCompile";
-			this->buttonCompile->Size = System::Drawing::Size(75, 23);
-			this->buttonCompile->TabIndex = 4;
-			this->buttonCompile->Text = L"Compile";
-			this->buttonCompile->UseVisualStyleBackColor = true;
-			// 
 			// LDef
 			// 
 			this->LDef->Location = System::Drawing::Point(84, 42);
@@ -157,7 +147,6 @@ namespace SpeechAnalysis1 {
 			this->Controls->Add(this->label2);
 			this->Controls->Add(this->LDef);
 			this->Controls->Add(this->label1);
-			this->Controls->Add(this->buttonCompile);
 			this->Controls->Add(this->buttonOK);
 			this->Controls->Add(this->LName);
 			this->Controls->Add(this->Name);

@@ -265,12 +265,12 @@ HRESULT AI::Environment::executer(Rule* rule) {
 	ls = new LecteurSymbole(*rule->getScript());
 	hr = seqInst();
 	if( hr != S_OK )
-		return hr;
+		return (HRESULT)hr.getValue();
 	else
 	return S_OK;
 }
 Value AI::Environment::seqInst() {
-	HRESULT hr;
+	Value hr;
 	while(ls->getSymCour().getType() != Symbole::Type::FIN)
 	{
 		hr = Inst();
@@ -280,7 +280,7 @@ Value AI::Environment::seqInst() {
 	return S_OK;
 }
 Value AI::Environment::Inst() {
-	HRESULT hr;
+	Value hr;
 	while(ls->getSymCour().getType() != Symbole::Type::FIN_INST)
 	{
 
@@ -324,8 +324,8 @@ Value AI::Environment::Operation() {
 		if(ls->getSymCour().getChaine() == "==")
 		{
 			ls->suivant();
-			
-			return Comparaison(var->getValue(),Operation(),"==");
+			Value val = Operation();
+			return Comparaison(var->getValue(),&val,"==");
 		}
 		else
 			return var; //au pire la valeur de l'operation est celle de la variable

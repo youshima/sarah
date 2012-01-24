@@ -6,10 +6,28 @@
 /*
 	CLASS VALUE
 */
-Value::Value(VAR_TYPE type = VAR_TYPE_NONE) : buffer(0) {
+Value::Value(VAR_TYPE type) : buffer(0) {
 	setType(type);
 }
 
+Value::Value(int val) : buffer(0) {
+	*this = val;
+}
+Value::Value(float val) : buffer(0) {
+	*this = val;
+}
+Value::Value(bool val) : buffer(0) {
+	*this = val;
+}
+Value::Value(std::string val) : buffer(0) {
+	*this = val;
+}
+Value::Value(char val) : buffer(0) {
+	*this = val;
+}
+Value::Value(HRESULT val) : buffer(0) {
+	*this = val;
+}
 Value::~Value() {
 	free((void*)buffer);
 }
@@ -129,6 +147,50 @@ void Value::operator =(HRESULT val) {
 void Value::operator =(char val) {
 	setType(VARCHAR);
 	this->setValue((char*) val);
+}
+
+bool Value::operator ==(int val) {
+	Value temp = val; 
+	return *this == temp;
+}
+bool Value::operator ==(float val) {
+	Value temp = val; 
+	return *this == temp;
+}
+bool Value::operator ==(bool val) {
+	Value temp = val; 
+	return *this == temp;
+}
+bool Value::operator ==(std::string val) {
+	Value temp = val; 
+	return *this == temp;
+}
+bool Value::operator ==(HRESULT val) {
+	Value temp = val; 
+	return *this == temp;
+}
+bool Value::operator ==(char val) {
+	Value temp = val; 
+	return *this == temp;
+}
+
+bool Value::operator !=(int val) {
+	return !(*this == val);
+}
+bool Value::operator !=(float val) {
+	return !(*this == val);
+}
+bool Value::operator !=(bool val) {
+	return !(*this == val);
+}
+bool Value::operator !=(std::string val) {
+return !(*this == val);
+}
+bool Value::operator !=(HRESULT val) {
+	return !(*this == val);
+}
+bool Value::operator !=(char val) {
+	return !(*this == val);
 }
 /*
 	CLASS VAR

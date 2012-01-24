@@ -152,6 +152,9 @@ System::Void Form1::textEntry_PreviewKeyDown(System::Object^  sender, System::Wi
 			 {
 				SentenceParser* sp = new SentenceParser();
 				vector<Element*>* elements = sp->Analyse(this->textEntry->Text);
+
+				for(int i = 0; i < environment->getRulesCount(); i++)
+					environment->executer(environment->getRule(i));
 				
 				GenerateButtons(elements);
 			 }

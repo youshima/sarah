@@ -173,6 +173,9 @@ public:
 	* @return Le code d'erreur
 	*/
 	HRESULT executer(Rule* rule);
+	
+
+private:
 	/** Execute une sequence d'instruction
 	* @return Le code d'erreur
 	*/
@@ -190,14 +193,15 @@ public:
 	*/
 	Value Operation();
 	/** Execute une comparaison, le resultat est un Value
-	* @param gauche Symbole à gauche de l operateur
-	* @param droit Symbole à droite de l'operateur
+	* @param gauche valeur à gauche de l operateur
+	* @param droit valeur à droite de l'operateur
 	* @param operateur Chaine representant l'operateur
 	* @return Valeur de la comparaison = vrai ou faux
 	*/
-	Value Comparaison(Symbole* gauche,Symbole* droit,std::string operateur);
+	Value Comparaison(Value* gauche,Value* droit,std::string operateur);
 
-private:
+
+
 	std::vector<VAR> Vars; //liste des variables d'environnement
 	std::vector<Rule> Rules; //liste des regles de l'environnement
 	File file; //fichier de sauvegarde
