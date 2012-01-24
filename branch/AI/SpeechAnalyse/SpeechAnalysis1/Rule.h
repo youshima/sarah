@@ -1,6 +1,7 @@
 #pragma once
 #include "Helpers.h"
 #include "STR.h"
+
 namespace AI
 {
 /*
@@ -60,6 +61,8 @@ public:
 		{ affecte la valeur d'enabled }
 	*/
 	void setEnabled(bool enabled);
+
+	
 private:
 
 private:

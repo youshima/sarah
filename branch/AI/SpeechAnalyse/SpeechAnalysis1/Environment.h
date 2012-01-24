@@ -5,6 +5,7 @@
 #include "Rule.h"
 #include "File.h"
 #include "Browser.h"
+#include "LecteurSymbole.h"
 
 
 #define FILENAME_ENV "environment.data"
@@ -167,12 +168,40 @@ public:
 		=> { nombre de regles }
 	*/
 	UINT getRulesCount();
-
+	/** Execute le code de la regle sur l'environnement
+	* @param rule Regle à executer
+	* @return Le code d'erreur
+	*/
+	HRESULT executer(Rule* rule);
+	/** Execute une sequence d'instruction
+	* @return Le code d'erreur
+	*/
+	Value seqInst();
+	/** Execute instruction
+	* @return Le code d'erreur
+	*/
+	Value Inst();
+	/** Execute une instruction If
+	* @return Le code d'erreur
+	*/
+	Value instIf();
+	/** Execute une operation, comparaison, affectation, etc
+	* @return le resultat de l'opération
+	*/
+	Value Operation();
+	/** Execute une comparaison, le resultat est un Value
+	* @param gauche Symbole à gauche de l operateur
+	* @param droit Symbole à droite de l'operateur
+	* @param operateur Chaine representant l'operateur
+	* @return Valeur de la comparaison = vrai ou faux
+	*/
+	Value Comparaison(Symbole* gauche,Symbole* droit,std::string operateur);
 
 private:
 	std::vector<VAR> Vars; //liste des variables d'environnement
 	std::vector<Rule> Rules; //liste des regles de l'environnement
 	File file; //fichier de sauvegarde
+	LecteurSymbole* ls; //!< lecteur utilisé lors de l'execution
 };
 
 }
