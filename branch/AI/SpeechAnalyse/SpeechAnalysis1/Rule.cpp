@@ -5,9 +5,7 @@ AI::Rule::Rule() : enabled(false) {
 
 }
 AI::Rule::~Rule() {
-	script.~basic_string();
-	name.~basic_string();
-	about.~basic_string();
+
 }
 bool AI::Rule::getEnabled() {
 	return this->enabled;

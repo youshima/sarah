@@ -3,7 +3,7 @@
 #include "Helpers.h"
 #include "STR.h"
 
-enum VAR_TYPE { INTEGER, STRING, VARCHAR, REAL, VAR_TYPE_NONE };
+enum VAR_TYPE { INTEGER, STRING, VARCHAR, REAL,VARBOOL, VARRESULT, VAR_TYPE_NONE };
 /*
 	classe Value
 	represente une valeur de type quelconque
@@ -37,6 +37,9 @@ public:
 		{attribue la valeur au buffer de variable}
 	*/
 	void setValue(char* value);
+	/** change le type de la variable
+	*/
+	void setType(VAR_TYPE type);
 	/*
 		operateur ==
 		{ vrai si les Value ont le même type et meme valeur }
@@ -44,9 +47,16 @@ public:
 	bool operator==(Value value);
 	/*
 		operateur !=
-		{ faux si les Value ont le même type et meme valeur }
 	*/
 	bool operator!=(Value value);
+
+	void operator=(bool val);
+	void operator=(std::string val);
+	void operator=(char val);
+	void operator=(HRESULT val);
+	void operator=(int val);
+	void operator=(float val);
+
 private:
 	char* buffer;
 	VAR_TYPE type;

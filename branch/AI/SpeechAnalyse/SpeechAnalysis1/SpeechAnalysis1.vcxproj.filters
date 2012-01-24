@@ -43,6 +43,8 @@
     <ClCompile Include="WordNet.cpp">
       <Filter>Util</Filter>
     </ClCompile>
+    <ClCompile Include="LecteurSymbole.cpp" />
+    <ClCompile Include="Symbole.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Form1.h" />
@@ -85,6 +87,8 @@
     <ClInclude Include="WordNet.h">
       <Filter>Util</Filter>
     </ClInclude>
+    <ClInclude Include="LecteurSymbole.h" />
+    <ClInclude Include="Symbole.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
@@ -118,6 +122,9 @@
     </Filter>
     <Filter Include="environment\forms">
       <UniqueIdentifier>{4ff2174a-0b77-44ef-b10d-8a5927481122}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="environment\script">
+      <UniqueIdentifier>{721946bc-a51f-4051-94b3-49c37a17b8a4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

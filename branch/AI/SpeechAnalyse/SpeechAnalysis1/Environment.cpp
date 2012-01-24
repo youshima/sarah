@@ -260,3 +260,82 @@ UINT AI::Environment::getVarCount() {
 UINT AI::Environment::getRulesCount() {
 	return this->Rules.size();
 }
+HRESULT AI::Environment::executer(Rule* rule) {
+	Value hr;
+	ls = new LecteurSymbole(*rule->getScript());
+	hr = seqInst();
+	if( hr != S_OK )
+		return hr;
+	else
+	return S_OK;
+}
+Value AI::Environment::seqInst() {
+	HRESULT hr;
+	while(ls->getSymCour().getType() != Symbole::Type::FIN)
+	{
+		hr = Inst();
+		if( hr != S_OK )
+			return hr;
+	}
+	return S_OK;
+}
+Value AI::Environment::Inst() {
+	HRESULT hr;
+	while(ls->getSymCour().getType() != Symbole::Type::FIN_INST)
+	{
+
+		switch(ls->getSymCour().getType())
+		{
+			case Symbole::INCONNU :
+				if(ls->getSymCour().getChaine() == "if")
+					hr = instIf();
+				else
+					hr = E_FAIL;
+			break;
+			case Symbole::VARIABLE :
+				 hr = Operation();
+				break;
+			default:
+				hr = E_FAIL;
+		}
+		if(hr != S_OK)
+			return hr;
+	}
+	return S_OK;
+}
+Value AI::Environment::instIf() {
+
+	ls->suivant();
+	Inst();
+	return S_OK;
+}
+Value AI::Environment::Operation() {
+
+	Symbole sym = ls->getSymCour(); //variable de gauche
+	VAR* var = getVar(sym.getChaine());
+	if(var == 0)
+			return E_INVALIDARG;
+	ls->suivant();
+
+	if(ls->getSymCour().getType() != Symbole::Type::OPERATION)
+		return E_FAIL;
+	
+	
+		if(ls->getSymCour().getChaine() == "==")
+		{
+			ls->suivant();
+			
+			return Comparaison(var->getValue(),Operation(),"==");
+		}
+		else
+			return var; //au pire la valeur de l'operation est celle de la variable
+	
+}
+Value AI::Environment::Comparaison(Value* gauche,Value* droit,std::string operateur) {
+
+	if(operateur == "==")
+		return gauche == droit;
+	else if(operateur == "!=")
+		return gauche != droit;
+	return false;
+}
