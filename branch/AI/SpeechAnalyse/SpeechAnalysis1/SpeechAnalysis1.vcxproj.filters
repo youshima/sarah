@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="SpeechAnalysis1.cpp" />
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="Form1.cpp">
+      <Filter>windows</Filter>
+    </ClCompile>
+    <ClCompile Include="WindowDatabase.cpp">
+      <Filter>windows</Filter>
+    </ClCompile>
+    <ClCompile Include="Browser.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="File.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="HTTPGET.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Environment.cpp">
+      <Filter>environment</Filter>
+    </ClCompile>
+    <ClCompile Include="Form.cpp">
+      <Filter>environment\forms</Filter>
+    </ClCompile>
+    <ClCompile Include="Database.cpp">
+      <Filter>environment\database</Filter>
+    </ClCompile>
+    <ClCompile Include="Rule.cpp">
+      <Filter>environment\rules</Filter>
+    </ClCompile>
+    <ClCompile Include="VAR.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="Source.cpp">
+      <Filter>environment\sources</Filter>
+    </ClCompile>
+    <ClCompile Include="SentenceParser.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+    <ClCompile Include="WordNet.cpp">
+      <Filter>Util</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Form1.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="WindowRule.h" />
+    <ClInclude Include="Browser.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="File.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Helpers.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="HTTPGET.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Environment.h">
+      <Filter>environment</Filter>
+    </ClInclude>
+    <ClInclude Include="Form.h">
+      <Filter>environment\forms</Filter>
+    </ClInclude>
+    <ClInclude Include="Database.h">
+      <Filter>environment\database</Filter>
+    </ClInclude>
+    <ClInclude Include="Rule.h">
+      <Filter>environment\rules</Filter>
+    </ClInclude>
+    <ClInclude Include="VAR.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="Source.h">
+      <Filter>environment\sources</Filter>
+    </ClInclude>
+    <ClInclude Include="SentenceParser.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+    <ClInclude Include="WordNet.h">
+      <Filter>Util</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="app.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Form1.resX" />
+    <EmbeddedResource Include="WindowRule.resx" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.ico" />
+    <None Include="ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="windows">
+      <UniqueIdentifier>{80a45df2-2b85-41b1-badd-2ddfbc475e14}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Util">
+      <UniqueIdentifier>{63364e23-c85e-4809-891f-2edeedd2f2e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="environment">
+      <UniqueIdentifier>{c811fce6-814b-4a84-bf67-b5a5710f99b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="environment\rules">
+      <UniqueIdentifier>{f42e424a-b60e-4357-b8f7-c6150e37221b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="environment\database">
+      <UniqueIdentifier>{33b1c874-ebf9-4017-99ba-31f21c9e7e93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="environment\sources">
+      <UniqueIdentifier>{29681826-33f4-465f-9412-d69eaf5ca0c3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="environment\forms">
+      <UniqueIdentifier>{4ff2174a-0b77-44ef-b10d-8a5927481122}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
