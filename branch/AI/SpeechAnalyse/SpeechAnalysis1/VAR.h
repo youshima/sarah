@@ -15,7 +15,17 @@ public:
 		constructeur de Value
 		{initialise les variables par défaut ou selon l'utilisateur}
 	*/
-	Value(VAR_TYPE type);
+	Value(VAR_TYPE type = VAR_TYPE_NONE);
+	/*
+		constructeur de Value
+		{initialise les variables par défaut ou selon l'utilisateur}
+	*/
+	Value(int val);
+	Value(float val);
+	Value(bool val);
+	Value(HRESULT val);
+	Value(std::string val);
+	Value(char val);
 	/*
 		destructeur de Value
 		{nettoie la mémoire}
@@ -56,6 +66,20 @@ public:
 	void operator=(HRESULT val);
 	void operator=(int val);
 	void operator=(float val);
+
+	bool operator==(bool val);
+	bool operator==(std::string val);
+	bool operator==(char val);
+	bool operator==(HRESULT val);
+	bool operator==(int val);
+	bool operator==(float val);
+
+	bool operator!=(bool val);
+	bool operator!=(std::string val);
+	bool operator!=(char val);
+	bool operator!=(HRESULT val);
+	bool operator!=(int val);
+	bool operator!=(float val);
 
 private:
 	char* buffer;

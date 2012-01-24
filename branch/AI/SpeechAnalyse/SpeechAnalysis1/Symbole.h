@@ -11,7 +11,7 @@ public:
 	enum Type{VARIABLE,VALEUR,OPERATION,FIN,FIN_INST,INCONNU}; //!< Types possibles de symboles
 	/** Constructeur de symbole
 	*/
-	Symbole(std::string chaine);
+	Symbole(std::string chaine = "");
 	/** Destructeur de symbole
 	*/
 	~Symbole();
