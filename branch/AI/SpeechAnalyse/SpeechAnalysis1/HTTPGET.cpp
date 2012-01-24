@@ -5,6 +5,14 @@
 using namespace AI;
 using namespace AI::BROWSER;
 
+HTTPGET::HTTPGET()
+{
+}
+
+HTTPGET::~HTTPGET()
+{
+}
+
 int HTTPGET::strrch (char * string, char * recherche)
 {
 	int i,j;
@@ -45,7 +53,7 @@ char * HTTPGET::http_get(char * url_path, char * url_server)
 {
 	//Envoie la requête donnée en paramètre et retourne la réponse du serveur
 	SOCKET s;
-	char reponse[64000];
+	char * reponse = (char *)malloc(sizeof(char) * 64000);
 	char buffer[64000];
 	char requete[64000] = "GET ";
 	int n, corps;
