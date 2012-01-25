@@ -8,7 +8,7 @@ class Symbole
 {
 public:
 
-	enum Type{VARIABLE,VALEUR,OPERATION,FIN,FIN_INST,INCONNU}; //!< Types possibles de symboles
+	enum Type{VARIABLE,VALEUR,CHAINE,OPERATION,SENTENCE,FIN,FIN_INST,INCONNU}; //!< Types possibles de symboles
 	/** Constructeur de symbole
 	*/
 	Symbole(std::string chaine = "");

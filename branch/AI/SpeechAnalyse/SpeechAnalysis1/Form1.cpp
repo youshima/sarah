@@ -78,9 +78,9 @@ void Form1::EditRule() {
 			 
 			 UINT index = (UINT)this->rules->SelectedRows[0]->Index;
 			 AI::Rule* rule = environment->getRule(index);
-			 window->LName->Text = gcnew String(rule->getName()->c_str());
-			 window->LDef->Text = gcnew String(rule->getAbout()->c_str());
-			 window->LScript->Text = gcnew String(rule->getScript()->c_str());
+			 window->LName->Text = gcnew String(rule->getName().c_str());
+			 window->LDef->Text = gcnew String(rule->getAbout().c_str());
+			 window->LScript->Text = gcnew String(rule->getScript().c_str());
 			 window->Show();
 }
 void Form1::DeleteRule() {
@@ -102,8 +102,8 @@ void Form1::RedrawRules() {
 				
 				// this->rules->Rows[i]->SetValues(values);
 				 this->rules->Rows[i]->Cells[0]->Value = i;
-				 this->rules->Rows[i]->Cells[1]->Value = gcnew String(environment->getRule(i)->getName()->c_str());
-				// this->rules->Rows[i]->Cells[2]->Value = gcnew String(environment->getRule(i)->getAbout()->c_str());
+				 this->rules->Rows[i]->Cells[1]->Value = gcnew String(environment->getRule(i)->getName().c_str());
+				 this->rules->Rows[i]->Cells[2]->Value = gcnew String(environment->getRule(i)->getResult().c_str());
 				 this->rules->Rows[i]->Cells[3]->Value = environment->getRule(i)->getEnabled();
 			 }
 }
@@ -150,13 +150,38 @@ System::Void Form1::textEntry_PreviewKeyDown(System::Object^  sender, System::Wi
 
 			 if(e->KeyCode == Keys::Enter)
 			 {
+				 VAR sentence;
+				 sentence = VAR("SENTENCE");
+				 std::string fastStr = "";
+					for(UINT i = 0; i < (UINT)this->textEntry->Text->Length; i++) //boucle simple de copie
+						fastStr += (char)this->textEntry->Text[i];
+					Value v;
+					v = fastStr;
+				 sentence.setValue(v);
+
+				 environment->AddVar(sentence);
+				 
+				 environment->setVar(std::string("SENTENCE"),v);
 				SentenceParser* sp = new SentenceParser();
 				vector<Element*>* elements = sp->Analyse(this->textEntry->Text);
 
+				HRESULT hr;
 				for(int i = 0; i < environment->getRulesCount(); i++)
-					environment->executer(environment->getRule(i));
+				{
+					hr = environment->executer(environment->getRule(i));
+					if(hr == E_FAIL)
+						environment->getRule(i)->setResult(std::string("ECHEC"));
+					else
+						environment->getRule(i)->setResult(std::string("OK"));
+						
+				}
 				
+				VAR* var = environment->getVar(std::string("ANSWER"));
+				if(var)
+					this->textOut->Text = gcnew String(var->getValue().getValue());
 				GenerateButtons(elements);
+
+				RedrawRules();
 			 }
 }
 

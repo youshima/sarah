@@ -201,7 +201,6 @@ private:
 	Value Comparaison(Value* gauche,Value* droit,std::string operateur);
 
 
-
 	std::vector<VAR> Vars; //liste des variables d'environnement
 	std::vector<Rule> Rules; //liste des regles de l'environnement
 	File file; //fichier de sauvegarde

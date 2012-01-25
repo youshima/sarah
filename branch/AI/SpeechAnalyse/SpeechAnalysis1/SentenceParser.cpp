@@ -87,7 +87,7 @@ UINT SentenceParser::readElement() {
 	if(this->str.size() == 0 || cursor >= this->str.size()) //si la chaine est vide ou bien on a atteint la fin, retourner ""
 		return 0;
 
-	while(!isSeparator(str[cursor]))
+	while(cursor < this->str.size() && !isSeparator(str[cursor]))
 	{
 		element += str[cursor];
 		cursor++;

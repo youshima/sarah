@@ -158,25 +158,25 @@ HRESULT File::write(VAR& var) {
 	toEnd();
 	if(isOpen())
 	{
-		write(*var.getName());
-		Value* val = var.getValue();
+		write(var.getName());
+		Value val = var.getValue();
 		
-		VAR_TYPE type = val->getType();
+		VAR_TYPE type = val.getType();
 		file.write((char*)&type, sizeof(VAR_TYPE));
 		switch(type)
 		{
 			case INTEGER :
-				file.write(val->getValue(), sizeof(int));
+				file.write((char*)val.getValue(), sizeof(int));
 			break;
 			case REAL :
-				file.write(val->getValue(), sizeof(float));
+				file.write((char*)val.getValue(), sizeof(float));
 			break;
 			case VARCHAR :
-				file.write(val->getValue(), sizeof(char));
+				file.write(val.getValue(), sizeof(char));
 			break;
 			case STRING :
 				std::string* str;
-				str = (std::string*)val->getValue();
+				str = (std::string*)val.getValue();
 				write(*str);
 			break;
 			
@@ -326,9 +326,9 @@ HRESULT File::write(Rule& rule) {
 	if(isOpen())
 	{
 		toEnd();
-		write(*rule.getName());
-		write(*rule.getScript());
-		write(*rule.getAbout());
+		write(rule.getName());
+		write(rule.getScript());
+		write(rule.getAbout());
 		write(rule.getEnabled());
 		return S_OK;
 	}
@@ -338,7 +338,7 @@ HRESULT File::write(Rule& rule) {
 HRESULT File::read(Rule& rule) {
 	if(isOpen())
 	{
-		std::string name,script,about;
+		std::string name,script,about,result;
 		bool enabled;
 		read(name);
 		read(script);
@@ -348,11 +348,8 @@ HRESULT File::read(Rule& rule) {
 		rule.setName(name);
 		rule.setScript(script);
 		rule.setAbout(about);
+		rule.setResult(std::string(""));
 		rule.setEnabled(enabled);
-
-		name.~basic_string();
-		script.~basic_string();
-		about.~basic_string();
 
 		return S_OK;
 	}

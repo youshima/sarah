@@ -3,7 +3,7 @@
 #include "Helpers.h"
 #include "STR.h"
 
-enum VAR_TYPE { INTEGER, STRING, VARCHAR, REAL,VARBOOL, VARRESULT, VAR_TYPE_NONE };
+enum VAR_TYPE { INTEGER, STRING, VARCHAR, REAL,VARBOOL, VARRESULT, SENTENCE, VAR_TYPE_NONE };
 /*
 	classe Value
 	represente une valeur de type quelconque
@@ -20,12 +20,12 @@ public:
 		constructeur de Value
 		{initialise les variables par défaut ou selon l'utilisateur}
 	*/
-	Value(int val);
+	/*Value(int val);
 	Value(float val);
 	Value(bool val);
 	Value(HRESULT val);
 	Value(std::string val);
-	Value(char val);
+	Value(char val);*/
 	/*
 		destructeur de Value
 		{nettoie la mémoire}
@@ -66,6 +66,7 @@ public:
 	void operator=(HRESULT val);
 	void operator=(int val);
 	void operator=(float val);
+	void operator=(Value val);
 
 	bool operator==(bool val);
 	bool operator==(std::string val);
@@ -82,7 +83,7 @@ public:
 	bool operator!=(float val);
 
 private:
-	char* buffer;
+	char buffer[256];
 	VAR_TYPE type;
 };
 
@@ -109,12 +110,12 @@ public:
 		fonction getName
 		=> { pointeur sur le nom de la variable }
 	*/
-	std::string* getName();
+	std::string getName();
 	/*
 		fonction getValue
 		=> { pointeur sur la valeur de la variable }
 	*/
-	Value* getValue();
+	Value getValue();
 	/*
 		procedure setName
 		{ attribue la valeur de nom à this->nom }
@@ -144,6 +145,6 @@ public:
 
 private:
 	std::string name; //nom effectif de la variable
-	Value* value; //valeur de la variable
+	Value value; //valeur de la variable
 
 };
