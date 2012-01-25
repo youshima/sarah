@@ -120,7 +120,75 @@ bool Value::operator ==(Value value) {
 			return ( this->getType() == value.getType() && memcmp(this->getValue(),value.getValue(), sizeof(float)) == 0 );
 			break;
 		case STRING :
+			if(value.getType() == SENTENCE)
+				{
+					std::string str2 = (char*)this->getValue();
+					std::string str1 = (char*)value.getValue();
+					LecteurSymbole* ls1 = new LecteurSymbole(str1.substr(1,str1.size()));
+					LecteurSymbole* ls2 = new LecteurSymbole(str2);
+					//vrai = %
+					//faux = *
+					int minimalSkips;
+					int maximalSkips;
+					Symbole goal;
+					while( ls1->getSymCour().getChaine() != "]" ) //on s'arrete au crochet final
+					{
+						minimalSkips = 0;
+						maximalSkips = 0;
+						std::string str = ls1->getSymCour().getChaine();
+						while(ls1->getSymCour().getType() != Symbole::FIN && ls1->getSymCour().getType() != Symbole::CHAINE)
+						{
+							switch(str[0])
+							{
+							case '%':
+								maximalSkips = 20;
+								break;
+							case '*':
+								minimalSkips++;
+								break;
+							case ' ': //ignorer
+								break; 
+							case ',': //ignorer
+								break;
+							default : 
+								
+								break;
+							}
+							
+							ls1->suivant();
+						}
+						
+							goal = ls1->getSymCour();
+						//	if(ls1->getSymCour().getType() != Symbole::FIN)
+						//goal = Symbole(goal.getChaine().substr(1,goal.getChaine().size()2) );
+						//on a reperé le prochain but à atteindre
+						int skips = 0;
+						while(ls2->getSymCour().getType() != Symbole::Type::FIN && ls2->getSymCour().getChaine() != goal.getChaine() ) //parcourir la phrase à comparer jusqu à trouver le but
+						{
+							skips++;
+							ls2->suivant();
+							
+						}
+						if( ls2->getSymCour().getType() == Symbole::Type::FIN && goal.getType() != Symbole::Type::FIN ) //but non atteint
+							return false;
+						//if(ls2->getSymCour().getType() == Symbole::Type::FIN)
+						//	return false;
+						//else
+						{
+							if( skips >= minimalSkips && skips <= maximalSkips ) //si on a sauté un nombre de mots correctement defini par la syntaxe
+								ls2->suivant();
+							else
+								return false;	//pas bon, la phrase ne correspond pas
+						}
+						ls1->suivant(); //sauter le goal
 
+						if(ls2->getSymCour().getType() == Symbole::Type::FIN && ls1->getSymCour().getType() == Symbole::Type::FIN)
+							break;
+					}
+
+					return true; //l'ensemble de la phrase a été parcourue et tous les buts sont atteints
+				}
+			else
 			return ( this->getType() == value.getType() && strcmp(this->getValue(),value.getValue()) == 0 );
 			break;
 		case SENTENCE :

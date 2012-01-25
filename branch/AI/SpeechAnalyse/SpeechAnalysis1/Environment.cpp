@@ -296,8 +296,8 @@ Value AI::Environment::Inst() {
 			case Symbole::SENTENCE :
 				 hr = Operation();
 				break;
-			default:
-				hr = E_FAIL;
+			case Symbole::CHAINE :
+				hr = Operation();
 		}
 		if(hr == E_FAIL)
 			return hr;
