@@ -6,11 +6,11 @@
 /*
 	CLASS VALUE
 */
-Value::Value(VAR_TYPE type) : buffer(0) {
+Value::Value(VAR_TYPE type) {
 	setType(type);
 }
 
-Value::Value(int val) : buffer(0) {
+/*Value::Value(int val) : buffer(0) {
 	*this = val;
 }
 Value::Value(float val) : buffer(0) {
@@ -27,9 +27,10 @@ Value::Value(char val) : buffer(0) {
 }
 Value::Value(HRESULT val) : buffer(0) {
 	*this = val;
-}
+}*/
 Value::~Value() {
-	free((void*)buffer);
+	//if(getType() != STRING && getType() != SENTENCE)
+	//free((void*)buffer);
 }
 
 VAR_TYPE Value::getType() {
@@ -38,7 +39,8 @@ VAR_TYPE Value::getType() {
 
 void Value::setType(VAR_TYPE type)
 {
-	if(buffer != 0)
+	this->type = type;
+	/*if(buffer != 0)
 		free((void*)buffer);
 	switch(this->type)
 	{
@@ -49,6 +51,9 @@ void Value::setType(VAR_TYPE type)
 			buffer = (char*)malloc(sizeof(float));
 			break;
 		case STRING :
+			buffer = 0;
+			break;
+		case SENTENCE :
 			buffer = 0;
 			break;
 		case VARCHAR :
@@ -63,7 +68,7 @@ void Value::setType(VAR_TYPE type)
 		default :
 			buffer = 0;
 			break;
-	}
+	}*/
 }
 
 char* Value::getValue() {
@@ -80,9 +85,18 @@ void Value::setValue(char* value) {
 			memcpy((void*)buffer,value,sizeof(float));
 			break;
 		case STRING :
-			free((char*)buffer);
-			buffer = (char*)malloc(sizeof(char) * strlen(value));
-			memcpy((void*)buffer,value,strlen(value));
+			//free((char*)buffer);
+			//buffer = (char*)malloc(sizeof(char) *  ( strlen(value) +1 ));
+			strcpy(buffer,value);
+			//memcpy((void*)buffer,value,strlen(value));
+			//buffer[strlen(value)] = '\0'; //ajouter le end string
+			break;
+		case SENTENCE:
+			//free((char*)buffer);
+			//buffer = (char*)malloc(sizeof(char) *  ( strlen(value) +1 ));
+			strcpy(buffer,value);
+			//memcpy((void*)buffer,value,strlen(value));
+			//buffer[strlen(value)] = '\0'; //ajouter le end string
 			break;
 		case VARCHAR :
 			memcpy((void*)buffer,value,sizeof(char));
@@ -96,6 +110,7 @@ void Value::setValue(char* value) {
 	}
 }
 bool Value::operator ==(Value value) {
+
 	switch(this->type)
 	{
 		case INTEGER :
@@ -105,7 +120,84 @@ bool Value::operator ==(Value value) {
 			return ( this->getType() == value.getType() && memcmp(this->getValue(),value.getValue(), sizeof(float)) == 0 );
 			break;
 		case STRING :
-			return ( this->getType() == value.getType() && memcmp(this->getValue(),value.getValue(), sizeof(strlen(this->buffer))) == 0 );
+
+			return ( this->getType() == value.getType() && strcmp(this->getValue(),value.getValue()) == 0 );
+			break;
+		case SENTENCE :
+			if( value.getType() != SENTENCE && value.getType() != STRING )
+				return false;
+			else
+			{
+				if(value.getType() == STRING)
+				{
+					std::string str1 = (char*)this->getValue();
+					std::string str2 = (char*)value.getValue();
+					LecteurSymbole* ls1 = new LecteurSymbole(str1.substr(1,str1.size()));
+					LecteurSymbole* ls2 = new LecteurSymbole(str2);
+					//vrai = %
+					//faux = *
+					int minimalSkips;
+					int maximalSkips;
+					Symbole goal;
+					while( ls1->getSymCour().getChaine() != "]" ) //on s'arrete au crochet final
+					{
+						minimalSkips = 0;
+						maximalSkips = 0;
+						std::string str = ls1->getSymCour().getChaine();
+						while(ls1->getSymCour().getType() != Symbole::FIN && ls1->getSymCour().getType() != Symbole::CHAINE)
+						{
+							switch(str[0])
+							{
+							case '%':
+								maximalSkips = 20;
+								break;
+							case '*':
+								minimalSkips++;
+								break;
+							case ' ': //ignorer
+								break; 
+							case ',': //ignorer
+								break;
+							default : 
+								
+								break;
+							}
+							
+							ls1->suivant();
+						}
+						
+							goal = ls1->getSymCour();
+						//	if(ls1->getSymCour().getType() != Symbole::FIN)
+						//goal = Symbole(goal.getChaine().substr(1,goal.getChaine().size()2) );
+						//on a reperé le prochain but à atteindre
+						int skips = 0;
+						while(ls2->getSymCour().getType() != Symbole::Type::FIN && ls2->getSymCour().getChaine() != goal.getChaine() ) //parcourir la phrase à comparer jusqu à trouver le but
+						{
+							skips++;
+							ls2->suivant();
+							
+						}
+						if( ls2->getSymCour().getType() == Symbole::Type::FIN && goal.getType() != Symbole::Type::FIN ) //but non atteint
+							return false;
+						//if(ls2->getSymCour().getType() == Symbole::Type::FIN)
+						//	return false;
+						//else
+						{
+							if( skips >= minimalSkips && skips <= maximalSkips ) //si on a sauté un nombre de mots correctement defini par la syntaxe
+								ls2->suivant();
+							else
+								return false;	//pas bon, la phrase ne correspond pas
+						}
+						ls1->suivant(); //sauter le goal
+
+						if(ls2->getSymCour().getType() == Symbole::Type::FIN && ls1->getSymCour().getType() == Symbole::Type::FIN)
+							break;
+					}
+
+					return true; //l'ensemble de la phrase a été parcourue et tous les buts sont atteints
+				}
+				return false;
+			}
 			break;
 		case VARCHAR :
 			return ( this->getType() == value.getType() && memcmp(this->getValue(),value.getValue(), sizeof(char)) == 0 );
@@ -137,7 +229,10 @@ void Value::operator =(bool val) {
 	this->setValue((char*) &val);
 }
 void Value::operator =(std::string val) {
-	setType(STRING);
+	if(val.size() > 0 && val[0] == '[')
+		setType(SENTENCE);
+	else
+		setType(STRING);
 	this->setValue((char*) val.c_str());
 }
 void Value::operator =(HRESULT val) {
@@ -148,29 +243,45 @@ void Value::operator =(char val) {
 	setType(VARCHAR);
 	this->setValue((char*) val);
 }
+void Value::operator =(Value val) {
+	std::string str;
+	if(buffer != 0)
+	 str = val.getValue();
+	else
+	str = "";
+	*this = str;
+	setType(val.getType());
+
+}
 
 bool Value::operator ==(int val) {
-	Value temp = val; 
+	Value temp;
+	temp = val; 
 	return *this == temp;
 }
 bool Value::operator ==(float val) {
-	Value temp = val; 
+	Value temp;
+	temp = val; 
 	return *this == temp;
 }
 bool Value::operator ==(bool val) {
-	Value temp = val; 
+	Value temp;
+	temp = val; 
 	return *this == temp;
 }
 bool Value::operator ==(std::string val) {
-	Value temp = val; 
+	Value temp;
+	temp = val; 
 	return *this == temp;
 }
 bool Value::operator ==(HRESULT val) {
-	Value temp = val; 
+	Value temp;
+	temp = val; 
 	return *this == temp;
 }
 bool Value::operator ==(char val) {
-	Value temp = val; 
+	Value temp;
+	temp = val; 
 	return *this == temp;
 }
 
@@ -196,19 +307,16 @@ bool Value::operator !=(char val) {
 	CLASS VAR
 */
 VAR::VAR(std::string name) : name(name) {
-	this->value = 0;
 }
 
 VAR::~VAR() {
-	if(value)
-		value->~Value();
 }
 
-std::string* VAR::getName() {
-	return &this->name;
+std::string VAR::getName() {
+	return this->name;
 }
 
-Value* VAR::getValue() {
+Value VAR::getValue() {
 	return value;
 }
 
@@ -217,8 +325,8 @@ void VAR::setName( std::string name ) {
 }
 
 void VAR::setValue( Value val ) {
-	this->value = new Value(val.getType());
-	this->value->setValue(val.getValue());
+	this->value.setType(val.getType());
+	this->value.setValue(val.getValue());
 }
 
 void VAR::operator=( Value val ) {
@@ -226,7 +334,7 @@ void VAR::operator=( Value val ) {
 }
 
 bool VAR::operator==( VAR val ) {
-	return ( *this->getValue() == *val.getValue());
+	return ( this->getValue() == val.getValue());
 }
 bool VAR::operator!=( VAR val ) {
 	return !( *this == val );

@@ -28,19 +28,23 @@ public:
 	bool getEnabled();
 	/*
 		fonction getScript
-		=> { pointeur sur le script de la regle }
+		=> { le script de la regle }
 	*/
-	std::string* getScript();
+	std::string getScript();
 	/*
 		fonction getName
-		=> { pointeur sur le nom de la regle }
+		=> { le nom de la regle }
 	*/
-	std::string* getName();
+	std::string getName();
 	/*
 		fonction getAbout
-		+> { pointeur sur le descriptif de la regle }
+		+> { descriptif de la regle }
 	*/
-	std::string* getAbout();
+	std::string getAbout();
+	/*
+
+	*/
+	std::string getResult();
 	/*
 		procedure getScript
 		{ affecte la valeur de script }
@@ -56,6 +60,8 @@ public:
 		{ affecte la valeur de about }
 	*/
 	void setAbout(std::string& about);
+
+	void setResult(std::string& result);
 	/*
 		procedure setEnabled
 		{ affecte la valeur d'enabled }
@@ -69,6 +75,7 @@ private:
 	std::string script; //code de la regle
 	std::string name; //nom de la regle
 	std::string about; //descriptif de la regle
+	std::string result;
 	bool enabled; //activer ou desactiver la regle
 };
 }

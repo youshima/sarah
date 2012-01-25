@@ -77,8 +77,8 @@ HRESULT AI::Environment::Load() {
 }
 
 HRESULT AI::Environment::AddVar(VAR& var) {
-	int index = FindVarIndex(*var.getName());
-	if(index > 0) //la variable existe dejà
+	int index = FindVarIndex(var.getName());
+	if(index >= 0) //la variable existe dejà
 		return E_FAIL;
 	else
 		Vars.push_back(var); //sinon l'ajouter
@@ -110,10 +110,10 @@ HRESULT AI::Environment::RemoveVar(UINT& index) {
 
 int AI::Environment::FindVarIndex(std::string& name) {
 	UINT i = 0;
+	UINT size = getVarCount();
+	while( i < size && Vars[i].getName() != name) i++;
 
-	while( i < getVarCount() && *Vars[i].getName() != name);
-
-	if(i == getVarCount())
+	if(i == size)
 		return -1;
 	else
 		return i;
@@ -131,7 +131,7 @@ VAR* AI::Environment::getVar(UINT& index) {
 
 VAR* AI::Environment::getVar(std::string& name) {
 	int index = FindVarIndex(name);
-	if(index > 0)
+	if(index >= 0)
 	{
 		UINT i = index;
 		return getVar(i);
@@ -142,7 +142,7 @@ VAR* AI::Environment::getVar(std::string& name) {
 
 HRESULT AI::Environment::setVar(std::string& name, Value& value) {
 	int index = FindVarIndex(name);
-	if(index > 0)
+	if(index >= 0)
 	{
 		UINT i = index;
 		return setVar(i,value);
@@ -162,15 +162,15 @@ HRESULT AI::Environment::setVar(UINT& index, Value& value) {
 }
 /**************************************************/
 HRESULT AI::Environment::AddRule(Rule& rule) {
-	if(getRule(*rule.getName()) == 0) // si la rule n'existe pas dejà
+	if(getRule(rule.getName()) == 0) // si la rule n'existe pas dejà
 		Rules.push_back(rule);
 	else
 	{
-		Rule* mrule = getRule(*rule.getName());
-		mrule->setName(*rule.getName());
-		mrule->setAbout(*rule.getAbout());
+		Rule* mrule = getRule(rule.getName());
+		mrule->setName(rule.getName());
+		mrule->setAbout(rule.getAbout());
 		mrule->setEnabled(rule.getEnabled());
-		mrule->setScript(*rule.getScript());
+		mrule->setScript(rule.getScript());
 
 		return E_FAIL; //modification
 	}
@@ -203,7 +203,7 @@ HRESULT AI::Environment::RemoveRule(UINT& index) {
 int AI::Environment::FindRuleIndex(std::string& name) {
 	UINT i = 0;
 
-	while( i < getRulesCount() && *Rules[i].getName() != name) i++;
+	while( i < getRulesCount() && Rules[i].getName() != name) i++;
 
 	if(i == getRulesCount())
 		return -1;
@@ -262,80 +262,161 @@ UINT AI::Environment::getRulesCount() {
 }
 HRESULT AI::Environment::executer(Rule* rule) {
 	Value hr;
-	ls = new LecteurSymbole(*rule->getScript());
+	ls = new LecteurSymbole(rule->getScript());
 	hr = seqInst();
-	if( hr != S_OK )
-		return (HRESULT)hr.getValue();
+	if( hr != E_FAIL )
+		return S_OK;
 	else
-	return S_OK;
+	return E_FAIL;
 }
 Value AI::Environment::seqInst() {
 	Value hr;
 	while(ls->getSymCour().getType() != Symbole::Type::FIN)
 	{
+		if(ls->getSymCour().getChaine() == "if")
+					hr = instIf();
+		else
 		hr = Inst();
-		if( hr != S_OK )
+		if( hr == E_FAIL )
 			return hr;
 	}
-	return S_OK;
+	hr = S_OK;
+	return hr;
 }
 Value AI::Environment::Inst() {
 	Value hr;
-	while(ls->getSymCour().getType() != Symbole::Type::FIN_INST)
+	if(ls->getSymCour().getType() != Symbole::Type::FIN_INST || ls->getSymCour().getType() != Symbole::Type::FIN)
 	{
 
 		switch(ls->getSymCour().getType())
 		{
-			case Symbole::INCONNU :
-				if(ls->getSymCour().getChaine() == "if")
-					hr = instIf();
-				else
-					hr = E_FAIL;
-			break;
 			case Symbole::VARIABLE :
+				 hr = Operation();
+				break;
+			case Symbole::SENTENCE :
 				 hr = Operation();
 				break;
 			default:
 				hr = E_FAIL;
 		}
-		if(hr != S_OK)
+		if(hr == E_FAIL)
 			return hr;
 	}
-	return S_OK;
+	return hr;
 }
 Value AI::Environment::instIf() {
 
+	Value hr;
 	ls->suivant();
-	Inst();
-	return S_OK;
+	Value val = Inst();
+	bool tr = (val == true);
+	if( tr )
+	{
+		ls->suivant(); //sauter le then
+		if(ls->getSymCour().getChaine() != "else" && ls->getSymCour().getChaine() != "endif")
+		{
+			hr = seqInst();
+			if(hr == E_FAIL)
+				return hr;
+
+			while(ls->getSymCour().getChaine() != "endif")
+			ls->suivant(); //zapper le else s'il y en a un
+		}
+	}
+	else
+	{
+		while(ls->getSymCour().getChaine() != "else" && ls->getSymCour().getChaine() != "endif")
+			ls->suivant(); //zapper les instructions de la condition
+	
+	}
+
+	if(ls->getSymCour().getChaine() == "else")
+	{
+			ls->suivant();
+			hr = seqInst();
+			if(hr == E_FAIL)
+				return hr;
+	}
+
+	hr = S_OK;
+	return hr;
 }
 Value AI::Environment::Operation() {
-
+	Value hr;
 	Symbole sym = ls->getSymCour(); //variable de gauche
-	VAR* var = getVar(sym.getChaine());
-	if(var == 0)
-			return E_INVALIDARG;
-	ls->suivant();
-
-	if(ls->getSymCour().getType() != Symbole::Type::OPERATION)
-		return E_FAIL;
 	
-	
-		if(ls->getSymCour().getChaine() == "==")
+	Value valCom;
+	VAR* var;
+	if(sym.getType() == Symbole::Type::VARIABLE)
+	{
+		
+		var = getVar(sym.getChaine());
+		if(var == 0)
 		{
+				VAR newvar;
+				newvar = VAR(sym.getChaine());
+				Value n;
+				n = "NULL";				
+				newvar.setValue(n);
+				AddVar(newvar);
+				var = getVar(sym.getChaine());
+		}
+		
+
+		valCom = var->getValue();
+
+	}
+	else if(sym.getType() == Symbole::Type::SENTENCE)
+	{
+		//ici la variable doit être composée à partir d'une transcription de la forme [element1, ... element n]
+		valCom = sym.getChaine(); //recuperer la phrase et la stocker dans une value
+
+	}
+	else if(sym.getType() == Symbole::Type::CHAINE)
+	{
+		//ici la variable doit être d'une chaine
+		valCom = sym.getChaine(); //recuperer la phrase et la stocker dans une value
+
+	}
+
+		
+	ls->suivant();
+	
+
+	/*if(ls->getSymCour().getType() != Symbole::Type::OPERATION)
+		return E_FAIL;*/
+	
+	
+		if(ls->getSymCour().getChaine() == "==" || ls->getSymCour().getChaine() == "!=" || ls->getSymCour().getChaine() == "=")
+		{
+			std::string operateur = ls->getSymCour().getChaine();
 			ls->suivant();
+			
 			Value val = Operation();
-			return Comparaison(var->getValue(),&val,"==");
+			if(operateur == "=")
+			{
+				var->setValue(val);
+				return val;
+			}
+			else
+			return Comparaison(&valCom,&val,operateur);
 		}
 		else
-			return var; //au pire la valeur de l'operation est celle de la variable
+			return valCom; //au pire la valeur de l'operation est celle de la variable
 	
 }
 Value AI::Environment::Comparaison(Value* gauche,Value* droit,std::string operateur) {
-
+	Value hr;
 	if(operateur == "==")
-		return gauche == droit;
+	{
+		hr = (*gauche == *droit);
+		return hr;
+	}
 	else if(operateur == "!=")
-		return gauche != droit;
-	return false;
+	{
+		hr = (*gauche != *droit);
+		return hr;
+	}
+	hr = false;
+	return hr;
 }
