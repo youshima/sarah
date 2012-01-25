@@ -32,11 +32,11 @@ void DBWORDLIST::addWord(DBWORD* word)
 WordNet::WordNet()
 {
 	mysql_init(&mysql);
-	connection = mysql_real_connect(&mysql,"localhost","wordnet","wordnet","wn_pro_mysql",0,0,0);
+	connection = mysql_real_connect(&mysql,"pg.no-ip.biz","wordnet","wordnet","wn_pro_mysql",3306,0,0);
 	if (connection == NULL) 
 	{
 		cout << mysql_error(&mysql) << endl;
-		exit(-1);							//Remplacer par une exception ?
+		exit(-5545);							//Remplacer par une exception ?
 	}
 
 }
