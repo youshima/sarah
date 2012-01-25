@@ -10,6 +10,8 @@ using namespace SpeechAnalysis1;
 int main(array<System::String ^> ^args)
 {
 	
+	//Juste pour tester la connection à WordNet :
+	WordNet* wd = new WordNet();
 
 	// Activation des effets visuels de Windows XP avant la création de tout contrôle
 	Application::EnableVisualStyles();
