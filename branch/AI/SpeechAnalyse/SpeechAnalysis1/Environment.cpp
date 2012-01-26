@@ -53,7 +53,7 @@ HRESULT AI::Environment::Load() {
 			VAR var;
 			for(UINT i = 0; i < (UINT)val; i++) //lire toutes les variables
 			{
-				file.write(var);
+				file.read(var);
 				AddVar(var); //ajouter la variable à la liste
 			}
 

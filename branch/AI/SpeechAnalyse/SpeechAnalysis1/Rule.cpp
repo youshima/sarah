@@ -2,7 +2,7 @@
 #include "Rule.h"
 
 AI::Rule::Rule() : enabled(false) {
-
+	result = "NONE";
 }
 AI::Rule::~Rule() {
 
