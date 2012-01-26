@@ -86,6 +86,7 @@ HRESULT File::write(std::string& str) {
 	if(isOpen())
 	{
 		write((int)str.size()); //ecrire la longueur
+		if(str.size() > 0)
 		file.write((char*)str.c_str(), sizeof(char) * str.size() ); //ecrire la chaine de caracteres
 
 		return S_OK;
@@ -175,9 +176,9 @@ HRESULT File::write(VAR& var) {
 				file.write(val.getValue(), sizeof(char));
 			break;
 			case STRING :
-				std::string* str;
-				str = (std::string*)val.getValue();
-				write(*str);
+				std::string str;
+				str = val.getValue();
+				write(str);
 			break;
 			
 		}
@@ -348,7 +349,7 @@ HRESULT File::read(Rule& rule) {
 		rule.setName(name);
 		rule.setScript(script);
 		rule.setAbout(about);
-		rule.setResult(std::string(""));
+		rule.setResult(std::string("NONE"));
 		rule.setEnabled(enabled);
 
 		return S_OK;
