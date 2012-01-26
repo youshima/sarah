@@ -19,7 +19,7 @@ private:
 	DBWORDLIST* next;
 public:
 	DBWORDLIST(DBWORD* word);
-	inline DBWORD* getWord() { return this->word; }
+	inline DBWORD* getWord() { if (this->word)return this->word; else return NULL; }
 	inline DBWORDLIST* getNext() { return this->next; }
 	void setNext(DBWORD* word);
 	void addWord(DBWORD* word);
