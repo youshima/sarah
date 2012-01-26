@@ -4,6 +4,9 @@ Implémentation de la classe WordNet
 #include "StdAfx.h"
 #include "WordNet.h"
 
+#include "Form1.h"
+#include <vcclr.h>
+
 
 DBWORDLIST::DBWORDLIST(DBWORD* word)
 {
@@ -14,7 +17,7 @@ DBWORDLIST::DBWORDLIST(DBWORD* word)
 void DBWORDLIST::setNext(DBWORD* word)
 {
 	if (this->next)
-		this->next->setValue(word);
+		this->next->setNext(word);
 	else
 		this->next = new DBWORDLIST(word);
 }
@@ -82,7 +85,7 @@ TYPE WordNet::type_of(char type)
 	}
 }
 
-HRESULT WordNet::find(DBWORDLIST* wordlist, char* name, int numberOfOccurences)
+HRESULT WordNet::find(DBWORDLIST* wordlist, char* name, int& numberOfOccurences)
 {
 	wordlist = NULL;
 	numberOfOccurences = 0;
@@ -90,14 +93,16 @@ HRESULT WordNet::find(DBWORDLIST* wordlist, char* name, int numberOfOccurences)
 	string query = "SELECT * FROM wn_synset WHERE word = '";
 	query.append(name);
 	query.append("' ;");
+	//System::String^ out = gcnew System::String(query.c_str());
+		//	MessageBox::Show(out);
 	runQuery((char*)query.c_str());
 	result = mysql_store_result(connection);
 	while (row = mysql_fetch_row(result))
 	{
-		if (type_of((char)row[3][0])!='v')
+		if (type_of((char)row[3][0])!=VERB)
 		{
 			word = new DBWORD;
-			word->setName((std::string &)row[2]);
+			word->setName((std::string)row[2]);
 			word->setType(type_of((char)row[3][0]));
 			string query = "SELECT * FROM wn_gloss WHERE synset_id = '";
 			query.append(row[0]);
@@ -106,12 +111,12 @@ HRESULT WordNet::find(DBWORDLIST* wordlist, char* name, int numberOfOccurences)
 			runQuery((char*)query.c_str());
 			result2 = mysql_store_result(connection);
 			row2 = mysql_fetch_row(result2);
-			word->setDef((std::string &)row2[1]);
+			word->setDef((std::string )row2[1]);
 		}
 		else //c'est un verbe
 		{
 			word = new DBVERB;
-			word->setName((std::string &)row[2]);
+			word->setName((std::string)row[2]);
 			word->setType(VERB);
 			string query = "SELECT * FROM wn_gloss WHERE synset_id = '";
 			query.append(row[0]);
@@ -120,13 +125,13 @@ HRESULT WordNet::find(DBWORDLIST* wordlist, char* name, int numberOfOccurences)
 			runQuery((char*)query.c_str());
 			result2 = mysql_store_result(connection);
 			row2 = mysql_fetch_row(result2);
-			word->setDef((std::string &)row2[1]);
+			word->setDef((std::string)row2[1]);
 
 		}
 		if (!wordlist)
 			wordlist = new DBWORDLIST(word);
 		else
-			wordlist->addWord(word);
+			wordlist->setNext(word);
 
 		numberOfOccurences++;
 	}
@@ -135,7 +140,7 @@ HRESULT WordNet::find(DBWORDLIST* wordlist, char* name, int numberOfOccurences)
 	return 0;
 }
 
-HRESULT WordNet::findSynonims(DBWORDLIST* wordlist, DBWORD wordQuery, int numberOfSynonims)
+HRESULT WordNet::findSynonims(DBWORDLIST* wordlist, DBWORD wordQuery, int& numberOfSynonims)
 {
 	wordlist = NULL;
 	numberOfSynonims = 0;
@@ -159,7 +164,7 @@ HRESULT WordNet::findSynonims(DBWORDLIST* wordlist, DBWORD wordQuery, int number
 			if (type_of((char)row[3][0])!='v')
 			{
 				word = new DBWORD;
-				word->setName((std::string &)row[2]);
+				word->setName((std::string )row[2]);
 				word->setType(type_of((char)row[3][0]));
 				string query = "SELECT * FROM wn_gloss WHERE synset_id = '";
 				query.append(row2[0]);
@@ -168,12 +173,12 @@ HRESULT WordNet::findSynonims(DBWORDLIST* wordlist, DBWORD wordQuery, int number
 				runQuery((char*)query.c_str());
 				result3 = mysql_store_result(connection);
 				row3 = mysql_fetch_row(result3);
-				word->setDef((std::string &)row3[1]);
+				word->setDef((std::string)row3[1]);
 			}
 			else //c'est un verbe
 			{
 				word = new DBVERB;
-				word->setName((std::string &)row[3]);
+				word->setName((std::string )row[3]);
 				word->setType(VERB);
 				string query = "SELECT * FROM wn_gloss WHERE synset_id = '";
 				query.append(row2[0]);
@@ -182,13 +187,13 @@ HRESULT WordNet::findSynonims(DBWORDLIST* wordlist, DBWORD wordQuery, int number
 				runQuery((char*)query.c_str());
 				result3 = mysql_store_result(connection);
 				row3 = mysql_fetch_row(result3);
-				word->setDef((std::string &)row3[1]);
+				word->setDef((std::string )row3[1]);
 
 			}
 			if (!wordlist)
 				wordlist = new DBWORDLIST(word);
 			else
-				wordlist->addWord(word);
+				wordlist->setNext(word);
 		}
 			
 		numberOfSynonims++;

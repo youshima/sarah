@@ -125,11 +125,11 @@ TYPE* DBWORD::getType() {
 	return &this->type;
 }
 
-void DBWORD::setName(std::string& name) {
+void DBWORD::setName(std::string name) {
 	this->name = name;
 }
 	
-void DBWORD::setDef(std::string& def) {
+void DBWORD::setDef(std::string def) {
 	this->def = def;
 }
 	

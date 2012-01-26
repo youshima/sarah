@@ -1,5 +1,7 @@
 #include "StdAfx.h"
 #include "Form1.h"
+#include "WordNet.h"
+#include <vcclr.h>
 
 using namespace SpeechAnalysis1;
 
@@ -27,7 +29,16 @@ void Form1::RefreshElements() {
 			 item->Checked = this->ElementContainer->Visible;
 }
 
+	bool Form1::To_CharStar( String^ source, char*& target )
+{
+    pin_ptr<const wchar_t> wch = PtrToStringChars( source );
+    int len = (( source->Length+1) * 2);
+    target = new char[ len ];
+    return wcstombs( target, wch, len ) != -1;
+}
 void Form1::GenerateButtons(vector<Element*>* elements) {
+	
+
 			
 			 //enlever les boutons d'abord
 
@@ -61,9 +72,8 @@ void Form1::GenerateButtons(vector<Element*>* elements) {
 				if(elements->at(i)->isSeparator())
 					button->BackColor = Color::Red;
 				
-		//	    button->Click += gcnew System::EventHandler(this, &Form1::buttonElements_Click);
+			    button->Click += gcnew System::EventHandler(this, &Form1::buttonAdd_Click);
 				this->ElementContainer->Controls->Add(button);
-				
 				
 				ButtonElements->Add(button);
 
@@ -250,9 +260,38 @@ System::Void Form1::databaseToolStripMenuItem_Click(System::Object^  sender, Sys
 System::Void Form1::data_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e) {
 				
 }
+
 System::Void Form1::buttonAdd_Click(System::Object^  sender, System::EventArgs^  e) {
 
+
+		Button^ b = (Button^)sender;
+		char* name = "";
+
+		To_CharStar(b->Text, name);
+
+		WordNet* wd = new WordNet();
+		DBWORDLIST* DBWL= new DBWORDLIST(new DBWORD);
+		int nb = 0;
+		char buffer[33];
+	//	System::String^ out = gcnew System::String(name);
+		//	MessageBox::Show(b->Text);
+		wd->find(DBWL,name,nb); 
+		System::String^ out = gcnew System::String(itoa(nb,buffer,10));
+			MessageBox::Show(out);
+			DBWORD* word;
+				word = DBWL->getWord();
+		for (int i = 0; i < nb; i++)
+		{
+			if (word)
+			{
+				DBWL = DBWL->getNext();
+				System::String^ out = gcnew System::String(word->getName()->c_str());
+				MessageBox::Show(out);
+				word = DBWL->getWord();
+			}
+		}
 }
+
 /*
 
 
@@ -287,3 +326,4 @@ System::Void Form1::browserThread_DoWork(System::Object^  sender, System::Compon
 
 //this->environment->findWords(tostring(this->dataForm->textWord->Text));
 }
+
