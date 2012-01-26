@@ -127,12 +127,12 @@ public:
 		procedure setName
 		{affecte la valeur de name à self.name}
 	*/
-	void setName(std::string& name);
+	void setName(std::string name);
 	/*
 		procedure setDef
 		{affecte la valeur de def à self.def}
 	*/
-	void setDef(std::string& def);
+	void setDef(std::string def);
 	/*
 		procedure setType
 		{affecte la valeur de type à self.type}

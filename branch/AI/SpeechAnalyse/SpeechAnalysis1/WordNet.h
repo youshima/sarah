@@ -42,10 +42,10 @@ private:
 public:
 	WordNet(); //constructeur qui initialise la connection à la DB
 	~WordNet(); //destructeur, qui ferme la connection à la DB
-	HRESULT find(DBWORDLIST* wordlist, char* name, int numberOfOccurences);
+	HRESULT find(DBWORDLIST* wordlist, char* name, int& numberOfOccurences);
 	//{} => { wordlist = pointeur sur une liste de DBWORD* (pointant sur DBWORD ou DBVERB)
 	//correspondants à name, et numberOfOccurences = nombre de DBWORD dans la liste}
-	HRESULT findSynonims(DBWORDLIST* wordlist, DBWORD word, int numberOfSynonims);
+	HRESULT findSynonims(DBWORDLIST* wordlist, DBWORD word, int& numberOfSynonims);
 	//{} => { wordlist = pointeur sur une liste de DBWORD* (pointant sur DBWORD ou DBVERB)
 	//synonimes de word, et numberOfOccurences = nombre de DBWORD dans la liste}
 };

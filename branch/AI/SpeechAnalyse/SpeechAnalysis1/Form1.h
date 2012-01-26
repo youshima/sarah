@@ -62,7 +62,7 @@ namespace SpeechAnalysis1 {
 	private: System::Collections::Generic::List<System::Windows::Forms::Button^>^  ButtonElements;
 	private: System::Windows::Forms::MenuStrip^  menu;
 
-
+	private: bool To_CharStar(String^ source, char*& target);
 	private: System::Windows::Forms::ToolStripMenuItem^  fileToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  exitToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  addToolStripMenuItem;
@@ -460,6 +460,8 @@ private:
 			System::Void WordTextChanged(System::Object^ sender, System::EventArgs^ e);
 
 			System::Void browserThread_DoWork(System::Object^  sender, System::ComponentModel::DoWorkEventArgs^  e);
+
+			
 
 };
 }

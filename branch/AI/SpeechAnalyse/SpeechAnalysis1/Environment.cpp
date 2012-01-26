@@ -17,7 +17,7 @@ AI::Environment::~Environment() {
 }
 
 HRESULT AI::Environment::Save() {
-	bool exists;
+	/*bool exists;
 	if(file.open(FILENAME_ENV, exists) != S_OK) //ouvrir le fichier
 		return E_FILENOTFOUND;
 	
@@ -31,6 +31,7 @@ HRESULT AI::Environment::Save() {
 	for(UINT i = 0; i < (UINT)val; i++)
 		file.write(Rules[i]);
 	file.close();
+	*/
 	return S_OK;
 }
 
