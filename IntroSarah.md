@@ -1,0 +1,26 @@
+# 1.2 - Intro Sarah #
+
+Dans un monde où l'informatique règne sur tous les domaines les individus se trouvent de plus en plus isolés, cet isolement a deux aspects bien distincts :
+D'une part il y a ceux que le travail oblige à rester devant les machines, d'autre part les personnes qui ont lâché prise avec l'informatique et qui n'ont pas accès à ce qui nous semble si naturel à tous.
+Pour résoudre en partie ce problème d'isolement, nous proposons Sarah, un système d'interaction humain-machine graphique et audio basé sur l'intelligence artificielle. Cette application a pour vocation d'une part d'assurer un coté social dans le rapport avec la machine (dialogue), d'autre part une assistance intelligente à l'utilisation de matériel informatique.
+
+Sarah, sous la forme d'un visage en 3D apparaissant en arrière plan pourrait entendre l'utilisateur, lui parler et interagir avec lui au travers d'expressions de visage basiques.
+
+Il est important que la capacité de compréhension et de dialogue de Sarah soit importante de manière à assurer une interaction naturelle.
+L'utilisateur pourrait par exemple, au delà des mondanités de tous les jours demander à Sarah de faire des recherches web, consulter les mails ou bien écrire sous sa dictée et bien d'autres choses encore.
+
+Il apparait à ce niveau que Sarah doit posséder également un système efficace de contrôle d'applications externes. Deux idées se bousculent pour cela : un système de script et un système de plug-in.
+Dans l'idéal, il faudrait pouvoir créer un plug-in par application (comme Firefox ou Thunderbird) qui permettrait à Sarah d'avoir accès à des commandes simples. Cependant certains logiciels ne disposent pas d'un système de plug-in, il devient alors nécessaire de compliquer les choses et décrire sous forme de script les interactions complexes avec la mémoire des processus de ces programmes.
+
+Devant la complexité de la tâche il apparait clairement que la mise en place des systèmes d'interaction durant le laps de temps donné pour le projet est peu réalisable, c'est pourquoi, la démonstration finale devrait porter sur 1-2 logiciels tout au plus.
+
+L'aspect graphique nous importe tout autant que l'IA car c'est cela qui distingue Sarah des systèmes habituels de commande vocale. Ce visage que nous avons choisi pour des raisons pratiques et esthétiques de simplifier à la forme d'un masque de Drama est sensé donner à notre idée la touche de l'exceptionnel. Ce visage est sensé être en 3D et déformable.
+Nous utiliserons OGRE 3D comme moteur graphique et 3DS MAX comme logiciel d'édition (voir Glossaire).
+Un squelette devra être réalisé pour habiller le visage et le rendre animé en temps réel, une série d'animations basiques devront être mises en place ainsi que le mouvement des lèvres (celui ci devra être synchronisé avec la voix).
+
+Pour en arriver à la voix, c'est elle qui assurera la transition entre l'IA et l'utilisateur, de la précision d’interprétation de celle-ci dépend la qualité d'analyse de l'IA et donc la qualité de sa réponse.
+Pour améliorer la précision nous recommandons un bon microphone bien configuré et éloigné des hauts-parleurs. Malheuresement malgré ces précautions, nous pouvons nous attendre à rencontrer quelques problèmes.
+
+Affin de limiter les problèmes et incompatibilités, Sarah parlera exclusivement Anglais.
+
+Plus loin dans ce rapport, nous présenterons l'ensemble du travail effectué sur le projet, l'organisation, les problèmes rencontrés. Un Glossaire est à votre disposition, il vous renseignera sur les logiciels et termes techniques utilisés.

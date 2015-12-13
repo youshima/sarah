@@ -1,0 +1,37 @@
+Pour l'instant je vais modifier un peu cette page juste pour balancer des liens, des idées, des commentaires sur ces liens.
+On changera ça plus tard.
+
+Balancez vos liens ou n'importe quoi ici !
+
+## Partie IA ##
+
+Jonn a dit :
+  * http://chatterbots.fr/forum/viewtopic.php?id=2
+  * http://s140685957.onlinehome.fr/bot/logs/193.55.51.9.htm
+
+
+## Partie Audio ##
+
+  * Un vieux tuto pas fini (à peine commencé) : http://blogs.developpeur.org/madmatt/archive/2009/05/03/reconnaissance-et-synth-se-vocale-sapi-5-1.aspx
+  * Un autre : http://www.blong.com/Conferences/DCon2002/Speech/SAPI51/SAPI51.htm (**En Delphi !**)
+  * L'API peut-être utlisée : http://msdn.microsoft.com/en-us/library/ee125663%28VS.85%29.aspx
+  * Avec quelques exemples en C/C++ (avec code source) : http://msdn.microsoft.com/en-us/library/ee125103%28v=VS.85%29.aspx
+  * Ici en 2eme un logiciel (DSpeech) qui lit des textes avec SAPI **et des voix en DL** : http://dimio.altervista.org/eng/
+  * eSpeak parle beaucoup de langues, et apparement bien le français : http://espeak.sourceforge.net/languages.html **(Après tests, c'est vraiment de la merde en français)**
+
+_La meilleure voix pour le moment est Virginie : http://rapidshare.com/files/108331417/Virginie.exe.html
+Elle est aussi à la racine du SVN. Il faut l'installer et la choisir en lançant le fichier C:\Windows\SysWOW64\Speech\SpeechUX\sapi.cpl (Sous windows 7 64). Sous Windows 32 bits il suffit d'aller dans **Panneau de Configuration -> Reconnaissance vocale** et ça se trouve facilement. Pour tester Virginie, ouvrez le fichier /branch/Speech/Speeche.vcxproj avec VC++ et appuyez sur F5._
+
+
+## Partie Graphique ##
+
+> Librairies/Moteur utilisés : Ogre 3D http://www.ogre3d.org/
+
+> Tuto de rigg pour Sarah :
+
+http://www.free3dstudiomaxtutorials.com/animation/how-to-bone-rigging-a-face-part-1.html
+
+http://www.free3dstudiomaxtutorials.com/animation/how-to-bone-rigging-a-face-part-2.html
+
+
+## Autre ##
